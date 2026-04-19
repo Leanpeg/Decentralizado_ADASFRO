@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  DESCENTRALIZANDO — Medio Digital de ADASFRO                ║
+  ║  Cédula Jurídica: 3-002-860094                              ║
+  ║  Archivos: index.html · styles.css · script.js              ║
+  ║                                                              ║
+  ║  CÓMO EDITAR ESTE SITIO:                                     ║
+  ║  - Busca los comentarios con "✏️ EDITAR" para cambiar texto  ║
+  ║  - Busca "🖼️ IMAGEN" para cambiar fotos                     ║
+  ║  - Busca "🔗 ENLACE" para cambiar links                      ║
+  ║  - Los 3 archivos deben estar en la misma carpeta            ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✏️ EDITAR: Título que aparece en la pestaña del navegador -->
+  <title>Descentralizando</title>
+
+  <!-- ✏️ EDITAR: Descripción para buscadores (SEO) -->
+  <meta name="description" content="Descentralizando es el medio digital oficial de ADASFRO. Información, análisis y participación sobre turismo inteligente, accesibilidad e inclusión en Costa Rica." />
+  <meta name="keywords" content="turismo inteligente, accesibilidad, Costa Rica, ADASFRO, desarrollo sostenible, inclusión social" />
+  <meta name="author" content="ADASFRO – Asociación Agencia para el Desarrollo Accesible sin Fronteras" />
+
+  <!-- Open Graph: lo que se ve cuando compartes en redes sociales -->
+  <meta property="og:title" content="Descentralizando" />
+  <meta property="og:description" content="Información veraz, análisis técnico y diálogo participativo sobre turismo inteligente e inclusión en Costa Rica." />
+  <meta property="og:type" content="website" />
+  <!-- 🖼️ IMAGEN: Cambia esta URL por la imagen que quieres mostrar en redes -->
+  <meta property="og:image" content="images/og-image.jpg" />
+
+  <!-- Fuentes tipográficas desde Google Fonts (sin costo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!--
+    Tipografía elegida:
+    - "Playfair Display": para títulos — da carácter editorial y profesional
+    - "Source Sans 3": para cuerpo — muy legible, accesible, moderna
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       ENLACE DE SALTAR AL CONTENIDO — Accesibilidad (WCAG 2.1)
+       Permite a usuarios de teclado saltar directo al contenido
+       ════════════════════════════════════════════════════════ -->
+  <a href="#contenido-principal" class="saltar-contenido">
+    Saltar al contenido principal
+  </a>
+
+  <!-- ════════════════════════════════════════════════════════
+       BARRA SUPERIOR — Información institucional y accesibilidad
+       ════════════════════════════════════════════════════════ -->
+  <div class="barra-top" role="banner" aria-label="Información institucional">
+    <div class="contenedor barra-top-inner">
+      <!-- ✏️ EDITAR: Texto informativo de la barra superior -->
+      <span class="barra-entidad">
+        🏛️ ADASFRO · Cédula Jurídica 3-002-860094 · Respaldado por la Ley N.º 218
+      </span>
+      <div class="barra-accesibilidad" role="group" aria-label="Opciones de accesibilidad">
+        <!-- Botones para aumentar/disminuir texto — Accesibilidad -->
+        <button class="btn-accesibilidad" id="btn-texto-grande" aria-label="Aumentar tamaño de texto" title="Texto más grande">A+</button>
+        <button class="btn-accesibilidad" id="btn-texto-normal" aria-label="Tamaño de texto normal" title="Texto normal">A</button>
+        <button class="btn-accesibilidad" id="btn-alto-contraste" aria-label="Activar alto contraste" title="Alto contraste">◐</button>
+        <!-- 🔗 ENLACE: Links a redes sociales. Cambia # por el enlace real -->
+        <a href="https://facebook.com" class="red-social" aria-label="Facebook de Descentralizando" target="_blank" rel="noopener">f</a>
+        <a href="https://twitter.com" class="red-social" aria-label="Twitter de Descentralizando" target="_blank" rel="noopener">𝕏</a>
+        <a href="https://instagram.com" class="red-social" aria-label="Instagram de Descentralizando" target="_blank" rel="noopener">ig</a>
+        <a href="https://youtube.com" class="red-social" aria-label="YouTube de Descentralizando" target="_blank" rel="noopener">▶</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       ENCABEZADO / NAVBAR — Menú de navegación principal
+       ════════════════════════════════════════════════════════ -->
+  <header class="navbar" id="navbar" role="banner">
+    <div class="contenedor nav-inner">
+
+      <!-- LOGO DEL MEDIO -->
+      <a href="#" class="logo" aria-label="Descentralizando — Ir al inicio">
+        <!-- 🖼️ IMAGEN: Cambia "images/logo.png" por tu logo real -->
+        <!-- Si tienes logo: descomenta la línea de abajo y comenta las dos que siguen -->
+        <!-- <img src="images/logo.png" alt="Logo Descentralizando" height="44" /> -->
+        <span class="logo-icono" aria-hidden="true">🗺️</span>
+        <div class="logo-texto">
+          <!-- ✏️ EDITAR: Nombre del medio -->
+          <span class="logo-nombre">Descentralizando</span>
+          <span class="logo-subtitulo">por ADASFRO</span>
+        </div>
+      </a>
+
+      <!-- MENÚ DE NAVEGACIÓN DESKTOP -->
+      <nav class="nav-menu" role="navigation" aria-label="Menú principal">
+        <ul>
+          <!-- ✏️ EDITAR: Cambia los nombres y los href="#seccion" según tus secciones -->
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#quienes-somos">Nosotros</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+          <li><a href="#linea-editorial">Editorial</a></li>
+          <li><a href="#casos-exito">Casos de éxito</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <!-- BOTÓN SUSCRIPCIÓN -->
+      <a href="#contacto" class="btn btn-verde nav-suscribir">
+        📩 Suscribirse
+      </a>
+
+      <!-- BOTÓN HAMBURGUESA (móvil) -->
+      <button
+        class="hamburguesa"
+        id="hamburguesa"
+        aria-label="Abrir o cerrar menú"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- MENÚ MÓVIL (se despliega al tocar el botón hamburguesa) -->
+    <div class="menu-movil" id="menu-movil" aria-hidden="true" role="navigation" aria-label="Menú móvil">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#quienes-somos">Nosotros</a></li>
+        <li><a href="#noticias">Noticias</a></li>
+        <li><a href="#linea-editorial">Editorial</a></li>
+        <li><a href="#casos-exito">Casos de éxito</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#contacto" class="btn btn-verde">📩 Suscribirse</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════
+       CONTENIDO PRINCIPAL
+       ════════════════════════════════════════════════════════ -->
+  <main id="contenido-principal">
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN HERO — Portada principal del medio
+         ────────────────────────────────────────────────────── -->
+    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+      <!-- Fondo decorativo con formas geométricas animadas -->
+      <div class="hero-fondo" aria-hidden="true">
+        <div class="forma forma-1"></div>
+        <div class="forma forma-2"></div>
+        <div class="forma forma-3"></div>
+        <div class="hero-grid-dots"></div>
+      </div>
+
+      <div class="contenedor hero-contenido">
+        <!-- COLUMNA IZQUIERDA: Texto principal -->
+        <div class="hero-texto" data-animar="arriba">
+
+          <!-- Etiqueta de categoría -->
+          <div class="hero-etiqueta">
+            <span class="punto-vivo" aria-label="En vivo"></span>
+            <!-- ✏️ EDITAR: Texto de la etiqueta superior -->
+            Medio digital independiente · Costa Rica
+          </div>
+
+          <!-- ✏️ EDITAR: Título principal del hero -->
+          <h1 id="hero-titulo">
+            Información que
+            <em>transforma</em>
+            territorios
+          </h1>
+
+          <!-- ✏️ EDITAR: Descripción principal -->
+          <p class="hero-descripcion">
+            Descentralizando promueve la transformación hacia Destinos Turísticos Inteligentes mediante información veraz, análisis técnico y diálogo participativo. Un medio inclusivo, accesible y sin fronteras.
+          </p>
+
+          <!-- Botones de acción -->
+          <div class="hero-botones">
+            <a href="#noticias" class="btn btn-verde btn-grande">
+              📰 Ver noticias
+            </a>
+            <a href="#quienes-somos" class="btn btn-contorno btn-grande">
+              🏛️ Quiénes somos
+            </a>
+          </div>
+
+          <!-- Etiquetas temáticas -->
+          <div class="hero-temas" aria-label="Temas principales">
+            <span class="tema-pill">🌿 Sostenibilidad</span>
+            <span class="tema-pill">💻 Innovación</span>
+            <span class="tema-pill">♿ Accesibilidad</span>
+            <span class="tema-pill">🗺️ Turismo inteligente</span>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Noticia destacada principal -->
+        <div class="hero-noticia-destacada" data-animar="izquierda">
+          <div class="noticia-principal-card">
+            <div class="noticia-categoria-badge">📌 Noticia destacada</div>
+            <!-- 🖼️ IMAGEN: Reemplaza este div por tu imagen -->
+            <div class="noticia-imagen-placeholder" aria-hidden="true">
+              <!-- Si tienes imagen: <img src="images/noticia-principal.jpg" alt="Descripción de la foto" /> -->
+              <div class="placeholder-icono">🗳️</div>
+            </div>
+            <div class="noticia-card-cuerpo">
+              <!-- ✏️ EDITAR: Categoría de la noticia destacada -->
+              <span class="noticia-cat">Política · Febrero 2026</span>
+              <!-- ✏️ EDITAR: Título de la noticia destacada -->
+              <h2 class="noticia-card-titulo">
+                Crónica: vigilancia internacional en la Escuela Unificada República del Perú
+              </h2>
+              <!-- ✏️ EDITAR: Resumen de la noticia destacada -->
+              <p>La misión electoral de la OEA observó el desarrollo de las elecciones nacionales del 1° de febrero de 2026 en San José, Costa Rica.</p>
+              <!-- 🔗 ENLACE: Cambia # por el enlace a la noticia completa -->
+              <a href="#" class="btn btn-oscuro btn-pequeno">Leer más →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TICKER de noticias (banda de texto rodante) -->
+      <div class="ticker-wrap" role="marquee" aria-label="Últimas noticias">
+        <div class="ticker-etiqueta" aria-hidden="true">📡 ÚLTIMA HORA</div>
+        <div class="ticker-contenido">
+          <div class="ticker-pista" id="ticker-pista">
+            <!-- ✏️ EDITAR: Cambia estos textos por tus noticias recientes -->
+            <span>LESCO mal aplicado vulnera derechos según la Sala Constitucional</span>
+            <span>•</span>
+            <span>TSE incorporó medidas inclusivas para personas con discapacidad en elecciones 2026</span>
+            <span>•</span>
+            <span>CES 2026: La IA es ya la base de la tecnología cotidiana</span>
+            <span>•</span>
+            <span>Costa Rica en la recta final electoral: foco en encuestas y debates</span>
+            <span>•</span>
+            <span>Asociación Pro Defensa de Personas Sordas denuncia falta de preparación del TSE</span>
+            <span>•</span>
+            <!-- Copia duplicada para efecto continuo -->
+            <span>LESCO mal aplicado vulnera derechos según la Sala Constitucional</span>
+            <span>•</span>
+            <span>TSE incorporó medidas inclusivas para personas con discapacidad en elecciones 2026</span>
+            <span>•</span>
+            <span>CES 2026: La IA es ya la base de la tecnología cotidiana</span>
+            <span>•</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN QUIÉNES SOMOS — Institucional
+         ────────────────────────────────────────────────────── -->
+    <section class="seccion seccion-clara" id="quienes-somos" aria-labelledby="titulo-quienes">
+      <div class="contenedor">
+
+        <!-- Encabezado de sección -->
+        <div class="seccion-encabezado" data-animar="arriba">
+          <span class="seccion-etiqueta">🏛️ Quiénes somos</span>
+          <h2 id="titulo-quienes" class="titulo-seccion">
+            Un medio con propósito institucional
+          </h2>
+          <!-- ✏️ EDITAR: Descripción general -->
+          <p class="seccion-descripcion">
+            Descentralizando es el medio digital oficial de ADASFRO, una organización sin fines de lucro comprometida con la inclusión, la accesibilidad y el desarrollo sostenible de Costa Rica.
+          </p>
+        </div>
+
+        <!-- Grilla de tarjetas institucionales -->
+        <div class="grilla-institucional">
+
+          <!-- Tarjeta: Misión -->
+          <div class="tarjeta-institucional tarjeta-verde" data-animar="arriba" data-retraso="0">
+            <div class="tarjeta-icono" aria-hidden="true">🎯</div>
+            <h3>Misión</h3>
+            <!-- ✏️ EDITAR: Texto de la misión -->
+            <p>Promover la transformación de territorios turísticos hacia Destinos Turísticos Inteligentes mediante información veraz, análisis técnico y diálogo participativo.</p>
+          </div>
+
+          <!-- Tarjeta: Visión -->
+          <div class="tarjeta-institucional tarjeta-azul" data-animar="arriba" data-retraso="100">
+            <div class="tarjeta-icono" aria-hidden="true">🔭</div>
+            <h3>Visión</h3>
+            <!-- ✏️ EDITAR: Texto de la visión -->
+            <p>Ser el medio de referencia en América Latina para estrategias de turismo inteligente, fomentando sostenibilidad, innovación y descentralización del conocimiento.</p>
+          </div>
+
+          <!-- Tarjeta: Marco Legal -->
+          <div class="tarjeta-institucional tarjeta-gris" data-animar="arriba" data-retraso="200">
+            <div class="tarjeta-icono" aria-hidden="true">⚖️</div>
+            <h3>Marco legal</h3>
+            <!-- ✏️ EDITAR: Referencias legales -->
+            <p>Opera bajo la <strong>Ley de Asociaciones N.º 218</strong>, la Constitución Política de Costa Rica (Art. 28, 29 y 46) y el Código Electoral Art. 139.</p>
+          </div>
+
+          <!-- Tarjeta: Principios -->
+          <div class="tarjeta-institucional tarjeta-turquesa" data-animar="arriba" data-retraso="300">
+            <div class="tarjeta-icono" aria-hidden="true">🌐</div>
+            <h3>Principios editoriales</h3>
+            <!-- ✏️ EDITAR: Principios del medio -->
+            <p>Independencia editorial, imparcialidad en procesos electorales, inclusión social, accesibilidad universal e innovación tecnológica como ejes transversales.</p>
+          </div>
+
+        </div>
+
+        <!-- Bloque de equipo -->
+        <div class="bloque-equipo" data-animar="arriba">
+          <h3 class="subtitulo-equipo">Equipo directivo</h3>
+          <div class="grilla-equipo">
+            <!-- ✏️ EDITAR: Datos del director -->
+            <div class="tarjeta-persona">
+              <div class="persona-avatar" aria-hidden="true">AC</div>
+              <div class="persona-info">
+                <strong>Alberto Cabezas Villalobos</strong>
+                <span>Director</span>
+              </div>
+            </div>
+            <!-- ✏️ EDITAR: Datos del presidente -->
+            <div class="tarjeta-persona">
+              <div class="persona-avatar persona-avatar-alt" aria-hidden="true">LP</div>
+              <div class="persona-info">
+                <strong>Lenin Antonio Pérez Guzmán</strong>
+                <span>Presidente de ADASFRO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN NOTICIAS — Artículos recientes
+         ────────────────────────────────────────────────────── -->
+    <section class="seccion seccion-oscura" id="noticias" aria-labelledby="titulo-noticias">
+      <div class="contenedor">
+
+        <!-- Encabezado -->
+        <div class="seccion-encabezado claro" data-animar="arriba">
+          <span class="seccion-etiqueta claro">📰 Noticias</span>
+          <h2 id="titulo-noticias" class="titulo-seccion">Cobertura reciente</h2>
+          <p class="seccion-descripcion claro">
+            Análisis, crónicas y reportajes sobre inclusión, accesibilidad y desarrollo sostenible en Costa Rica y América Latina.
+          </p>
+        </div>
+
+        <!-- Filtros de categoría -->
+        <div class="filtros-categoria" role="group" aria-label="Filtrar por categoría">
+          <!-- ✏️ EDITAR: Cambia las categorías según las secciones de tu medio -->
+          <button class="filtro activo" data-filtro="todos">Todos</button>
+          <button class="filtro" data-filtro="politica">Política</button>
+          <button class="filtro" data-filtro="social">Social</button>
+          <button class="filtro" data-filtro="tecnologia">Tecnología</button>
+          <button class="filtro" data-filtro="turismo">Turismo</button>
+        </div>
+
+        <!-- Grilla de noticias -->
+        <!--
+          CÓMO AGREGAR UNA NOTICIA:
+          1. Copia un bloque <article class="tarjeta-noticia"> ... </article>
+          2. Pégalo dentro de <div class="grilla-noticias">
+          3. Cambia el data-categoria, la imagen, el título y el resumen
+        -->
+        <div class="grilla-noticias" id="grilla-noticias">
+
+          <!-- NOTICIA 1: DESTACADA (ocupa 2 columnas) -->
+          <article class="tarjeta-noticia noticia-grande" data-categoria="social" data-animar="arriba" data-retraso="0">
+            <!-- 🖼️ IMAGEN: Cambia por tu imagen -->
+            <div class="noticia-imagen" aria-hidden="true">
+              <div class="img-placeholder">⚖️</div>
+            </div>
+            <div class="noticia-cuerpo">
+              <div class="noticia-meta">
+                <span class="noticia-cat cat-social">🤝 Social</span>
+                <time datetime="2026-02-03">03 Feb 2026</time>
+              </div>
+              <!-- ✏️ EDITAR: Título de la noticia -->
+              <h3><a href="#">LESCO mal aplicado vulnera derechos, advierte la Sala Constitucional</a></h3>
+              <!-- ✏️ EDITAR: Resumen -->
+              <p>La accesibilidad no es un favor institucional, sino una obligación jurídica exigible. La Sala IV evidenció que la existencia de normas resulta insuficiente cuando las instituciones no garantizan condiciones reales de acceso.</p>
+              <a href="#" class="enlace-leer-mas">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- NOTICIA 2 -->
+          <article class="tarjeta-noticia" data-categoria="politica" data-animar="arriba" data-retraso="100">
+            <div class="noticia-imagen" aria-hidden="true">
+              <div class="img-placeholder">🗳️</div>
+            </div>
+            <div class="noticia-cuerpo">
+              <div class="noticia-meta">
+                <span class="noticia-cat cat-politica">🏛️ Política</span>
+                <time datetime="2026-02-01">01 Feb 2026</time>
+              </div>
+              <h3><a href="#">Crónica: vigilancia internacional en la Escuela Unificada República del Perú</a></h3>
+              <p>La misión electoral de la OEA se desplegó para observar el desarrollo de las elecciones nacionales del 1° de febrero de 2026.</p>
+              <a href="#" class="enlace-leer-mas">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- NOTICIA 3 -->
+          <article class="tarjeta-noticia" data-categoria="politica" data-animar="arriba" data-retraso="200">
+            <div class="noticia-imagen" aria-hidden="true">
+              <div class="img-placeholder">♿</div>
+            </div>
+            <div class="noticia-cuerpo">
+              <div class="noticia-meta">
+                <span class="noticia-cat cat-politica">🏛️ Política</span>
+                <time datetime="2026-02-01">01 Feb 2026</time>
+              </div>
+              <h3><a href="#">Medidas inclusivas del TSE para personas con discapacidad en elecciones 2026</a></h3>
+              <p>El TSE incorporó diversas acciones para garantizar que las personas con discapacidad pudieran ejercer su derecho al voto de forma autónoma.</p>
+              <a href="#" class="enlace-leer-mas">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- NOTICIA 4 -->
+          <article class="tarjeta-noticia" data-categoria="social" data-animar="arriba" data-retraso="0">
+            <div class="noticia-imagen" aria-hidden="true">
+              <div class="img-placeholder">👂</div>
+            </div>
+            <div class="noticia-cuerpo">
+              <div class="noticia-meta">
+                <span class="noticia-cat cat-social">🤝 Social</span>
+                <time datetime="2026-02-01">01 Feb 2026</time>
+              </div>
+              <h3><a href="#">Comunidad sorda denuncia falta de preparación del TSE para personas sordas</a></h3>
+              <p>La Asociación Pro Defensa de las Personas Sordas criticó la ausencia de medidas de accesibilidad en el proceso electoral.</p>
+              <a href="#" class="enlace-leer-mas">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- NOTICIA 5 -->
+          <article class="tarjeta-noticia" data-categoria="tecnologia" data-animar="arriba" data-retraso="100">
+            <div class="noticia-imagen" aria-hidden="true">
+              <div class="img-placeholder">🤖</div>
+            </div>
+            <div class="noticia-cuerpo">
+              <div class="noticia-meta">
+                <span class="noticia-cat cat-tecnologia">💻 Tecnología</span>
+                <time datetime="2026-01-09">09 Ene 2026</time>
+              </div>
+              <h3><a href="#">CES 2026: La IA ya no es un "extra", es la base de la tecnología cotidiana</a></h3>
+              <p>La feria tecnológica más influyente deja una tendencia dominante: la inteligencia artificial como capa central de múltiples categorías.</p>
+              <a href="#" class="enlace-leer-mas">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- NOTICIA 6 -->
+          <article class="tarjeta-noticia" data-categoria="politica" data-animar="arriba" data-retraso="200">
+            <div class="noticia-imagen" aria-hidden="true">
+              <div class="img-placeholder">🇨🇷</div>
+            </div>
+            <div class="noticia-cuerpo">
+              <div class="noticia-meta">
+                <span class="noticia-cat cat-politica">🏛️ Política</span>
+                <time datetime="2026-01-22">22 Ene 2026</time>
+              </div>
+              <h3><a href="#">Costa Rica en recta final electoral: campaña en calles, tensiones en alza</a></h3>
+              <p>Baja efervescencia ciudadana en espacios públicos, pero con creciente tensión política en el discurso y encuestas como árbitros.</p>
+              <a href="#" class="enlace-leer-mas">Leer más →</a>
+            </div>
+          </article>
+
+        </div><!-- fin grilla-noticias -->
+
+        <!-- Botón ver más noticias -->
+        <div class="centrar-boton" style="margin-top:3rem;">
+          <!-- 🔗 ENLACE: Cambia # por el enlace a tu archivo de noticias -->
+          <a href="#" class="btn btn-contorno-claro">Ver todas las noticias →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN LÍNEA EDITORIAL — Temáticas cubiertas
+         ────────────────────────────────────────────────────── -->
+    <section class="seccion seccion-clara" id="linea-editorial" aria-labelledby="titulo-editorial">
+      <div class="contenedor">
+
+        <div class="seccion-encabezado" data-animar="arriba">
+          <span class="seccion-etiqueta">📋 Línea editorial</span>
+          <h2 id="titulo-editorial" class="titulo-seccion">Temáticas que cubrimos</h2>
+          <p class="seccion-descripcion">
+            Nuestro enfoque editorial está centrado en seis ejes estratégicos que guían cada publicación y análisis.
+          </p>
+        </div>
+
+        <!-- Grilla de ejes temáticos -->
+        <div class="grilla-editorial">
+          <!--
+            ✏️ EDITAR: Para agregar un eje temático, copia un bloque .eje-card
+            y cambia el ícono, título y descripción
+          -->
+
+          <div class="eje-card" data-animar="arriba" data-retraso="0">
+            <div class="eje-numero" aria-hidden="true">01</div>
+            <div class="eje-icono" aria-hidden="true">💻</div>
+            <h3>Innovación tecnológica y digitalización turística</h3>
+            <p>Cobertura de avances tecnológicos aplicados al sector turístico y la digitalización de destinos.</p>
+          </div>
+
+          <div class="eje-card" data-animar="arriba" data-retraso="100">
+            <div class="eje-numero" aria-hidden="true">02</div>
+            <div class="eje-icono" aria-hidden="true">🌿</div>
+            <h3>Sostenibilidad ambiental y economía circular</h3>
+            <p>Análisis de prácticas sostenibles, economía circular y su impacto en el desarrollo turístico.</p>
+          </div>
+
+          <div class="eje-card" data-animar="arriba" data-retraso="200">
+            <div class="eje-numero" aria-hidden="true">03</div>
+            <div class="eje-icono" aria-hidden="true">🏛️</div>
+            <h3>Gobernanza y participación ciudadana</h3>
+            <p>Información sobre políticas públicas, procesos democráticos y participación activa de comunidades.</p>
+          </div>
+
+          <div class="eje-card" data-animar="arriba" data-retraso="0">
+            <div class="eje-numero" aria-hidden="true">04</div>
+            <div class="eje-icono" aria-hidden="true">♿</div>
+            <h3>Desarrollo local, inclusión y accesibilidad</h3>
+            <p>Reportajes sobre accesibilidad universal, derechos de personas con discapacidad y comunidades vulnerables.</p>
+          </div>
+
+          <div class="eje-card" data-animar="arriba" data-retraso="100">
+            <div class="eje-numero" aria-hidden="true">05</div>
+            <div class="eje-icono" aria-hidden="true">🌟</div>
+            <h3>Casos de éxito nacionales e internacionales</h3>
+            <p>Experiencias inspiradoras de destinos y organizaciones que lideran la transformación inclusiva.</p>
+          </div>
+
+          <div class="eje-card" data-animar="arriba" data-retraso="200">
+            <div class="eje-numero" aria-hidden="true">06</div>
+            <div class="eje-icono" aria-hidden="true">📊</div>
+            <h3>Políticas públicas e inversión turística</h3>
+            <p>Seguimiento a decisiones de gobierno, inversión y normativa relacionada con el turismo y la accesibilidad.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN CASOS DE ÉXITO — Historias inspiradoras
+         ────────────────────────────────────────────────────── -->
+    <section class="seccion seccion-verde-oscuro" id="casos-exito" aria-labelledby="titulo-casos">
+      <div class="contenedor">
+
+        <div class="seccion-encabezado claro" data-animar="arriba">
+          <span class="seccion-etiqueta claro">🌟 Casos de éxito</span>
+          <h2 id="titulo-casos" class="titulo-seccion">Historias que inspiran</h2>
+          <p class="seccion-descripcion claro">
+            Iniciativas, comunidades y proyectos que demuestran que la inclusión, la innovación y la sostenibilidad van juntas.
+          </p>
+        </div>
+
+        <!-- Slider / carrusel de casos -->
+        <div class="slider-casos" role="region" aria-label="Carrusel de casos de éxito">
+          <div class="slider-pista" id="slider-pista">
+
+            <!--
+              ✏️ EDITAR: Para agregar un caso de éxito, copia el bloque .caso-card
+              y cambia el ícono, título, descripción y etiqueta
+            -->
+
+            <div class="caso-card">
+              <div class="caso-icono" aria-hidden="true">🗳️</div>
+              <span class="caso-etiqueta">Accesibilidad Electoral</span>
+              <h3>TSE incluye LESCO en mesas electorales</h3>
+              <p>Por primera vez en Costa Rica, el Tribunal Supremo de Elecciones incorporó intérpretes de LESCO en el proceso electoral para garantizar el derecho al voto de personas sordas.</p>
+            </div>
+
+            <div class="caso-card">
+              <div class="caso-icono" aria-hidden="true">🏘️</div>
+              <span class="caso-etiqueta">Desarrollo local</span>
+              <h3>Orosi: turismo rural comunitario accesible</h3>
+              <p>La comunidad de Orosi, Cartago, desarrolla un modelo de turismo rural que integra accesibilidad universal con conservación del patrimonio natural y cultural.</p>
+            </div>
+
+            <div class="caso-card">
+              <div class="caso-icono" aria-hidden="true">📱</div>
+              <span class="caso-etiqueta">Innovación digital</span>
+              <h3>App de guía turística con lenguaje inclusivo</h3>
+              <p>Iniciativa costarricense desarrolla una aplicación de guía turística con soporte para personas con discapacidad visual, auditiva y cognitiva.</p>
+            </div>
+
+            <div class="caso-card">
+              <div class="caso-icono" aria-hidden="true">🌿</div>
+              <span class="caso-etiqueta">Sostenibilidad</span>
+              <h3>Destino Turístico Inteligente: modelo Cartago</h3>
+              <p>La provincia de Cartago avanza hacia la certificación de Destino Turístico Inteligente integrando tecnología, sostenibilidad y participación ciudadana.</p>
+            </div>
+
+          </div><!-- fin slider-pista -->
+
+          <!-- Controles del slider -->
+          <div class="slider-controles" aria-label="Controles del carrusel">
+            <button class="slider-btn" id="slider-anterior" aria-label="Caso anterior">←</button>
+            <div class="slider-indicadores" id="slider-indicadores" role="tablist"></div>
+            <button class="slider-btn" id="slider-siguiente" aria-label="Siguiente caso">→</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN ESTADÍSTICAS — Datos del medio
+         ────────────────────────────────────────────────────── -->
+    <section class="seccion seccion-estadisticas" aria-labelledby="titulo-estadisticas">
+      <div class="contenedor">
+
+        <div class="seccion-encabezado" data-animar="arriba">
+          <span class="seccion-etiqueta">📊 Impacto</span>
+          <h2 id="titulo-estadisticas" class="titulo-seccion">Descentralizando en números</h2>
+        </div>
+
+        <div class="grilla-estadisticas">
+          <!--
+            ✏️ EDITAR: Cambia los números y descripciones con datos reales de tu medio
+            data-meta="500" es el número final que se animará al hacer scroll
+          -->
+          <div class="tarjeta-estadistica" data-animar="arriba" data-retraso="0">
+            <div class="estadistica-numero" data-meta="12" data-sufijo="+">12+</div>
+            <div class="estadistica-label">Publicaciones mensuales</div>
+          </div>
+          <div class="tarjeta-estadistica" data-animar="arriba" data-retraso="100">
+            <div class="estadistica-numero" data-meta="6" data-sufijo="">6</div>
+            <div class="estadistica-label">Ejes temáticos</div>
+          </div>
+          <div class="tarjeta-estadistica" data-animar="arriba" data-retraso="200">
+            <div class="estadistica-numero" data-meta="3" data-sufijo=" años">3 años</div>
+            <div class="estadistica-label">De trayectoria</div>
+          </div>
+          <div class="tarjeta-estadistica" data-animar="arriba" data-retraso="300">
+            <div class="estadistica-numero" data-meta="100" data-sufijo="%">100%</div>
+            <div class="estadistica-label">Independencia editorial</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECCIÓN CONTACTO + SUSCRIPCIÓN
+         ────────────────────────────────────────────────────── -->
+    <section class="seccion seccion-clara" id="contacto" aria-labelledby="titulo-contacto">
+      <div class="contenedor contacto-grilla">
+
+        <!-- COLUMNA IZQUIERDA: Información de contacto -->
+        <div class="contacto-info" data-animar="derecha">
+          <span class="seccion-etiqueta">📩 Contacto</span>
+          <h2 id="titulo-contacto" class="titulo-seccion">Escribenos,<br/>participemos juntos</h2>
+          <p>¿Tenés una historia que contar, una denuncia que hacer o querés colaborar con nosotros? Estamos aquí.</p>
+
+          <ul class="lista-contacto" role="list">
+            <li>
+              <span class="contacto-icono" aria-hidden="true">📧</span>
+              <div>
+                <strong>Correo electrónico</strong>
+                <!-- ✏️ EDITAR: Cambia el correo -->
+                <a href="mailto:descentralizando@adasfro.org">descentralizando@adasfro.org</a>
+              </div>
+            </li>
+            <li>
+              <span class="contacto-icono" aria-hidden="true">📍</span>
+              <div>
+                <strong>Dirección</strong>
+                <!-- ✏️ EDITAR: Cambia la dirección -->
+                <span>Orosi, Cartago, Costa Rica</span>
+              </div>
+            </li>
+            <li>
+              <span class="contacto-icono" aria-hidden="true">🏛️</span>
+              <div>
+                <strong>Entidad responsable</strong>
+                <span>ADASFRO · Cédula 3-002-860094</span>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Bloque informativo de modelo de operación -->
+          <div class="bloque-modelo">
+            <p>
+              <strong>Modelo no comercial:</strong> Descentralizando opera por donaciones y contribuciones voluntarias, manteniendo plena independencia editorial.
+            </p>
+            <!-- 🔗 ENLACE: Enlace para donar -->
+            <a href="#" class="btn btn-verde" style="margin-top:1rem;">💚 Apoyar el medio</a>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Formulario de contacto / suscripción -->
+        <div class="contacto-formulario" data-animar="izquierda">
+          <div class="formulario-card">
+            <h3>Suscribirse al boletín</h3>
+            <p>Recibí nuestras publicaciones directamente en tu correo, sin spam.</p>
+
+            <!--
+              FORMULARIO:
+              Para que el formulario envíe correos reales necesitás un servicio backend.
+              Opciones gratuitas: Formspree.io, Web3Forms.com
+              Reemplaza action="#" con tu URL de Formspree/Web3Forms
+            -->
+            <form class="formulario" id="formulario-suscripcion" novalidate aria-label="Formulario de suscripción">
+
+              <div class="campo-formulario">
+                <label for="nombre-suscripcion">Nombre completo</label>
+                <input
+                  type="text"
+                  id="nombre-suscripcion"
+                  name="nombre"
+                  placeholder="Tu nombre"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+
+              <div class="campo-formulario">
+                <label for="email-suscripcion">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="email-suscripcion"
+                  name="email"
+                  placeholder="tu@correo.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+
+              <div class="campo-formulario">
+                <label for="interes">Tema de interés</label>
+                <select id="interes" name="interes">
+                  <option value="">Selecciona un tema</option>
+                  <!-- ✏️ EDITAR: Cambia las opciones según tus categorías -->
+                  <option value="politica">Política y gobernanza</option>
+                  <option value="social">Social e inclusión</option>
+                  <option value="turismo">Turismo inteligente</option>
+                  <option value="tecnologia">Tecnología e innovación</option>
+                  <option value="todos">Todos los temas</option>
+                </select>
+              </div>
+
+              <div class="campo-formulario">
+                <label for="mensaje-contacto">Mensaje (opcional)</label>
+                <textarea
+                  id="mensaje-contacto"
+                  name="mensaje"
+                  placeholder="¿Tenés algo que compartirnos?"
+                  rows="4"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-verde btn-formulario">
+                📩 Enviar y suscribirme
+              </button>
+
+              <!-- Mensaje de confirmación (aparece tras enviar) -->
+              <div class="formulario-exito" id="formulario-exito" role="alert" aria-live="polite"></div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- fin main -->
+
+  <!-- ════════════════════════════════════════════════════════
+       PIE DE PÁGINA — Footer
+       ════════════════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="contenedor footer-superior">
+
+      <!-- Columna: Identidad -->
+      <div class="footer-columna footer-identidad">
+        <a href="#" class="logo footer-logo" aria-label="Descentralizando – Inicio">
+          <span class="logo-icono" aria-hidden="true">🗺️</span>
+          <div class="logo-texto">
+            <span class="logo-nombre">Descentralizando</span>
+            <span class="logo-subtitulo">por ADASFRO</span>
+          </div>
+        </a>
+        <!-- ✏️ EDITAR: Descripción corta del medio para el footer -->
+        <p>Medio digital informativo y educativo, operado bajo un modelo no comercial por ADASFRO. Independencia editorial garantizada.</p>
+        <!-- Redes sociales -->
+        <div class="footer-redes" role="list" aria-label="Redes sociales">
+          <!-- 🔗 ENLACE: Cambia # por los enlaces reales -->
+          <a href="#" class="footer-red" aria-label="Facebook" target="_blank" rel="noopener" role="listitem">f</a>
+          <a href="#" class="footer-red" aria-label="Twitter/X" target="_blank" rel="noopener" role="listitem">𝕏</a>
+          <a href="#" class="footer-red" aria-label="Instagram" target="_blank" rel="noopener" role="listitem">ig</a>
+          <a href="#" class="footer-red" aria-label="YouTube" target="_blank" rel="noopener" role="listitem">▶</a>
+        </div>
+      </div>
+
+      <!-- Columna: Navegación -->
+      <nav class="footer-columna" aria-label="Navegación del pie de página">
+        <h3>Navegación</h3>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#quienes-somos">Quiénes somos</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+          <li><a href="#linea-editorial">Línea editorial</a></li>
+          <li><a href="#casos-exito">Casos de éxito</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <!-- Columna: Temas -->
+      <div class="footer-columna">
+        <h3>Temas</h3>
+        <ul>
+          <li><a href="#">Turismo inteligente</a></li>
+          <li><a href="#">Accesibilidad</a></li>
+          <li><a href="#">Inclusión social</a></li>
+          <li><a href="#">Sostenibilidad</a></li>
+          <li><a href="#">Tecnología</a></li>
+          <li><a href="#">Política pública</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna: Datos institucionales -->
+      <div class="footer-columna">
+        <h3>Datos institucionales</h3>
+        <!-- ✏️ EDITAR: Actualiza estos datos si cambian -->
+        <address style="font-style:normal;">
+          <p>📧 descentralizando@adasfro.org</p>
+          <p>📍 Orosi, Cartago, Costa Rica</p>
+          <p>🏛️ Cédula: 3-002-860094</p>
+        </address>
+        <p style="margin-top:1rem; font-size:0.8rem; opacity:0.7;">
+          Ley de Asociaciones N.º 218 · Constitución Política Art. 28, 29, 46 · Código Electoral Art. 139
+        </p>
+      </div>
+
+    </div><!-- fin footer-superior -->
+
+    <!-- Footer inferior: copyright -->
+    <div class="footer-inferior">
+      <div class="contenedor footer-inferior-inner">
+        <!-- ✏️ EDITAR: Año del copyright -->
+        <span>© 2026 ADASFRO · Descentralizando — Todos los derechos reservados</span>
+        <span>Diseñado con accesibilidad y compromiso social 🌿</span>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Botón volver al inicio -->
+  <button class="volver-arriba" id="volver-arriba" aria-label="Volver al inicio de la página">
+    ↑
+  </button>
+
+  <!-- Script principal (debe ir al final del body) -->
+  <script src="script.js"></script>
+
+</body>
+</html>
