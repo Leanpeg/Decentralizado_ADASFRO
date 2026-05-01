@@ -1,0 +1,1384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateUrl='custom.xml' b:templateVersion='2.0.0' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  DESCENTRALIZANDO — Tema Blogger v2.0                            ║
+  ║  Medio Digital de ADASFRO · Cédula 3-002-860094                 ║
+  ║  Diseño: Revista tipo NewsMag con entradas dinámicas             ║
+  ║                                                                  ║
+  ║  CSS/JS alojados en GitHub Pages:                                ║
+  ║  https://leanpeg.github.io/Decentralizado_ADASFRO/              ║
+  ║                                                                  ║
+  ║  INSTRUCCIONES:                                                  ║
+  ║  1. Ve a Blogger → Tema → Editar HTML                           ║
+  ║  2. Selecciona todo y pega este archivo completo                 ║
+  ║  3. Guarda                                                       ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+  <b:include data='blog' name='all-head-content'/>
+
+  <!-- ══ SEO y Open Graph ══ -->
+  <meta expr:content='data:blog.metaDescription' name='description'/>
+  <meta content='Descentralizando, ADASFRO, economía 4.0, descentralización, Costa Rica, blockchain, inclusión, tecnología' name='keywords'/>
+  <meta content='ADASFRO – Asociación Agencia para el Desarrollo Accesible sin Fronteras' name='author'/>
+  <meta content='Descentralizando por ADASFRO' property='og:site_name'/>
+  <meta expr:content='data:blog.pageTitle' property='og:title'/>
+  <meta content='website' property='og:type'/>
+
+  <!-- ══ Fuentes tipográficas ══ -->
+  <link href='https://fonts.googleapis.com' rel='preconnect'/>
+  <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
+  <link href='https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&amp;family=Source+Sans+3:wght@300;400;600;700&amp;family=Oswald:wght@400;600;700&amp;display=swap' rel='stylesheet'/>
+
+  <!-- ══ CSS principal desde GitHub Pages ══ -->
+  <link href='https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-styles.css' rel='stylesheet'/>
+
+  <!-- ══ CSS adicional específico para Blogger ══ -->
+  <b:skin><![CDATA[
+/* ═══════════════════════════════════════════════════
+   ESTILOS BLOGGER — Descentralizando NewsMag Theme
+   Complementa el CSS externo de GitHub Pages
+   ═══════════════════════════════════════════════════ */
+
+/* Reset Blogger */
+body { margin: 0; padding: 0; background: #f7f9fc; }
+.widget, #layout { display: block; }
+
+/* ─── BARRA SUPERIOR ─── */
+.dm-topbar {
+  background: #0d1117;
+  color: #caf0f8;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.8rem;
+  padding: 6px 0;
+  border-bottom: 2px solid #2d6a4f;
+}
+.dm-topbar-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.dm-topbar-fecha { opacity: 0.75; }
+.dm-topbar-redes { display: flex; gap: 0.75rem; align-items: center; }
+.dm-topbar-redes a {
+  color: #caf0f8; font-weight: 700; font-size: 0.85rem;
+  transition: color 0.2s; padding: 2px 6px;
+  border-radius: 3px;
+}
+.dm-topbar-redes a:hover { color: #74c69d; background: rgba(255,255,255,0.1); }
+
+/* ─── NAVBAR / HEADER ─── */
+.dm-header {
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: sticky; top: 0; z-index: 1000;
+  border-bottom: 3px solid #1b4332;
+}
+.dm-header-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 70px; gap: 1rem;
+}
+.dm-logo {
+  display: flex; align-items: center; gap: 0.75rem;
+  text-decoration: none; color: #1b4332;
+}
+.dm-logo-icon { font-size: 2rem; }
+.dm-logo-nombre {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 900; line-height: 1;
+  color: #1b4332;
+}
+.dm-logo-sub {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #40916c;
+}
+.dm-logo-texto { display: flex; flex-direction: column; }
+
+/* ─── MENÚ NAVEGACIÓN ─── */
+.dm-nav { display: flex; align-items: center; gap: 0; }
+.dm-nav a {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: #0d1117; text-decoration: none;
+  padding: 0.6rem 1rem;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 4px;
+}
+.dm-nav a:hover, .dm-nav a.activo {
+  background: #1b4332; color: #fff;
+}
+.dm-btn-buscar {
+  background: none; border: none; cursor: pointer;
+  font-size: 1.2rem; padding: 0.5rem; color: #1b4332;
+  transition: color 0.2s;
+}
+.dm-btn-buscar:hover { color: #40916c; }
+.dm-menu-toggle {
+  display: none; background: none; border: none;
+  cursor: pointer; font-size: 1.5rem; color: #1b4332;
+}
+
+/* ─── BARRA TRENDING ─── */
+.dm-trending {
+  background: #f0fdf4; border-bottom: 1px solid #d8f3dc;
+  padding: 8px 0;
+}
+.dm-trending-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; gap: 1rem; overflow: hidden;
+}
+.dm-trending-label {
+  background: #2d6a4f; color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 3px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.dm-trending-ticker {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.875rem; color: #1b4332;
+  white-space: nowrap; overflow: hidden;
+  animation: ticker 20s linear infinite;
+}
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ─── HERO / FEATURED POSTS GRID ─── */
+.dm-hero { padding: 1.5rem 0; background: #fff; }
+.dm-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+.dm-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+.dm-hero-main {
+  grid-column: 1; grid-row: 1 / 3;
+  position: relative; border-radius: 8px; overflow: hidden;
+  min-height: 420px;
+}
+.dm-hero-main img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s;
+}
+.dm-hero-main:hover img { transform: scale(1.03); }
+.dm-hero-main .dm-card-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  padding: 2rem 1.5rem 1.5rem;
+}
+.dm-hero-main .dm-card-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 900; color: #fff;
+  margin: 0.5rem 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.dm-hero-sub {
+  position: relative; border-radius: 8px; overflow: hidden;
+  min-height: 200px;
+}
+.dm-hero-sub img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s;
+}
+.dm-hero-sub:hover img { transform: scale(1.03); }
+.dm-hero-sub .dm-card-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 1.5rem 1rem 1rem;
+}
+.dm-hero-sub .dm-card-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; color: #fff;
+  margin: 0.25rem 0; line-height: 1.3;
+}
+
+/* ─── BADGES / ETIQUETAS ─── */
+.dm-badge {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 2px 8px; border-radius: 3px;
+  background: #2d6a4f; color: #fff;
+}
+.dm-badge-politica  { background: #023e8a; }
+.dm-badge-social    { background: #6a0572; }
+.dm-badge-tecnologia{ background: #0077b6; }
+.dm-badge-turismo   { background: #40916c; }
+.dm-card-meta {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem; color: rgba(255,255,255,0.8);
+  margin-top: 0.5rem;
+}
+
+/* ─── SECCIÓN NOTICIAS RECIENTES ─── */
+.dm-seccion { padding: 2rem 0; }
+.dm-seccion-inner { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+.dm-seccion-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid #1b4332; padding-bottom: 0.75rem;
+}
+.dm-seccion-titulo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: #1b4332; margin: 0;
+}
+.dm-seccion-titulo::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 1em;
+  background: #2d6a4f;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+.dm-ver-todos {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  color: #2d6a4f; text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.dm-ver-todos:hover { color: #1b4332; }
+
+/* ─── GRILLA DE ARTÍCULOS (lista estilo NewsMag) ─── */
+.dm-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.dm-post-card {
+  background: #fff; border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+  display: flex; flex-direction: column;
+}
+.dm-post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.dm-post-thumb {
+  position: relative; overflow: hidden;
+  padding-top: 60%; /* 5:3 ratio */
+}
+.dm-post-thumb img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s;
+}
+.dm-post-card:hover .dm-post-thumb img { transform: scale(1.05); }
+.dm-post-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
+.dm-post-etiqueta { margin-bottom: 0.5rem; }
+.dm-post-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; color: #1b4332;
+  line-height: 1.35; margin: 0 0 0.5rem;
+  flex: 1;
+}
+.dm-post-titulo a { color: inherit; text-decoration: none; }
+.dm-post-titulo a:hover { color: #2d6a4f; }
+.dm-post-meta {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem; color: #4a5568;
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: auto; padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+}
+.dm-post-autor { font-weight: 600; }
+
+/* ─── LISTA HORIZONTAL (noticias secundarias) ─── */
+.dm-lista-noticias { display: flex; flex-direction: column; gap: 1rem; }
+.dm-noticia-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0;
+}
+.dm-noticia-item:last-child { border-bottom: none; padding-bottom: 0; }
+.dm-noticia-thumb {
+  width: 80px; height: 65px; flex-shrink: 0;
+  border-radius: 6px; overflow: hidden;
+}
+.dm-noticia-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.dm-noticia-body { flex: 1; }
+.dm-noticia-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem; font-weight: 700; color: #1b4332;
+  line-height: 1.3; margin: 0.25rem 0;
+}
+.dm-noticia-titulo a { color: inherit; text-decoration: none; }
+.dm-noticia-titulo a:hover { color: #40916c; }
+.dm-noticia-fecha {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.72rem; color: #4a5568;
+}
+
+/* ─── LAYOUT 2 COLUMNAS ─── */
+.dm-layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  max-width: 1280px; margin: 0 auto; padding: 0 1.5rem 2rem;
+}
+.dm-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.dm-widget-card {
+  background: #fff; border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+.dm-widget-card-header {
+  background: #1b4332; color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.6rem 1rem;
+}
+.dm-widget-card-body { padding: 1rem; }
+
+/* ─── ETIQUETAS SIDEBAR ─── */
+.dm-labels-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.dm-label-link {
+  display: inline-block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  padding: 4px 12px; border-radius: 99px;
+  background: #d8f3dc; color: #1b4332;
+  text-decoration: none; transition: all 0.2s;
+  border: 1px solid #74c69d;
+}
+.dm-label-link:hover { background: #2d6a4f; color: #fff; border-color: #2d6a4f; }
+
+/* ─── ENTRADAS DEL BLOG (widget nativo Blogger) ─── */
+.blog-posts { list-style: none; margin: 0; padding: 0; }
+#Blog1 .post { display: none; } /* ocultar layout default de Blogger */
+
+/* ─── PAGINACIÓN ─── */
+.dm-paginacion {
+  display: flex; justify-content: center; gap: 0.5rem;
+  padding: 2rem 0;
+}
+.dm-paginacion a, .dm-paginacion span {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 6px;
+  font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; font-weight: 600;
+  transition: all 0.2s; text-decoration: none;
+  background: #fff; color: #1b4332;
+  border: 1px solid #d8f3dc;
+}
+.dm-paginacion a:hover, .dm-paginacion .activo {
+  background: #2d6a4f; color: #fff; border-color: #2d6a4f;
+}
+.blog-pager { padding: 1rem 0; text-align: center; }
+.blog-pager a {
+  font-family: 'Oswald', sans-serif; font-size: 0.9rem;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 0.6rem 1.5rem; border-radius: 6px;
+  background: #2d6a4f; color: #fff; text-decoration: none;
+  transition: background 0.2s; display: inline-block; margin: 0.25rem;
+}
+.blog-pager a:hover { background: #1b4332; }
+
+/* ─── PÁGINA DE ENTRADA INDIVIDUAL ─── */
+.dm-post-individual { max-width: 780px; margin: 0 auto; }
+.dm-post-individual .post-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 900; color: #1b4332; line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.dm-post-individual .post-body {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1.05rem; line-height: 1.8; color: #1c2128;
+}
+.dm-post-individual .post-body p { margin-bottom: 1.25rem; }
+.dm-post-individual .post-body h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; color: #1b4332; margin: 2rem 0 0.75rem;
+}
+.dm-post-individual .post-body img {
+  max-width: 100%; border-radius: 8px;
+  margin: 1.5rem auto; display: block;
+}
+.dm-post-individual .post-header {
+  border-bottom: 3px solid #1b4332; padding-bottom: 1rem; margin-bottom: 2rem;
+}
+.post-labels a {
+  font-family: 'Oswald', sans-serif; font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; padding: 2px 10px; border-radius: 3px;
+  background: #2d6a4f; color: #fff; text-decoration: none; margin-right: 0.5rem;
+}
+.post-footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; }
+
+/* ─── COMENTARIOS ─── */
+.comments { font-family: 'Source Sans 3', sans-serif; }
+.comments h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; color: #1b4332; margin-bottom: 1rem;
+}
+
+/* ─── BÚSQUEDA ─── */
+.dm-busqueda-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(13,17,23,0.95); z-index: 9999;
+  align-items: flex-start; justify-content: center; padding-top: 15vh;
+}
+.dm-busqueda-overlay.activo { display: flex; }
+.dm-busqueda-form { width: 100%; max-width: 600px; padding: 0 1rem; }
+.dm-busqueda-input {
+  width: 100%; font-family: 'Playfair Display', serif;
+  font-size: 2rem; background: none;
+  border: none; border-bottom: 3px solid #2d6a4f;
+  color: #fff; padding: 0.5rem 0; outline: none;
+}
+.dm-busqueda-input::placeholder { color: rgba(255,255,255,0.3); }
+.dm-busqueda-cerrar {
+  position: fixed; top: 1rem; right: 1.5rem;
+  background: none; border: none; font-size: 2rem;
+  color: #fff; cursor: pointer;
+}
+
+/* ─── FOOTER ─── */
+.dm-footer {
+  background: #0d1117; color: #caf0f8;
+  padding: 3rem 0 0;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.dm-footer-grid {
+  max-width: 1280px; margin: 0 auto; padding: 0 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+}
+.dm-footer-logo-nombre {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 900; color: #fff;
+}
+.dm-footer-logo-sub {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #74c69d; margin-top: 2px;
+}
+.dm-footer p { font-size: 0.875rem; color: rgba(202,240,248,0.7); line-height: 1.7; margin-top: 0.75rem; }
+.dm-footer h3 {
+  font-family: 'Oswald', sans-serif; font-size: 0.85rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #74c69d; margin-bottom: 1rem; padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.dm-footer ul { list-style: none; padding: 0; margin: 0; }
+.dm-footer ul li { margin-bottom: 0.5rem; }
+.dm-footer ul li a {
+  color: rgba(202,240,248,0.7); text-decoration: none; font-size: 0.875rem;
+  transition: color 0.2s;
+}
+.dm-footer ul li a:hover { color: #74c69d; }
+.dm-footer-redes { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.dm-footer-redes a {
+  display: inline-flex; width: 34px; height: 34px;
+  align-items: center; justify-content: center;
+  border-radius: 50%; background: rgba(255,255,255,0.1);
+  color: #fff; font-size: 0.85rem; font-weight: 700;
+  text-decoration: none; transition: background 0.2s;
+}
+.dm-footer-redes a:hover { background: #2d6a4f; }
+.dm-footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 1rem 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.75rem; color: rgba(202,240,248,0.5);
+  max-width: 1280px; margin: 0 auto;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+
+/* ─── VOLVER ARRIBA ─── */
+#dm-volver-arriba {
+  display: none; position: fixed; bottom: 1.5rem; right: 1.5rem;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #2d6a4f; color: #fff; border: none; cursor: pointer;
+  font-size: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.2s; z-index: 500;
+  align-items: center; justify-content: center;
+}
+#dm-volver-arriba.visible { display: flex; }
+#dm-volver-arriba:hover { background: #1b4332; transform: translateY(-2px); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .dm-hero-grid { grid-template-columns: 1fr 1fr; }
+  .dm-hero-main { grid-column: 1 / 3; grid-row: 1; }
+  .dm-layout-2col { grid-template-columns: 1fr; }
+  .dm-footer-grid { grid-template-columns: 1fr 1fr; }
+  .dm-nav { display: none; }
+  .dm-menu-toggle { display: block; }
+  .dm-nav.abierto {
+    display: flex; flex-direction: column;
+    position: absolute; top: 70px; left: 0; right: 0;
+    background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    padding: 1rem; z-index: 999; gap: 0.25rem;
+  }
+}
+@media (max-width: 600px) {
+  .dm-hero-grid { grid-template-columns: 1fr; }
+  .dm-hero-main, .dm-hero-sub { grid-column: 1; grid-row: auto; }
+  .dm-footer-grid { grid-template-columns: 1fr; }
+  .dm-posts-grid { grid-template-columns: 1fr; }
+  .dm-logo-nombre { font-size: 1.2rem; }
+}
+
+/* ─── PLACEHOLDER IMAGEN ─── */
+.dm-img-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #d8f3dc 0%, #caf0f8 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: #2d6a4f;
+}
+  ]]></b:skin>
+</head>
+
+<body>
+
+<!-- ══ SALTAR AL CONTENIDO (Accesibilidad) ══ -->
+<a href='#contenido-principal' style='position:absolute;top:-100px;left:1rem;background:#2d6a4f;color:#fff;padding:6px 14px;border-radius:4px;font-family:sans-serif;z-index:9999;transition:top 0.2s;' onfocus='this.style.top="10px"' onblur='this.style.top="-100px"'>Saltar al contenido</a>
+
+<!-- ══════════════════════════════════════════════
+     BARRA SUPERIOR
+══════════════════════════════════════════════ -->
+<div class='dm-topbar'>
+  <div class='dm-topbar-inner'>
+    <span class='dm-topbar-fecha' id='dm-fecha-hoy'></span>
+    <div class='dm-topbar-redes'>
+      <span style='opacity:0.6; font-size:0.75rem;'>🏛️ ADASFRO · Cédula 3-002-860094</span>
+      <a href='https://facebook.com' rel='noopener' target='_blank' title='Facebook'>f</a>
+      <a href='https://instagram.com' rel='noopener' target='_blank' title='Instagram'>ig</a>
+      <a href='https://twitter.com' rel='noopener' target='_blank' title='Twitter/X'>𝕏</a>
+      <a href='https://youtube.com' rel='noopener' target='_blank' title='YouTube'>▶</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HEADER + NAVEGACIÓN
+══════════════════════════════════════════════ -->
+<header class='dm-header' id='dm-header' role='banner'>
+  <div class='dm-header-inner'>
+
+    <!-- Logo -->
+    <a class='dm-logo' expr:href='data:blog.homepageUrl' aria-label='Descentralizando – Inicio'>
+      <span class='dm-logo-icon' aria-hidden='true'>🗺️</span>
+      <div class='dm-logo-texto'>
+        <span class='dm-logo-nombre'>Descentralizando</span>
+        <span class='dm-logo-sub'>por ADASFRO</span>
+      </div>
+    </a>
+
+    <!-- Menú principal (se llena con PageList widget o estático) -->
+    <nav class='dm-nav' id='dm-nav' role='navigation' aria-label='Navegación principal'>
+      <a expr:href='data:blog.homepageUrl'>Inicio</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/Pol%C3%ADtica&quot;'>Política</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/Social&quot;'>Social</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/Tecnolog%C3%ADa&quot;'>Tecnología</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/Econom%C3%ADa&quot;'>Economía 4.0</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/Turismo&quot;'>Turismo</a>
+    </nav>
+
+    <div style='display:flex;align-items:center;gap:0.5rem;'>
+      <button aria-label='Buscar' class='dm-btn-buscar' id='dm-btn-buscar' type='button'>🔍</button>
+      <button aria-controls='dm-nav' aria-expanded='false' aria-label='Menú' class='dm-menu-toggle' id='dm-menu-toggle' type='button'>☰</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ══ Barra de búsqueda ══ -->
+<div class='dm-busqueda-overlay' id='dm-busqueda-overlay' role='dialog' aria-label='Buscar'>
+  <button class='dm-busqueda-cerrar' id='dm-busqueda-cerrar' type='button' aria-label='Cerrar búsqueda'>✕</button>
+  <div class='dm-busqueda-form'>
+    <p style='font-family:Oswald,sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:#74c69d;margin-bottom:0.5rem;'>Buscar en Descentralizando</p>
+    <form action='/search' method='get'>
+      <input class='dm-busqueda-input' name='q' placeholder='¿Qué querés encontrar?' type='text' aria-label='Término de búsqueda'/>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     BARRA TRENDING (últimos posts)
+══════════════════════════════════════════════ -->
+<div class='dm-trending' role='marquee' aria-live='off'>
+  <div class='dm-trending-inner'>
+    <span class='dm-trending-label'>🔥 Tendencia</span>
+    <span class='dm-trending-ticker' id='dm-ticker'>Cargando noticias recientes...</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CONTENIDO PRINCIPAL
+══════════════════════════════════════════════ -->
+<main id='contenido-principal' role='main'>
+
+<b:if cond='data:view.isHomepage'>
+<!-- ══════════════ PÁGINA DE INICIO ══════════════ -->
+
+  <!-- HERO: Grid principal de noticias destacadas -->
+  <section class='dm-hero' aria-label='Noticias destacadas'>
+    <div class='dm-hero-inner'>
+      <div class='dm-hero-grid' id='dm-hero-grid'>
+        <!-- Se llena dinámicamente por JS con la API de Blogger -->
+        <div style='grid-column:1/-1;display:flex;align-items:center;justify-content:center;min-height:300px;background:#f0fdf4;border-radius:8px;'>
+          <span style='font-family:Source Sans 3,sans-serif;color:#2d6a4f;font-size:1rem;'>⏳ Cargando noticias destacadas...</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAYOUT 2 COLUMNAS: Artículos + Sidebar -->
+  <div class='dm-layout-2col'>
+
+    <!-- COLUMNA PRINCIPAL -->
+    <div>
+
+      <!-- Sección: Noticias Recientes -->
+      <section class='dm-seccion' aria-labelledby='titulo-recientes'>
+        <div class='dm-seccion-header'>
+          <h2 class='dm-seccion-titulo' id='titulo-recientes'>Noticias Recientes</h2>
+          <a class='dm-ver-todos' expr:href='data:blog.homepageUrl'>Ver todas →</a>
+        </div>
+        <div class='dm-posts-grid' id='dm-posts-recientes'>
+          <!-- JS rellena aquí -->
+          <div style='grid-column:1/-1;padding:2rem;text-align:center;color:#4a5568;font-family:Source Sans 3,sans-serif;'>
+            ⏳ Cargando publicaciones...
+          </div>
+        </div>
+      </section>
+
+      <!-- Widget de Blogger: Blog Posts (oculto, Blogger lo necesita para funcionar) -->
+      <div style='display:none;' aria-hidden='true'>
+        <b:section id='main' class='main' maxwidgets='1' showaddelement='no'>
+          <b:widget id='Blog1' locked='true' title='Entradas de blog' type='Blog' version='2'>
+            <b:widget-settings>
+              <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+              <b:widget-setting name='overrideDateFormat'>false</b:widget-setting>
+              <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+              <b:widget-setting name='showLabels'>true</b:widget-setting>
+              <b:widget-setting name='showLocation'>false</b:widget-setting>
+              <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+              <b:widget-setting name='showAuthor'>true</b:widget-setting>
+              <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+              <b:widget-setting name='showSnippets'>true</b:widget-setting>
+              <b:widget-setting name='showImageUrl'>true</b:widget-setting>
+            </b:widget-settings>
+            <b:includable id='main' var='top'>
+              <b:loop values='data:posts' var='post'>
+                <article class='post' expr:id='"post-" + data:post.id'>
+                  <b:include data='post' name='post'/>
+                </article>
+              </b:loop>
+              <div class='blog-pager' id='blog-pager'>
+                <b:include name='nextprev'/>
+              </div>
+            </b:includable>
+            <b:includable id='post' var='post'>
+              <div class='post-header'>
+                <h1 class='post-title'>
+                  <b:if cond='data:post.link'>
+                    <a expr:href='data:post.link'><data:post.title/></a>
+                  <b:else/>
+                    <b:if cond='data:post.url'>
+                      <a expr:href='data:post.url'><data:post.title/></a>
+                    <b:else/>
+                      <data:post.title/>
+                    </b:if>
+                  </b:if>
+                </h1>
+              </div>
+              <div class='post-body' expr:id='"post-body-" + data:post.id'>
+                <data:post.body/>
+              </div>
+              <div class='post-footer'>
+                <span class='post-labels'>
+                  <b:loop values='data:post.labels' var='label'>
+                    <a expr:href='data:label.url'><data:label.name/></a>
+                  </b:loop>
+                </span>
+              </div>
+            </b:includable>
+            <b:includable id='nextprev'>
+              <b:if cond='data:newerPageUrl'>
+                <a class='blog-pager-newer-link' expr:href='data:newerPageUrl'>← Publicaciones nuevas</a>
+              </b:if>
+              <b:if cond='data:olderPageUrl'>
+                <a class='blog-pager-older-link' expr:href='data:olderPageUrl'>Publicaciones anteriores →</a>
+              </b:if>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </div>
+
+      <!-- Sección: Más noticias por categoría -->
+      <section class='dm-seccion' aria-labelledby='titulo-categoria' id='dm-seccion-categorias'>
+        <!-- JS agrega secciones por etiqueta aquí -->
+      </section>
+
+    </div><!-- fin columna principal -->
+
+    <!-- SIDEBAR -->
+    <aside class='dm-sidebar' aria-label='Sidebar'>
+
+      <!-- Widget: Categorías / Etiquetas -->
+      <div class='dm-widget-card'>
+        <div class='dm-widget-card-header'>📂 Categorías</div>
+        <div class='dm-widget-card-body'>
+          <div class='dm-labels-list' id='dm-labels'>
+            <!-- JS rellena etiquetas dinámicas -->
+          </div>
+          <!-- Nativo Blogger: Labels widget (oculto, genera data) -->
+          <div style='display:none;'>
+            <b:section id='sidebar-labels'>
+              <b:widget id='Label1' title='Etiquetas' type='Label' version='2'>
+                <b:includable id='main'>
+                  <b:loop values='data:labels' var='label'>
+                    <span class='dm-label-raw' data-count='data:label.count' data-url='data:label.url'>
+                      <data:label.name/>
+                    </span>
+                  </b:loop>
+                </b:includable>
+              </b:widget>
+            </b:section>
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget: Posts populares -->
+      <div class='dm-widget-card'>
+        <div class='dm-widget-card-header'>🔥 Lo más leído</div>
+        <div class='dm-widget-card-body'>
+          <div id='dm-populares'>
+            <div style='color:#4a5568;font-size:0.875rem;font-family:Source Sans 3,sans-serif;'>Cargando...</div>
+          </div>
+          <div style='display:none;'>
+            <b:section id='sidebar-popular'>
+              <b:widget id='PopularPosts1' title='Lo más leído' type='PopularPosts' version='2'>
+                <b:widget-settings>
+                  <b:widget-setting name='numItemsToShow'>5</b:widget-setting>
+                  <b:widget-setting name='showThumbnails'>true</b:widget-setting>
+                  <b:widget-setting name='showSnippets'>false</b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main'>
+                  <b:loop values='data:posts' var='post'>
+                    <div class='dm-pop-item' data-url='data:post.url' data-title='data:post.title' data-img='data:post.featuredImage'>
+                    </div>
+                  </b:loop>
+                </b:includable>
+              </b:widget>
+            </b:section>
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget: Sobre nosotros -->
+      <div class='dm-widget-card'>
+        <div class='dm-widget-card-header'>🏛️ Quiénes somos</div>
+        <div class='dm-widget-card-body'>
+          <p style='font-family:Source Sans 3,sans-serif;font-size:0.875rem;color:#4a5568;line-height:1.6;margin:0;'>
+            <strong style='color:#1b4332;'>Descentralizando</strong> es el medio digital de ADASFRO, enfocado en la 
+            economía 4.0, descentralización, inclusión y tecnología para Costa Rica y la región.
+          </p>
+          <p style='font-size:0.75rem;color:#74c69d;margin-top:0.75rem;font-family:Source Sans 3,sans-serif;'>
+            Cédula Jurídica: 3-002-860094 · Orosi, Cartago, CR
+          </p>
+          <a href='mailto:descentralizando@adasfro.org' style='display:inline-block;margin-top:0.75rem;font-size:0.8rem;font-family:Oswald,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#2d6a4f;text-decoration:none;'>
+            📧 Contactarnos →
+          </a>
+        </div>
+      </div>
+
+      <!-- Widget: Suscripción -->
+      <div class='dm-widget-card'>
+        <div class='dm-widget-card-header'>📩 Suscribirse</div>
+        <div class='dm-widget-card-body'>
+          <p style='font-size:0.875rem;color:#4a5568;margin-bottom:0.75rem;font-family:Source Sans 3,sans-serif;line-height:1.5;'>
+            Recibí nuestras noticias directamente en tu correo.
+          </p>
+          <div style='display:none;'>
+            <b:section id='sidebar-follow'>
+              <b:widget id='FollowByEmail1' title='Suscribirse por correo' type='FollowByEmail' version='2'/>
+            </b:section>
+          </div>
+          <form action='https://feedburner.google.com/fb/a/mailverify' method='post' onsubmit='window.open(this.action,&quot;popupwindow&quot;,&quot;scrollbars=yes,width=550,height=520&quot;);return true' target='popupwindow'>
+            <input name='uri' type='hidden' value='descentralizando'/>
+            <input name='loc' type='hidden' value='es_ES'/>
+            <div style='display:flex;gap:0.5rem;flex-wrap:wrap;'>
+              <input name='email' placeholder='tu@correo.com' required='required' style='flex:1;min-width:0;padding:0.5rem 0.75rem;border:1px solid #d8f3dc;border-radius:6px;font-family:Source Sans 3,sans-serif;font-size:0.875rem;outline:none;color:#1b4332;' type='email'/>
+              <button style='padding:0.5rem 1rem;background:#2d6a4f;color:#fff;border:none;border-radius:6px;font-family:Oswald,sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;text-transform:uppercase;white-space:nowrap;' type='submit'>Suscribir</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </aside><!-- fin sidebar -->
+
+  </div><!-- fin layout 2col -->
+
+</b:if>
+
+<!-- ══════════════ PÁGINA DE ENTRADA INDIVIDUAL ══════════════ -->
+<b:if cond='data:view.isPost'>
+  <div style='max-width:1280px;margin:0 auto;padding:2rem 1.5rem;'>
+    <div class='dm-layout-2col'>
+      <article class='dm-post-individual'>
+        <b:section id='main-post' class='main' maxwidgets='1' showaddelement='no'>
+          <b:widget id='Blog2' locked='true' title='Entrada' type='Blog' version='2'>
+            <b:includable id='main' var='top'>
+              <b:loop values='data:posts' var='post'>
+                <b:include data='post' name='post'/>
+              </b:loop>
+            </b:includable>
+            <b:includable id='post' var='post'>
+              <div class='post-header'>
+                <span class='post-labels'>
+                  <b:loop values='data:post.labels' var='label'>
+                    <a expr:href='data:label.url'><data:label.name/></a>
+                  </b:loop>
+                </span>
+                <h1 class='post-title' style='font-family:Playfair Display,serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;color:#1b4332;line-height:1.2;margin:0.75rem 0;'><data:post.title/></h1>
+                <div style='font-family:Source Sans 3,sans-serif;font-size:0.85rem;color:#4a5568;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding-bottom:1rem;border-bottom:2px solid #d8f3dc;margin-bottom:1.5rem;'>
+                  <span>📅 <data:post.dateHeader/></span>
+                  <span>✍️ <data:post.author.name/></span>
+                  <b:if cond='data:post.allowComments'>
+                    <a expr:href='data:post.url + &quot;#comments&quot;' style='color:#2d6a4f;text-decoration:none;'>💬 Comentarios</a>
+                  </b:if>
+                </div>
+              </div>
+              <div class='post-body' style='font-family:Source Sans 3,sans-serif;font-size:1.05rem;line-height:1.8;color:#1c2128;'>
+                <data:post.body/>
+              </div>
+              <div class='post-footer' style='margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;'>
+                <b:if cond='data:post.labels'>
+                  <div style='display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;'>
+                    <span style='font-family:Oswald,sans-serif;font-size:0.75rem;text-transform:uppercase;color:#4a5568;'>Categorías:</span>
+                    <b:loop values='data:post.labels' var='label'>
+                      <a class='dm-badge' expr:href='data:label.url'><data:label.name/></a>
+                    </b:loop>
+                  </div>
+                </b:if>
+              </div>
+              <b:if cond='data:post.allowComments'>
+                <div class='comments' style='margin-top:2rem;'>
+                  <b:include data='post' name='comments'/>
+                </div>
+              </b:if>
+            </b:includable>
+            <b:includable id='comments' var='post'>
+              <h3 style='font-family:Playfair Display,serif;font-size:1.3rem;color:#1b4332;margin-bottom:1rem;border-bottom:2px solid #d8f3dc;padding-bottom:0.5rem;'>
+                💬 Comentarios (<data:post.numComments/>)
+              </h3>
+              <div id='comments'>
+                <b:loop values='data:post.comments' var='comment'>
+                  <div style='padding:1rem;background:#f0fdf4;border-radius:8px;margin-bottom:0.75rem;border-left:3px solid #2d6a4f;'>
+                    <div style='font-family:Source Sans 3,sans-serif;font-size:0.85rem;font-weight:700;color:#1b4332;margin-bottom:0.25rem;'>
+                      <data:comment.author.name/> · <span style='font-weight:400;color:#4a5568;'><data:comment.timestamp/></span>
+                    </div>
+                    <div style='font-family:Source Sans 3,sans-serif;font-size:0.95rem;color:#1c2128;'><data:comment.body/></div>
+                  </div>
+                </b:loop>
+                <b:if cond='data:post.embedCommentForm'>
+                  <div id='comment-editor'></div>
+                </b:if>
+              </div>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </article>
+
+      <!-- Sidebar en entrada individual -->
+      <aside class='dm-sidebar' aria-label='Sidebar'>
+        <div class='dm-widget-card'>
+          <div class='dm-widget-card-header'>📂 Categorías</div>
+          <div class='dm-widget-card-body'>
+            <div class='dm-labels-list' id='dm-labels-post'>
+              <a class='dm-label-link' expr:href='data:blog.homepageUrl + "search/label/Pol%C3%ADtica"'>Política</a>
+              <a class='dm-label-link' expr:href='data:blog.homepageUrl + "search/label/Social"'>Social</a>
+              <a class='dm-label-link' expr:href='data:blog.homepageUrl + "search/label/Tecnolog%C3%ADa"'>Tecnología</a>
+              <a class='dm-label-link' expr:href='data:blog.homepageUrl + "search/label/Econom%C3%ADa"'>Economía 4.0</a>
+              <a class='dm-label-link' expr:href='data:blog.homepageUrl + "search/label/Turismo"'>Turismo</a>
+            </div>
+          </div>
+        </div>
+        <div class='dm-widget-card'>
+          <div class='dm-widget-card-header'>🔥 Lo más leído</div>
+          <div class='dm-widget-card-body'>
+            <div id='dm-populares-post'>
+              <div style='color:#4a5568;font-size:0.875rem;font-family:Source Sans 3,sans-serif;'>Cargando...</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</b:if>
+
+<!-- ══════════════ PÁGINA DE BÚSQUEDA / ETIQUETA ══════════════ -->
+<b:if cond='data:view.isSearch'>
+  <div style='max-width:1280px;margin:0 auto;padding:2rem 1.5rem;'>
+    <div style='background:#f0fdf4;border-radius:8px;padding:1.5rem;margin-bottom:2rem;border-left:4px solid #2d6a4f;'>
+      <h1 style='font-family:Playfair Display,serif;font-size:1.5rem;color:#1b4332;margin:0;'>
+        <b:if cond='data:view.search.label'>
+          📂 Categoría: <data:view.search.label/>
+        <b:else/>
+          🔍 Resultados de búsqueda
+        </b:if>
+      </h1>
+    </div>
+    <div class='dm-posts-grid' id='dm-posts-busqueda'>
+      <!-- JS puede rellenar, o Blogger muestra las entradas por defecto -->
+    </div>
+    <div style='display:none;'>
+      <b:section id='main-search' class='main' maxwidgets='1' showaddelement='no'>
+        <b:widget id='Blog3' locked='true' title='Entradas' type='Blog' version='2'>
+          <b:includable id='main' var='top'>
+            <b:loop values='data:posts' var='post'>
+              <b:include data='post' name='postCard'/>
+            </b:loop>
+            <div class='blog-pager'><b:include name='nextprev'/></div>
+          </b:includable>
+          <b:includable id='postCard' var='post'>
+            <article class='dm-post-card' style='display:block!important;'>
+              <div class='dm-post-thumb'>
+                <b:if cond='data:post.featuredImage'>
+                  <img expr:alt='data:post.title' expr:src='data:post.featuredImage' loading='lazy'/>
+                <b:else/>
+                  <div class='dm-img-placeholder'>🗺️</div>
+                </b:if>
+              </div>
+              <div class='dm-post-body'>
+                <div class='dm-post-etiqueta'>
+                  <b:loop values='data:post.labels' var='label'>
+                    <span class='dm-badge'><data:label.name/></span>
+                  </b:loop>
+                </div>
+                <h2 class='dm-post-titulo'>
+                  <a expr:href='data:post.url'><data:post.title/></a>
+                </h2>
+                <div class='dm-post-meta'>
+                  <span>📅 <data:post.dateHeader/></span>
+                  <span class='dm-post-autor'>· <data:post.author.name/></span>
+                </div>
+              </div>
+            </article>
+          </b:includable>
+          <b:includable id='nextprev'>
+            <b:if cond='data:newerPageUrl'>
+              <a class='blog-pager-newer-link' expr:href='data:newerPageUrl'>← Más recientes</a>
+            </b:if>
+            <b:if cond='data:olderPageUrl'>
+              <a class='blog-pager-older-link' expr:href='data:olderPageUrl'>Más antiguas →</a>
+            </b:if>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+  </div>
+</b:if>
+
+</main>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer class='dm-footer' role='contentinfo'>
+  <div class='dm-footer-grid'>
+
+    <!-- Identidad -->
+    <div>
+      <div style='display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;'>
+        <span style='font-size:1.8rem;'>🗺️</span>
+        <div>
+          <div class='dm-footer-logo-nombre'>Descentralizando</div>
+          <div class='dm-footer-logo-sub'>por ADASFRO</div>
+        </div>
+      </div>
+      <p>Medio digital informativo sobre economía 4.0, descentralización, tecnología e inclusión en Costa Rica. Operado por ADASFRO bajo modelo no comercial.</p>
+      <div class='dm-footer-redes'>
+        <a href='https://facebook.com' rel='noopener' target='_blank' title='Facebook' aria-label='Facebook'>f</a>
+        <a href='https://instagram.com' rel='noopener' target='_blank' title='Instagram' aria-label='Instagram'>ig</a>
+        <a href='https://twitter.com' rel='noopener' target='_blank' title='Twitter/X' aria-label='Twitter'>𝕏</a>
+        <a href='https://youtube.com' rel='noopener' target='_blank' title='YouTube' aria-label='YouTube'>▶</a>
+      </div>
+    </div>
+
+    <!-- Navegación -->
+    <nav aria-label='Navegación del pie de página'>
+      <h3>Navegación</h3>
+      <ul>
+        <li><a expr:href='data:blog.homepageUrl'>Inicio</a></li>
+        <li><a expr:href='data:blog.homepageUrl + "search/label/Pol%C3%ADtica"'>Política</a></li>
+        <li><a expr:href='data:blog.homepageUrl + "search/label/Social"'>Social</a></li>
+        <li><a expr:href='data:blog.homepageUrl + "search/label/Econom%C3%ADa"'>Economía 4.0</a></li>
+        <li><a expr:href='data:blog.homepageUrl + "search/label/Tecnolog%C3%ADa"'>Tecnología</a></li>
+        <li><a expr:href='data:blog.homepageUrl + "search/label/Turismo"'>Turismo</a></li>
+      </ul>
+    </nav>
+
+    <!-- Temas -->
+    <div>
+      <h3>Temas</h3>
+      <ul>
+        <li><a href='#'>Descentralización</a></li>
+        <li><a href='#'>Blockchain y Web3</a></li>
+        <li><a href='#'>Inclusión digital</a></li>
+        <li><a href='#'>Accesibilidad</a></li>
+        <li><a href='#'>Gobernanza</a></li>
+        <li><a href='#'>Turismo inteligente</a></li>
+      </ul>
+    </div>
+
+    <!-- Datos institucionales -->
+    <div>
+      <h3>Institución</h3>
+      <address style='font-style:normal;font-family:Source Sans 3,sans-serif;'>
+        <p>📧 descentralizando@adasfro.org</p>
+        <p>📍 Orosi, Cartago, Costa Rica</p>
+        <p>🏛️ Cédula: 3-002-860094</p>
+      </address>
+      <p style='margin-top:0.75rem;font-size:0.75rem;opacity:0.6;'>
+        Ley N.º 218 · Art. 28, 29, 46 Constitución · Art. 139 Código Electoral
+      </p>
+    </div>
+
+  </div>
+
+  <div class='dm-footer-bottom'>
+    <span>© 2026 ADASFRO · Descentralizando — Todos los derechos reservados</span>
+    <span>Diseñado con accesibilidad y compromiso social 🌿</span>
+  </div>
+</footer>
+
+<!-- Botón volver arriba -->
+<button aria-label='Volver al inicio' id='dm-volver-arriba' type='button'>↑</button>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT — Carga desde GitHub Pages + lógica Blogger
+══════════════════════════════════════════════ -->
+<script>
+//<![CDATA[
+// ═══════════════════════════════════════════════════════
+//  DESCENTRALIZANDO — script.js inline para Blogger
+//  Combina la lógica del GitHub Pages con la API JSON de Blogger
+// ═══════════════════════════════════════════════════════
+
+(function() {
+  'use strict';
+
+  // ── CONFIG ──────────────────────────────────────────
+  var BLOG_URL = 'https://www.decentralizando.org';
+  var API_BASE = BLOG_URL + '/feeds/posts/default?alt=json&max-results=';
+  var LABELS   = ['Política','Social','Tecnología','Economía','Turismo'];
+
+  // ── FECHA EN BARRA SUPERIOR ──────────────────────────
+  function setFecha() {
+    var el = document.getElementById('dm-fecha-hoy');
+    if (!el) return;
+    var dias   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    var meses  = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    var d = new Date();
+    el.textContent = dias[d.getDay()] + ', ' + d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
+  }
+
+  // ── FETCH JSON POSTS ─────────────────────────────────
+  function fetchPosts(max, label, callback) {
+    var url = API_BASE + max;
+    if (label) url += '&category=' + encodeURIComponent(label);
+    var s = document.createElement('script');
+    var cbName = '_cb_' + Math.random().toString(36).substr(2,8);
+    window[cbName] = function(data) {
+      delete window[cbName];
+      document.head.removeChild(s);
+      var entries = (data.feed && data.feed.entry) ? data.feed.entry : [];
+      callback(entries);
+    };
+    s.src = url + '&callback=' + cbName;
+    s.onerror = function() { callback([]); };
+    document.head.appendChild(s);
+  }
+
+  // ── HELPERS ─────────────────────────────────────────
+  function getThumb(entry) {
+    if (entry.media$thumbnail) return entry.media$thumbnail.url.replace(/\/s[0-9]+(-c)?\//, '/s600-c/');
+    if (entry['media$thumbnail']) return entry['media$thumbnail'].url;
+    var c = (entry.content && entry.content.$t) || '';
+    var m = c.match(/src="([^"]+\.(jpg|jpeg|png|webp|gif))"/i);
+    return m ? m[1] : '';
+  }
+  function getUrl(entry) {
+    var links = entry.link || [];
+    for (var i=0; i<links.length; i++) {
+      if (links[i].rel === 'alternate') return links[i].href;
+    }
+    return '#';
+  }
+  function getTitle(entry) {
+    return (entry.title && entry.title.$t) || 'Sin título';
+  }
+  function getLabel(entry) {
+    var cats = entry.category || [];
+    return cats.length ? cats[0].term : '';
+  }
+  function getDate(entry) {
+    var raw = (entry.published && entry.published.$t) || '';
+    if (!raw) return '';
+    var d = new Date(raw);
+    var meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return d.getDate() + ' ' + meses[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  function getLabelClass(label) {
+    var map = {
+      'Política':'politica','Social':'social',
+      'Tecnología':'tecnologia','Turismo':'turismo','Economía':'turismo'
+    };
+    return 'dm-badge dm-badge-' + (map[label] || '');
+  }
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── HERO GRID ────────────────────────────────────────
+  function renderHero(entries) {
+    var grid = document.getElementById('dm-hero-grid');
+    if (!grid) return;
+    if (!entries.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;padding:2rem;text-align:center;color:#4a5568;font-family:Source Sans 3,sans-serif;">No hay publicaciones aún. ¡Publicá tu primera entrada!</div>';
+      return;
+    }
+    var html = '';
+    // Post principal (grande)
+    var main = entries[0];
+    var mThumb = getThumb(main);
+    html += '<a href="' + escHtml(getUrl(main)) + '" class="dm-hero-main" style="text-decoration:none;">';
+    if (mThumb) {
+      html += '<img src="' + escHtml(mThumb) + '" alt="' + escHtml(getTitle(main)) + '" loading="eager"/>';
+    } else {
+      html += '<div class="dm-img-placeholder" style="position:absolute;top:0;left:0;right:0;bottom:0;">🗺️</div>';
+    }
+    html += '<div class="dm-card-overlay">';
+    html += '<span class="' + getLabelClass(getLabel(main)) + '">' + escHtml(getLabel(main) || 'Descentralizando') + '</span>';
+    html += '<h2 class="dm-card-titulo">' + escHtml(getTitle(main)) + '</h2>';
+    html += '<div class="dm-card-meta">📅 ' + escHtml(getDate(main)) + '</div>';
+    html += '</div></a>';
+    // Sub posts (4 más pequeños, en 2x2)
+    var subs = entries.slice(1, 5);
+    for (var i=0; i<subs.length; i++) {
+      var s = subs[i];
+      var sThumb = getThumb(s);
+      html += '<a href="' + escHtml(getUrl(s)) + '" class="dm-hero-sub" style="text-decoration:none;">';
+      if (sThumb) {
+        html += '<img src="' + escHtml(sThumb) + '" alt="' + escHtml(getTitle(s)) + '" loading="lazy"/>';
+      } else {
+        html += '<div class="dm-img-placeholder" style="position:absolute;top:0;left:0;right:0;bottom:0;">🗺️</div>';
+      }
+      html += '<div class="dm-card-overlay">';
+      html += '<span class="' + getLabelClass(getLabel(s)) + '">' + escHtml(getLabel(s) || 'Noticia') + '</span>';
+      html += '<h3 class="dm-card-titulo">' + escHtml(getTitle(s)) + '</h3>';
+      html += '<div class="dm-card-meta">📅 ' + escHtml(getDate(s)) + '</div>';
+      html += '</div></a>';
+    }
+    grid.innerHTML = html;
+  }
+
+  // ── GRID DE POSTS RECIENTES ──────────────────────────
+  function renderPostsGrid(entries, containerId) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    if (!entries.length) {
+      container.innerHTML = '<div style="grid-column:1/-1;padding:2rem;text-align:center;color:#4a5568;font-family:Source Sans 3,sans-serif;">No hay publicaciones en esta categoría aún.</div>';
+      return;
+    }
+    var html = '';
+    for (var i=0; i<entries.length; i++) {
+      var e = entries[i];
+      var thumb = getThumb(e);
+      html += '<article class="dm-post-card">';
+      html += '<a href="' + escHtml(getUrl(e)) + '" class="dm-post-thumb" style="display:block;position:relative;padding-top:60%;overflow:hidden;text-decoration:none;">';
+      if (thumb) {
+        html += '<img src="' + escHtml(thumb) + '" alt="' + escHtml(getTitle(e)) + '" loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transition:transform 0.4s;"/>';
+      } else {
+        html += '<div class="dm-img-placeholder" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:2rem;background:linear-gradient(135deg,#d8f3dc,#caf0f8);">🗺️</div>';
+      }
+      html += '</a>';
+      html += '<div class="dm-post-body">';
+      html += '<div class="dm-post-etiqueta"><span class="' + getLabelClass(getLabel(e)) + '">' + escHtml(getLabel(e) || 'Descentralizando') + '</span></div>';
+      html += '<h2 class="dm-post-titulo"><a href="' + escHtml(getUrl(e)) + '">' + escHtml(getTitle(e)) + '</a></h2>';
+      html += '<div class="dm-post-meta"><span>📅 ' + escHtml(getDate(e)) + '</span></div>';
+      html += '</div></article>';
+    }
+    container.innerHTML = html;
+  }
+
+  // ── TICKER TRENDING ──────────────────────────────────
+  function renderTicker(entries) {
+    var ticker = document.getElementById('dm-ticker');
+    if (!ticker || !entries.length) return;
+    var items = entries.slice(0, 5).map(function(e) {
+      return '📌 <a href="' + escHtml(getUrl(e)) + '" style="color:#1b4332;text-decoration:none;">' + escHtml(getTitle(e)) + '</a>';
+    });
+    ticker.innerHTML = items.join(' &nbsp;&nbsp;·&nbsp;&nbsp; ');
+  }
+
+  // ── POSTS POPULARES SIDEBAR ──────────────────────────
+  function renderPopulares(entries, id) {
+    var el = document.getElementById(id || 'dm-populares');
+    if (!el || !entries.length) return;
+    var html = '<div class="dm-lista-noticias">';
+    var top = entries.slice(0, 5);
+    for (var i=0; i<top.length; i++) {
+      var e = top[i];
+      var thumb = getThumb(e);
+      html += '<div class="dm-noticia-item">';
+      if (thumb) {
+        html += '<div class="dm-noticia-thumb"><img src="' + escHtml(thumb) + '" alt="' + escHtml(getTitle(e)) + '" loading="lazy"/></div>';
+      }
+      html += '<div class="dm-noticia-body">';
+      html += '<div class="dm-noticia-fecha">' + escHtml(getDate(e)) + '</div>';
+      html += '<div class="dm-noticia-titulo"><a href="' + escHtml(getUrl(e)) + '">' + escHtml(getTitle(e)) + '</a></div>';
+      html += '</div></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+  }
+
+  // ── ETIQUETAS / CATEGORÍAS ───────────────────────────
+  function renderLabels() {
+    var containers = ['dm-labels','dm-labels-post'];
+    var staticLabels = [
+      {name:'Política', url:'/search/label/Política'},
+      {name:'Social', url:'/search/label/Social'},
+      {name:'Tecnología', url:'/search/label/Tecnología'},
+      {name:'Economía 4.0', url:'/search/label/Economía'},
+      {name:'Turismo', url:'/search/label/Turismo'},
+      {name:'Descentralización', url:'/search/label/Descentralización'},
+      {name:'Blockchain', url:'/search/label/Blockchain'},
+      {name:'Inclusión', url:'/search/label/Inclusión'},
+      {name:'Gobernanza', url:'/search/label/Gobernanza'},
+    ];
+    var html = staticLabels.map(function(l) {
+      return '<a class="dm-label-link" href="' + escHtml(l.url) + '">' + escHtml(l.name) + '</a>';
+    }).join('');
+    for (var i=0; i<containers.length; i++) {
+      var el = document.getElementById(containers[i]);
+      if (el && !el.querySelector('a')) el.innerHTML = html;
+    }
+  }
+
+  // ── MENÚ HAMBURGUESA ────────────────────────────────
+  function initMenu() {
+    var toggle = document.getElementById('dm-menu-toggle');
+    var nav = document.getElementById('dm-nav');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', function() {
+      var open = nav.classList.toggle('abierto');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+        nav.classList.remove('abierto');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // ── BÚSQUEDA OVERLAY ─────────────────────────────────
+  function initBusqueda() {
+    var btn  = document.getElementById('dm-btn-buscar');
+    var overlay = document.getElementById('dm-busqueda-overlay');
+    var cerrar  = document.getElementById('dm-busqueda-cerrar');
+    if (!btn || !overlay) return;
+    btn.addEventListener('click', function() {
+      overlay.classList.add('activo');
+      var inp = overlay.querySelector('input');
+      if (inp) setTimeout(function(){ inp.focus(); }, 100);
+    });
+    if (cerrar) cerrar.addEventListener('click', function() { overlay.classList.remove('activo'); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') overlay.classList.remove('activo');
+    });
+  }
+
+  // ── VOLVER ARRIBA ────────────────────────────────────
+  function initVolverArriba() {
+    var btn = document.getElementById('dm-volver-arriba');
+    if (!btn) return;
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 400) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    });
+    btn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ── MARCAR LINK ACTIVO ───────────────────────────────
+  function markActiveNav() {
+    var links = document.querySelectorAll('.dm-nav a');
+    var path = window.location.href;
+    for (var i=0; i<links.length; i++) {
+      if (path === links[i].href) links[i].classList.add('activo');
+    }
+  }
+
+  // ── INIT ─────────────────────────────────────────────
+  function init() {
+    setFecha();
+    initMenu();
+    initBusqueda();
+    initVolverArriba();
+    markActiveNav();
+    renderLabels();
+
+    // Solo en home: cargar posts dinámicamente
+    var isHome = document.getElementById('dm-hero-grid') !== null;
+    if (isHome) {
+      // Cargar posts para hero (6 más recientes)
+      fetchPosts(6, null, function(entries) {
+        renderHero(entries);
+        renderTicker(entries);
+      });
+      // Cargar posts recientes (9)
+      fetchPosts(9, null, function(entries) {
+        renderPostsGrid(entries, 'dm-posts-recientes');
+        renderPopulares(entries, 'dm-populares');
+      });
+    }
+
+    // En página de entrada: sidebar populares
+    var popPost = document.getElementById('dm-populares-post');
+    if (popPost) {
+      fetchPosts(5, null, function(entries) {
+        renderPopulares(entries, 'dm-populares-post');
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+//]]>
+</script>
+
+<!-- Script externo de GitHub Pages (funciones adicionales) -->
+<script defer='defer' src='https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-script.js'/>
+
+</body>
+</html>
