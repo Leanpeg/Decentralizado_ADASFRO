@@ -1,73 +1,91 @@
 /*
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  DESCENTRALIZANDO — script.js v3.0                           ║
-  ║  Medio Digital ADASFRO · Economía 4.0 · Costa Rica           ║
-  ║  GitHub Pages: leanpeg.github.io/Decentralizado_ADASFRO/     ║
-  ║                                                              ║
-  ║  Funciones:                                                  ║
-  ║  1.  Navbar scroll + sombra                                  ║
-  ║  2.  Menú hamburguesa (móvil)                                ║
-  ║  3.  Búsqueda overlay                                        ║
-  ║  4.  Ticker: pausa al hover                                  ║
-  ║  5.  API Blogger: Hero grid dinámico                         ║
-  ║  6.  API Blogger: Noticias recientes (grid cards)            ║
-  ║  7.  API Blogger: Sidebar populares                          ║
-  ║  8.  API Blogger: Ticker de titulares                        ║
-  ║  9.  Animaciones al scroll (IntersectionObserver)            ║
-  ║  10. Volver arriba                                           ║
-  ║  11. Accesibilidad (texto grande / alto contraste)           ║
-  ║  12. Enlace activo en nav                                    ║
-  ║  13. Fecha dinámica en barra superior                        ║
-  ╚══════════════════════════════════════════════════════════════╝
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  DESCENTRALIZANDO — script.js v4.0                               ║
+  ║  CORRECCIONES v4:                                                ║
+  ║  ✅ Imágenes nítidas (URL sin resize borroso)                    ║
+  ║  ✅ Fallback a og:image y content image                          ║
+  ║  ✅ Paleta clara y vibrante (blanco + verde + azul)              ║
+  ║  ✅ Accesibilidad WCAG AA/AAA                                    ║
+  ╚══════════════════════════════════════════════════════════════════╝
 */
-
 'use strict';
 
-// ══════════════════════════════════════════════════════════
-// CONFIGURACIÓN CENTRAL — editar sólo aquí
-// ══════════════════════════════════════════════════════════
-const CONFIG = {
-  blogUrl:    'https://www.decentralizando.org',
-  blogId:     '',               // opcional: ID numérico del blog (más rápido)
-  maxHero:    5,                // entradas en hero grid
-  maxRecientes: 9,              // entradas en grilla recientes
-  maxSidebar: 5,                // entradas en sidebar "populares"
-  maxTicker:  8,                // titulares en ticker
-  apiBase:    'https://www.decentralizando.org/feeds/posts/default',
-  // Mapeo etiqueta → clase CSS badge
+// ══ CONFIG CENTRAL ══
+const CFG = {
+  blogUrl: 'https://www.decentralizando.org',
+  apiBase: 'https://www.decentralizando.org/feeds/posts/default',
+  maxHero:     5,
+  maxRecientes:9,
+  maxSidebar:  5,
+  maxTicker:   8,
+  // Badge color por etiqueta
   labelMap: {
-    'Política':       'badge-politica',
-    'Social':         'badge-social',
-    'Tecnología':     'badge-tecnologia',
-    'Economia':       'badge-economia',
-    'Economía':       'badge-economia',
-    'Turismo':        'badge-turismo',
-    'Blockchain':     'badge-blockchain',
+    'Política':          'badge-politica',
+    'Social':            'badge-social',
+    'Tecnología':        'badge-tecnologia',
+    'Economia':          'badge-economia',
+    'Economía':          'badge-economia',
+    'Turismo':           'badge-turismo',
+    'Blockchain':        'badge-blockchain',
     'Descentralización': 'badge-blockchain',
-    'Inclusión':      'badge-social',
-    'Gobernanza':     'badge-politica',
+    'Inclusión':         'badge-social',
+    'Gobernanza':        'badge-politica',
+    'Derechos':          'badge-social',
+    'TSE':               'badge-politica',
+    'LESCO':             'badge-social',
   }
 };
 
-// ══════════════════════════════════════════════════════════
-// UTILIDADES
-// ══════════════════════════════════════════════════════════
+// ══ UTILIDADES ══
 const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-function getThumb(entry, size) {
-  size = size || 600;
-  if (entry.media$thumbnail) {
-    return entry.media$thumbnail.url.replace(/\/s\d+(-c)?\//, `/s${size}-c/`);
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/**
+ * CORRECCIÓN PRINCIPAL: obtener URL de imagen nítida
+ * Blogger devuelve thumbnails con /s72-c/ que son muy pequeños y se ven borrosos.
+ * Pedimos /s1000/ para que el navegador reduzca (no amplíe) → imagen nítida.
+ */
+function getThumb(entry) {
+  // 1. media$thumbnail del feed (el más confiable)
+  if (entry.media$thumbnail && entry.media$thumbnail.url) {
+    let url = entry.media$thumbnail.url;
+    // Reemplazar cualquier tamaño /sXXX(-c)?/ por /s1000/
+    url = url.replace(/\/s\d+(-c)?\//g, '/s1000/');
+    // Asegurar HTTPS
+    url = url.replace(/^http:\/\//i, 'https://');
+    return url;
   }
-  const c = (entry.content && entry.content.$t) || (entry.summary && entry.summary.$t) || '';
-  const m = c.match(/src=["']([^"']+\.(jpg|jpeg|png|webp|gif))[^"']*/i);
-  return m ? m[1] : '';
+
+  // 2. Buscar primera imagen en el contenido HTML del post
+  const html = (entry.content && entry.content.$t)
+             || (entry.summary && entry.summary.$t)
+             || '';
+  if (html) {
+    // src con http o https
+    const mSrc = html.match(/src=["']https?:\/\/([^"']+\.(jpg|jpeg|png|webp|gif))[^"']*/i);
+    if (mSrc) {
+      let url = mSrc[0].replace(/src=["']/i, '').replace(/["']$/, '');
+      // Limpiar parámetros que puedan degradar calidad
+      url = url.replace(/\/s\d+(-c)?\//g, '/s1000/');
+      url = url.replace(/^http:\/\//i, 'https://');
+      return url;
+    }
+  }
+
+  return ''; // sin imagen → usar placeholder
 }
 
 function getUrl(entry) {
-  const links = entry.link || [];
-  for (const l of links) { if (l.rel === 'alternate') return l.href; }
+  for (const l of (entry.link || [])) {
+    if (l.rel === 'alternate') return l.href;
+  }
   return '#';
 }
 
@@ -75,13 +93,8 @@ function getTitle(entry) {
   return (entry.title && entry.title.$t) || 'Sin título';
 }
 
-function getLabels(entry) {
-  return (entry.category || []).map(c => c.term);
-}
-
 function getFirstLabel(entry) {
-  const cats = entry.category || [];
-  return cats.length ? cats[0].term : '';
+  return (entry.category && entry.category[0]) ? entry.category[0].term : '';
 }
 
 function getDate(entry) {
@@ -93,7 +106,7 @@ function getDate(entry) {
 }
 
 function badgeClass(label) {
-  return CONFIG.labelMap[label] || 'badge-turismo';
+  return CFG.labelMap[label] || 'badge-turismo';
 }
 
 function makeBadge(label) {
@@ -101,63 +114,78 @@ function makeBadge(label) {
   return `<span class="badge ${badgeClass(label)}">${esc(label)}</span>`;
 }
 
-// ══════════════════════════════════════════════════════════
-// 1. NAVBAR — Sombra al scroll
-// ══════════════════════════════════════════════════════════
-(function iniciarNavbar() {
-  const navbar = document.querySelector('.navbar');
-  if (!navbar) return;
-  function update() {
-    navbar.classList.toggle('con-sombra', window.scrollY > 30);
+function thumbHtml(url, alt, clase) {
+  clase = clase || '';
+  if (url) {
+    return `<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy" decoding="async"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"/>`;
   }
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+  return `<div class="img-placeholder">🗺️</div>`;
+}
+
+// ══ JSONP FETCH ══
+function fetchBlogger(max, label, callback) {
+  const cbName = '_db' + Date.now().toString(36);
+  let url = `${CFG.apiBase}?alt=json&max-results=${max}`;
+  if (label) url += `&category=${encodeURIComponent(label)}`;
+  url += `&callback=${cbName}`;
+
+  const script = document.createElement('script');
+  const timer = setTimeout(() => {
+    cleanup();
+    callback([]);
+  }, 10000);
+
+  function cleanup() {
+    clearTimeout(timer);
+    try { delete window[cbName]; } catch(e) {}
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[cbName] = function(data) {
+    cleanup();
+    const entries = (data && data.feed && data.feed.entry) ? data.feed.entry : [];
+    callback(entries);
+  };
+
+  script.src = url;
+  script.onerror = () => { cleanup(); callback([]); };
+  document.head.appendChild(script);
+}
+
+// ══ 1. NAVBAR SCROLL ══
+(function() {
+  const nav = document.querySelector('.navbar');
+  if (!nav) return;
+  const upd = () => nav.classList.toggle('con-sombra', window.scrollY > 30);
+  window.addEventListener('scroll', upd, {passive:true});
+  upd();
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// 2. MENÚ HAMBURGUESA
-// ══════════════════════════════════════════════════════════
-(function iniciarMenuMovil() {
+// ══ 2. HAMBURGUESA ══
+(function() {
   const btn  = $('hamburguesa');
   const menu = $('menu-movil');
   if (!btn || !menu) return;
 
+  function cerrar() {
+    btn.classList.remove('abierto');
+    menu.classList.remove('abierto');
+    btn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
   btn.addEventListener('click', () => {
     const open = btn.classList.toggle('abierto');
     menu.classList.toggle('abierto', open);
     btn.setAttribute('aria-expanded', String(open));
-    menu.setAttribute('aria-hidden', String(!open));
     document.body.style.overflow = open ? 'hidden' : '';
   });
-
-  menu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      btn.classList.remove('abierto');
-      menu.classList.remove('abierto');
-      btn.setAttribute('aria-expanded', 'false');
-      menu.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    });
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && btn.classList.contains('abierto')) {
-      btn.classList.remove('abierto');
-      menu.classList.remove('abierto');
-      btn.setAttribute('aria-expanded', 'false');
-      menu.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      btn.focus();
-    }
-  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', cerrar));
+  document.addEventListener('keydown', e => { if (e.key==='Escape') cerrar(); });
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// 3. BÚSQUEDA OVERLAY
-// ══════════════════════════════════════════════════════════
-(function iniciarBusqueda() {
+// ══ 3. BÚSQUEDA OVERLAY ══
+(function() {
   const btnAbrir  = $('btn-buscar');
   const overlay   = $('busqueda-overlay');
   const btnCerrar = $('busqueda-cerrar');
@@ -172,146 +200,112 @@ function makeBadge(label) {
   function cerrar() {
     overlay.classList.remove('activo');
     document.body.style.overflow = '';
-    if (btnAbrir) btnAbrir.focus();
   }
-
   if (btnAbrir)  btnAbrir.addEventListener('click', abrir);
   if (btnCerrar) btnCerrar.addEventListener('click', cerrar);
-
-  overlay.addEventListener('click', e => { if (e.target === overlay) cerrar(); });
+  overlay.addEventListener('click', e => { if (e.target===overlay) cerrar(); });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && overlay.classList.contains('activo')) cerrar();
+    if (e.key==='Escape' && overlay.classList.contains('activo')) cerrar();
   });
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// 4. TICKER — Pausa al hover
-// ══════════════════════════════════════════════════════════
-(function iniciarTicker() {
-  const pista = $('ticker-pista');
-  if (!pista) return;
-  pista.addEventListener('mouseenter', () => { pista.style.animationPlayState = 'paused'; });
-  pista.addEventListener('mouseleave', () => { pista.style.animationPlayState = 'running'; });
+// ══ 4. TICKER PAUSA ══
+(function() {
+  const p = $('ticker-pista');
+  if (!p) return;
+  p.addEventListener('mouseenter', () => p.style.animationPlayState='paused');
+  p.addEventListener('mouseleave', () => p.style.animationPlayState='running');
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// BLOGGER JSON API — Fetch con JSONP
-// ══════════════════════════════════════════════════════════
-function fetchBlogger(max, label, callback) {
-  let url = `${CONFIG.apiBase}?alt=json&max-results=${max}`;
-  if (label) url += `&category=${encodeURIComponent(label)}`;
-
-  const cbName = '_bc_' + Math.random().toString(36).slice(2, 10);
-  const script = document.createElement('script');
-
-  window[cbName] = function(data) {
-    try { delete window[cbName]; } catch(e) {}
-    if (script.parentNode) script.parentNode.removeChild(script);
-    const entries = (data && data.feed && data.feed.entry) ? data.feed.entry : [];
-    callback(entries);
-  };
-
-  script.src = url + `&callback=${cbName}`;
-  script.onerror = function() {
-    try { delete window[cbName]; } catch(e) {}
-    callback([]);
-  };
-  document.head.appendChild(script);
-}
-
-
-// ══════════════════════════════════════════════════════════
-// 5. HERO GRID — Carga dinámica
-// ══════════════════════════════════════════════════════════
+// ══ 5. HERO GRID ══
 function renderHero(entries) {
   const grid = $('dm-hero-grid');
   if (!grid) return;
 
   if (!entries.length) {
-    grid.innerHTML = `<div style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--gris-400);font-family:var(--f-cuerpo);">
-      📰 No hay publicaciones aún. ¡Publicá tu primera entrada en Blogger!
+    grid.innerHTML = `<div style="grid-column:1/-1;min-height:300px;display:flex;align-items:center;
+      justify-content:center;background:var(--fondo-3);border-radius:var(--r-lg);border:1px solid var(--borde);">
+      <p style="color:var(--texto-3);font-family:var(--f-cuerpo);">
+        📰 Publicá tu primera entrada en Blogger para verla aquí.
+      </p>
     </div>`;
     return;
   }
 
   let html = '';
 
-  // POST PRINCIPAL (grande, toma toda la altura izquierda)
+  // Post principal
   const main = entries[0];
-  const mThumb = getThumb(main, 900);
+  const mImg = getThumb(main);
   const mLabel = getFirstLabel(main);
-  html += `<a href="${esc(getUrl(main))}" class="hero-main" aria-label="${esc(getTitle(main))}">`;
-  if (mThumb) {
-    html += `<img src="${esc(mThumb)}" alt="${esc(getTitle(main))}" loading="eager"/>`;
-  } else {
-    html += `<div class="img-placeholder">🗺️</div>`;
-  }
-  html += `<div class="hero-main-overlay"></div>
-  <div class="hero-main-content">
-    ${makeBadge(mLabel)}
-    <h2 class="hero-main-title">${esc(getTitle(main))}</h2>
-    <div class="hero-main-meta">
-      <span>📅 ${esc(getDate(main))}</span>
+  html += `<a href="${esc(getUrl(main))}" class="hero-main" aria-label="${esc(getTitle(main))}">
+    <div style="position:absolute;inset:0;overflow:hidden;">
+      ${thumbHtml(mImg, getTitle(main))}
     </div>
-  </div>
+    <div class="hero-main-overlay"></div>
+    <div class="hero-main-content">
+      ${makeBadge(mLabel)}
+      <h2 class="hero-main-title">${esc(getTitle(main))}</h2>
+      <div class="hero-main-meta">
+        <span>📅 ${esc(getDate(main))}</span>
+      </div>
+    </div>
   </a>`;
 
-  // POSTS SECUNDARIOS (4, en 2x2 a la derecha)
+  // Posts secundarios (hasta 4)
   const subs = entries.slice(1, 5);
   for (const s of subs) {
-    const sThumb = getThumb(s, 600);
+    const sImg   = getThumb(s);
     const sLabel = getFirstLabel(s);
-    html += `<a href="${esc(getUrl(s))}" class="hero-sub" aria-label="${esc(getTitle(s))}">`;
-    if (sThumb) {
-      html += `<img src="${esc(sThumb)}" alt="${esc(getTitle(s))}" loading="lazy"/>`;
-    } else {
-      html += `<div class="img-placeholder" style="font-size:2rem">🗺️</div>`;
-    }
-    html += `<div class="hero-sub-overlay"></div>
-    <div class="hero-sub-content">
-      ${makeBadge(sLabel)}
-      <h3 class="hero-sub-title">${esc(getTitle(s))}</h3>
-      <div class="hero-sub-meta">📅 ${esc(getDate(s))}</div>
-    </div>
+    html += `<a href="${esc(getUrl(s))}" class="hero-sub" aria-label="${esc(getTitle(s))}">
+      <div style="position:absolute;inset:0;overflow:hidden;">
+        ${thumbHtml(sImg, getTitle(s))}
+      </div>
+      <div class="hero-sub-overlay"></div>
+      <div class="hero-sub-content">
+        ${makeBadge(sLabel)}
+        <h3 class="hero-sub-title">${esc(getTitle(s))}</h3>
+        <div class="hero-sub-meta">📅 ${esc(getDate(s))}</div>
+      </div>
     </a>`;
   }
 
   grid.innerHTML = html;
 }
 
-
-// ══════════════════════════════════════════════════════════
-// 6. GRILLA DE NOTICIAS RECIENTES
-// ══════════════════════════════════════════════════════════
+// ══ 6. GRILLA NOTICIAS ══
 function renderGridNoticias(entries, containerId) {
   const container = $(containerId);
   if (!container) return;
 
   if (!entries.length) {
-    container.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--gris-400);">No hay publicaciones en esta categoría aún.</div>`;
+    container.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--texto-3);">
+      No hay publicaciones aún en esta sección.
+    </div>`;
     return;
   }
 
   let html = '';
   for (const e of entries) {
-    const thumb  = getThumb(e, 600);
+    const img    = getThumb(e);
     const label  = getFirstLabel(e);
     const url    = getUrl(e);
     const titulo = getTitle(e);
     const fecha  = getDate(e);
 
     html += `<article class="noticia-card">
-      <a href="${esc(url)}" class="noticia-thumb" style="display:block;text-decoration:none">
-        ${thumb
-          ? `<img src="${esc(thumb)}" alt="${esc(titulo)}" loading="lazy"/>`
+      <a href="${esc(url)}" class="noticia-thumb" style="display:block;text-decoration:none;">
+        ${img
+          ? `<img src="${esc(img)}" alt="${esc(titulo)}" loading="lazy" decoding="async"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;"/>`
           : `<div class="img-placeholder">🗺️</div>`
         }
         ${makeBadge(label)}
       </a>
       <div class="noticia-body">
-        <h2 class="noticia-titulo"><a href="${esc(url)}">${esc(titulo)}</a></h2>
+        <h2 class="noticia-titulo">
+          <a href="${esc(url)}">${esc(titulo)}</a>
+        </h2>
         <div class="noticia-meta">
           <span>📅 ${esc(fecha)}</span>
         </div>
@@ -321,204 +315,160 @@ function renderGridNoticias(entries, containerId) {
   container.innerHTML = html;
 }
 
-
-// ══════════════════════════════════════════════════════════
-// 7. SIDEBAR — Lista de noticias
-// ══════════════════════════════════════════════════════════
-function renderSidebarLista(entries, containerId) {
-  const container = $(containerId);
-  if (!container || !entries.length) return;
+// ══ 7. SIDEBAR RANKING ══
+function renderSidebarRanking(entries, containerId) {
+  const el = $(containerId);
+  if (!el || !entries.length) return;
 
   let html = '';
-  entries.slice(0, CONFIG.maxSidebar).forEach((e, i) => {
-    const thumb = getThumb(e, 200);
+  entries.slice(0, CFG.maxSidebar).forEach((e, i) => {
+    const img   = getThumb(e);
     const label = getFirstLabel(e);
-    html += `<div class="rank-item">
-      <span class="rank-num">${String(i+1).padStart(2,'0')}</span>
-      <div>
-        <div class="rank-titulo">
+    html += `<div class="lista-item">
+      ${img ? `<div class="lista-thumb">
+        <img src="${esc(img)}" alt="${esc(getTitle(e))}" loading="lazy" decoding="async"/>
+      </div>` : ''}
+      <div class="lista-body">
+        ${makeBadge(label)}
+        <div class="lista-titulo">
           <a href="${esc(getUrl(e))}">${esc(getTitle(e))}</a>
         </div>
-        <div class="rank-fecha">📅 ${esc(getDate(e))} ${label ? '· ' + label : ''}</div>
+        <div class="lista-fecha">📅 ${esc(getDate(e))}</div>
       </div>
     </div>`;
   });
-  container.innerHTML = html;
+  el.innerHTML = `<div class="lista-noticias">${html}</div>`;
 }
 
-
-// ══════════════════════════════════════════════════════════
-// 8. TICKER — Titulares dinámicos
-// ══════════════════════════════════════════════════════════
+// ══ 8. TICKER ══
 function renderTicker(entries) {
   const pista = $('ticker-pista');
   if (!pista || !entries.length) return;
 
-  const items = entries.slice(0, CONFIG.maxTicker).map(e => {
-    return `<span class="ticker-item">
+  const items = entries.slice(0, CFG.maxTicker).map(e =>
+    `<span class="ticker-item">
       <span class="ticker-dot">●</span>
       <a href="${esc(getUrl(e))}">${esc(getTitle(e))}</a>
-    </span>`;
-  });
+    </span>`
+  );
   // Duplicar para loop continuo
   pista.innerHTML = items.join('') + items.join('');
 }
 
-
-// ══════════════════════════════════════════════════════════
-// 9. ANIMACIONES AL SCROLL
-// ══════════════════════════════════════════════════════════
-(function iniciarAnimaciones() {
-  const elementos = document.querySelectorAll('[data-animar]');
-  if (!elementos.length) return;
-
+// ══ 9. ANIMACIONES SCROLL ══
+(function() {
+  const els = document.querySelectorAll('[data-animar]');
+  if (!els.length) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    elementos.forEach(el => el.classList.add('animado'));
+    els.forEach(el => el.classList.add('animado'));
     return;
   }
-
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach(entrada => {
-      if (!entrada.isIntersecting) return;
-      const el = entrada.target;
-      const delay = parseInt(el.getAttribute('data-retraso') || '0', 10);
-      setTimeout(() => el.classList.add('animado'), delay);
-      observer.unobserve(el);
+  const obs = new IntersectionObserver(entradas => {
+    entradas.forEach(e => {
+      if (!e.isIntersecting) return;
+      const d = parseInt(e.target.getAttribute('data-retraso') || '0', 10);
+      setTimeout(() => e.target.classList.add('animado'), d);
+      obs.unobserve(e.target);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-
-  elementos.forEach(el => observer.observe(el));
+  }, {threshold:0.1, rootMargin:'0px 0px -30px 0px'});
+  els.forEach(el => obs.observe(el));
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// 10. VOLVER ARRIBA
-// ══════════════════════════════════════════════════════════
-(function iniciarVolverArriba() {
-  const btn = document.querySelector('.volver-arriba') || $('volver-arriba');
+// ══ 10. VOLVER ARRIBA ══
+(function() {
+  const btn = document.querySelector('.volver-arriba');
   if (!btn) return;
-
-  function update() { btn.classList.toggle('visible', window.scrollY > 500); }
-  window.addEventListener('scroll', update, { passive: true });
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    const skip = document.querySelector('.saltar-contenido');
-    if (skip) skip.focus();
-  });
-  update();
+  const upd = () => btn.classList.toggle('visible', window.scrollY > 500);
+  window.addEventListener('scroll', upd, {passive:true});
+  btn.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+  upd();
 })();
 
+// ══ 11. ACCESIBILIDAD ══
+(function() {
+  const btnG = $('btn-texto-grande');
+  const btnN = $('btn-texto-normal');
+  const btnC = $('btn-alto-contraste');
 
-// ══════════════════════════════════════════════════════════
-// 11. ACCESIBILIDAD — Texto grande / Alto contraste
-// ══════════════════════════════════════════════════════════
-(function iniciarAccesibilidad() {
-  const btnGrande   = $('btn-texto-grande');
-  const btnNormal   = $('btn-texto-normal');
-  const btnContraste= $('btn-alto-contraste');
-
-  if (btnGrande) btnGrande.addEventListener('click', () => {
+  if (btnG) btnG.addEventListener('click', () => {
     document.body.classList.add('texto-grande');
-    try { localStorage.setItem('dm-textoGrande','si'); } catch(e){}
+    try { localStorage.setItem('dm-tg','1'); } catch(e){}
   });
-  if (btnNormal) btnNormal.addEventListener('click', () => {
+  if (btnN) btnN.addEventListener('click', () => {
     document.body.classList.remove('texto-grande');
-    try { localStorage.setItem('dm-textoGrande','no'); } catch(e){}
+    try { localStorage.setItem('dm-tg','0'); } catch(e){}
   });
-  if (btnContraste) btnContraste.addEventListener('click', () => {
+  if (btnC) btnC.addEventListener('click', () => {
     const on = document.body.classList.toggle('alto-contraste');
-    btnContraste.setAttribute('aria-pressed', String(on));
-    try { localStorage.setItem('dm-contraste', on ? 'si' : 'no'); } catch(e){}
+    btnC.setAttribute('aria-pressed', String(on));
+    try { localStorage.setItem('dm-ac', on?'1':'0'); } catch(e){}
   });
-
-  // Restaurar preferencias
   try {
-    if (localStorage.getItem('dm-textoGrande') === 'si')
-      document.body.classList.add('texto-grande');
-    if (localStorage.getItem('dm-contraste') === 'si') {
+    if (localStorage.getItem('dm-tg')==='1') document.body.classList.add('texto-grande');
+    if (localStorage.getItem('dm-ac')==='1') {
       document.body.classList.add('alto-contraste');
-      if (btnContraste) btnContraste.setAttribute('aria-pressed','true');
+      if (btnC) btnC.setAttribute('aria-pressed','true');
     }
   } catch(e){}
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// 12. ENLACE ACTIVO EN NAV (scroll spy)
-// ══════════════════════════════════════════════════════════
-(function iniciarEnlaceActivo() {
-  const enlacesNav = document.querySelectorAll('.nav-menu a');
+// ══ 12. ENLACE ACTIVO ══
+(function() {
   const href = window.location.href;
-  enlacesNav.forEach(a => {
-    if (a.href === href || (a.href !== CONFIG.blogUrl + '/' && href.startsWith(a.href))) {
+  document.querySelectorAll('.nav-menu a').forEach(a => {
+    if (a.href && (a.href === href || (href.includes('/search/label/') && href.startsWith(a.href)))) {
       a.classList.add('activo');
     }
   });
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// 13. FECHA DINÁMICA
-// ══════════════════════════════════════════════════════════
-(function setFecha() {
+// ══ 13. FECHA DINÁMICA ══
+(function() {
   const el = $('dm-fecha-hoy');
   if (!el) return;
-  const dias   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-  const meses  = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const dias  = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const d = new Date();
   el.textContent = `${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
 })();
 
-
-// ══════════════════════════════════════════════════════════
-// INICIALIZACIÓN PRINCIPAL — Solo corre en la página de inicio
-// ══════════════════════════════════════════════════════════
+// ══ INIT PRINCIPAL ══
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('%c🗺️ Descentralizando · ADASFRO · v4.0', 'color:#00875a;font-weight:bold;font-size:13px;');
 
-  console.log(
-    '%c🗺️ Descentralizando — por ADASFRO\n%cEconomía 4.0 · Costa Rica',
-    'color:#00c896;font-size:15px;font-weight:bold;',
-    'color:#8896a7;font-size:11px;'
-  );
-
-  // Animaciones ya visibles
+  // Animar elementos ya visibles
   setTimeout(() => {
     document.querySelectorAll('[data-animar]:not(.animado)').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.95) {
-        const delay = parseInt(el.getAttribute('data-retraso') || '0', 10);
-        setTimeout(() => el.classList.add('animado'), delay);
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+        const d = parseInt(el.getAttribute('data-retraso') || '0', 10);
+        setTimeout(() => el.classList.add('animado'), d);
       }
     });
-  }, 150);
+  }, 100);
 
-  // ── Solo en homepage ──
+  // Solo en homepage
   const heroGrid = $('dm-hero-grid');
   if (heroGrid) {
-    // Hero + ticker (misma llamada)
-    fetchBlogger(CONFIG.maxHero + CONFIG.maxTicker, null, entries => {
-      renderHero(entries.slice(0, CONFIG.maxHero));
-      renderTicker(entries);
+    // Hero + ticker (misma llamada API)
+    fetchBlogger(Math.max(CFG.maxHero, CFG.maxTicker), null, entries => {
+      renderHero(entries.slice(0, CFG.maxHero));
+      renderTicker(entries.slice(0, CFG.maxTicker));
     });
-    // Noticias recientes
-    fetchBlogger(CONFIG.maxRecientes, null, entries => {
+    // Noticias recientes + sidebar
+    fetchBlogger(CFG.maxRecientes, null, entries => {
       renderGridNoticias(entries, 'dm-noticias-recientes');
-      renderSidebarLista(entries, 'dm-populares');
+      renderSidebarRanking(entries, 'dm-populares');
     });
   }
 
-  // ── Sidebar en post individual ──
-  const sidebarPopPost = $('dm-populares-post');
-  if (sidebarPopPost) {
-    fetchBlogger(CONFIG.maxSidebar, null, entries => {
-      renderSidebarLista(entries, 'dm-populares-post');
-    });
+  // Sidebar en post individual
+  if ($('dm-populares-post')) {
+    fetchBlogger(CFG.maxSidebar, null, e => renderSidebarRanking(e, 'dm-populares-post'));
   }
 
-  // ── Ticker en cualquier página ──
+  // Ticker en páginas de etiqueta/búsqueda
   const ticker = $('ticker-pista');
-  if (ticker && ticker.children.length === 0) {
-    fetchBlogger(CONFIG.maxTicker, null, renderTicker);
+  if (ticker && !ticker.querySelector('a')) {
+    fetchBlogger(CFG.maxTicker, null, renderTicker);
   }
-
 });

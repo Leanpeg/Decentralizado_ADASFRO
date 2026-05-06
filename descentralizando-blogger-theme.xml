@@ -4,19 +4,18 @@
 
 <!--
 =================================================================
-  DESCENTRALIZANDO — Tema Blogger v3.0
-  Medio Digital de ADASFRO · Economía 4.0 · Costa Rica
-  Cédula Jurídica: 3-002-860094
+  DESCENTRALIZANDO · Blogger Theme v4.0
+  ADASFRO · Cédula 3-002-860094 · Orosi, Cartago, CR
+  Economía 4.0 · Accesibilidad Universal · WCAG AA
 
   CSS: https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-styles.css
   JS:  https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-script.js
 
-  Fuentes: DM Serif Display + IBM Plex Sans + Oswald (Google Fonts)
-
-  CÓMO INSTALAR:
-  1. Blogger → Tema → Editar HTML
-  2. Seleccionar todo (Ctrl+A) → Borrar → Pegar este archivo
-  3. Guardar
+  CAMBIOS v4:
+  ✅ Paleta clara (blanco/crema + verde + azul marino + dorado)
+  ✅ Imágenes nítidas (resolución alta, sin redimensionado borroso)
+  ✅ Accesibilidad WCAG AA/AAA
+  ✅ Fuentes: DM Serif Display + IBM Plex Sans + Oswald
 =================================================================
 -->
 
@@ -25,95 +24,82 @@
   <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
   <b:include data='blog' name='all-head-content'/>
 
-  <!-- SEO -->
   <title><data:blog.pageTitle/></title>
   <b:if cond='data:blog.metaDescription'>
     <meta expr:content='data:blog.metaDescription' name='description'/>
   </b:if>
-  <meta content='descentralización, economía 4.0, ADASFRO, Costa Rica, blockchain, tecnología, inclusión digital' name='keywords'/>
+  <meta content='descentralización, economía 4.0, ADASFRO, Costa Rica, blockchain, accesibilidad, inclusión' name='keywords'/>
   <meta content='ADASFRO – Agencia para el Desarrollo Accesible sin Fronteras' name='author'/>
-
-  <!-- Open Graph -->
-  <meta expr:content='data:blog.pageTitle' property='og:title'/>
   <meta content='Descentralizando por ADASFRO' property='og:site_name'/>
+  <meta expr:content='data:blog.pageTitle' property='og:title'/>
   <meta content='website' property='og:type'/>
-  <b:if cond='data:blog.url'>
-    <meta expr:content='data:blog.url' property='og:url'/>
-  </b:if>
 
   <!-- Google Fonts: DM Serif Display + IBM Plex Sans + Oswald -->
   <link href='https://fonts.googleapis.com' rel='preconnect'/>
   <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
-  <link href='https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;display=swap' rel='stylesheet'/>
+  <link href='https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=Oswald:wght@400;500;600;700&amp;display=swap' rel='stylesheet'/>
 
   <!-- CSS desde GitHub Pages -->
   <link href='https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-styles.css' rel='stylesheet'/>
 
-  <!-- CSS mínimo para Blogger (no puede estar en archivo externo) -->
   <b:skin><![CDATA[
-/* Blogger overrides — mínimos necesarios */
-body { margin:0; padding:0; }
+/* Blogger reset mínimo */
+body { margin:0; padding:0; background:#f8f9fa; }
 .widget { display:block; }
-/* Ocultar header nativo de Blogger */
-#header-wrapper, .header-outer, #header { display:none !important; }
-/* Ocultar post nativo en homepage (lo mostramos con JS) */
-#main-wrapper .blog-posts .post { display:none !important; }
-/* Mostrar post en página individual */
+#header-wrapper,.header-outer,#header { display:none !important; }
+/* Ocultar render nativo de posts en homepage (JS los muestra) */
+.home-page .blog-posts .post { display:none !important; }
+/* Mostrar normal en post individual y búsqueda */
 .item-view .blog-posts .post,
-.post-page .blog-posts .post { display:block !important; }
+.post-page .blog-posts .post,
+.search-page .blog-posts .post { display:block !important; }
   ]]></b:skin>
 </head>
 
 <body>
 
-<!-- Accesibilidad: saltar al contenido -->
-<a class='saltar-contenido' href='#contenido-principal'>Saltar al contenido</a>
+<a class='saltar-contenido' href='#contenido-principal'>Saltar al contenido principal</a>
 
-<!-- ═══════════════════════════════════════════
-     BARRA SUPERIOR
-═══════════════════════════════════════════ -->
-<div class='barra-top' role='complementary'>
+<!-- ═══════════════════════ BARRA SUPERIOR ═══════════════════════ -->
+<div class='barra-top' role='complementary' aria-label='Barra de información'>
   <div class='contenedor'>
     <div class='barra-top-inner'>
-
       <span class='barra-entidad'>
-        <strong>ADASFRO</strong> · Cédula 3-002-860094 · Orosi, Cartago, CR
+        <strong>ADASFRO</strong>
+        <span style='opacity:0.5'>·</span>
+        Cédula 3-002-860094
+        <span style='opacity:0.5'>·</span>
+        Orosi, Cartago, CR
       </span>
-
       <div class='barra-accesibilidad' aria-label='Herramientas de accesibilidad'>
-        <span id='dm-fecha-hoy' style='font-family:var(--f-cuerpo);font-size:var(--t-xs);color:var(--gris-400);'></span>
+        <span class='dm-fecha' id='dm-fecha-hoy' aria-live='polite'></span>
         <div class='barra-sep' aria-hidden='true'></div>
-        <button class='btn-accesibilidad' id='btn-texto-grande' title='Aumentar tamaño de texto' type='button'>A+</button>
-        <button class='btn-accesibilidad' id='btn-texto-normal' title='Texto normal' type='button'>A</button>
-        <button aria-pressed='false' class='btn-accesibilidad' id='btn-alto-contraste' title='Alto contraste' type='button'>◑</button>
+        <button class='btn-accesibilidad' id='btn-texto-grande' title='Aumentar tamaño de texto' type='button' aria-label='Texto más grande'>A+</button>
+        <button class='btn-accesibilidad' id='btn-texto-normal' title='Tamaño de texto normal' type='button' aria-label='Texto normal'>A</button>
+        <button aria-pressed='false' class='btn-accesibilidad' id='btn-alto-contraste' title='Activar alto contraste' type='button' aria-label='Alto contraste'>◑</button>
         <div class='barra-sep' aria-hidden='true'></div>
-        <a class='red-social' href='https://facebook.com/descentralizando' rel='noopener' target='_blank' title='Facebook' aria-label='Facebook'>f</a>
-        <a class='red-social' href='https://instagram.com/descentralizando' rel='noopener' target='_blank' title='Instagram' aria-label='Instagram'>ig</a>
-        <a class='red-social' href='https://twitter.com/descentralizando' rel='noopener' target='_blank' title='Twitter/X' aria-label='Twitter/X'>𝕏</a>
-        <a class='red-social' href='https://youtube.com/@adasfro' rel='noopener' target='_blank' title='YouTube' aria-label='YouTube'>▶</a>
+        <a class='red-social' href='https://facebook.com' rel='noopener noreferrer' target='_blank' title='Facebook' aria-label='Seguirnos en Facebook'>f</a>
+        <a class='red-social' href='https://instagram.com' rel='noopener noreferrer' target='_blank' title='Instagram' aria-label='Seguirnos en Instagram'>ig</a>
+        <a class='red-social' href='https://twitter.com' rel='noopener noreferrer' target='_blank' title='Twitter/X' aria-label='Seguirnos en Twitter/X'>𝕏</a>
+        <a class='red-social' href='https://youtube.com' rel='noopener noreferrer' target='_blank' title='YouTube' aria-label='Ver nuestro canal de YouTube'>▶</a>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     NAVBAR
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
 <header class='navbar' id='dm-navbar' role='banner'>
   <div class='contenedor'>
     <nav class='nav-inner' aria-label='Navegación principal'>
 
-      <!-- Logo -->
-      <a class='logo' expr:href='data:blog.homepageUrl' aria-label='Descentralizando - Inicio'>
-        <span class='logo-icono' aria-hidden='true'>🗺️</span>
+      <a class='logo' expr:href='data:blog.homepageUrl' aria-label='Descentralizando - Ir al inicio'>
+        <span class='logo-icono' aria-hidden='true'>📖</span>
         <div class='logo-texto'>
           <span class='logo-nombre'>Descentralizando</span>
           <span class='logo-subtitulo'>por ADASFRO</span>
         </div>
       </a>
 
-      <!-- Menú desktop -->
       <ul class='nav-menu' role='list'>
         <li><a expr:href='data:blog.homepageUrl'>Inicio</a></li>
         <li><a expr:href='data:blog.homepageUrl + &quot;search/label/Pol%C3%ADtica&quot;'>Política</a></li>
@@ -124,11 +110,10 @@ body { margin:0; padding:0; }
         <li><a expr:href='data:blog.homepageUrl + &quot;search/label/Blockchain&quot;'>Blockchain</a></li>
       </ul>
 
-      <!-- Acciones -->
       <div class='nav-acciones'>
-        <button aria-label='Buscar' class='btn-buscar' id='btn-buscar' type='button'>🔍</button>
-        <a class='nav-suscribir' expr:href='data:blog.homepageUrl + &quot;#suscribir&quot;'>Suscribirse</a>
-        <button aria-controls='menu-movil' aria-expanded='false' aria-label='Abrir menú' class='hamburguesa' id='hamburguesa' type='button'>
+        <button aria-label='Abrir buscador' class='btn-buscar' id='btn-buscar' type='button'>🔍</button>
+        <a class='nav-suscribir' expr:href='data:blog.homepageUrl + &quot;#suscribir&quot;' aria-label='Suscribirse al boletín'>📩 Suscribirse</a>
+        <button aria-controls='menu-movil' aria-expanded='false' aria-label='Abrir menú de navegación' class='hamburguesa' id='hamburguesa' type='button'>
           <span aria-hidden='true'></span>
           <span aria-hidden='true'></span>
           <span aria-hidden='true'></span>
@@ -140,7 +125,7 @@ body { margin:0; padding:0; }
 </header>
 
 <!-- Menú móvil -->
-<nav aria-hidden='true' aria-label='Menú móvil' class='menu-movil' id='menu-movil' role='navigation'>
+<nav aria-hidden='true' aria-label='Menú de navegación móvil' class='menu-movil' id='menu-movil'>
   <a expr:href='data:blog.homepageUrl'>🏠 Inicio</a>
   <a expr:href='data:blog.homepageUrl + &quot;search/label/Pol%C3%ADtica&quot;'>🏛️ Política</a>
   <a expr:href='data:blog.homepageUrl + &quot;search/label/Social&quot;'>👥 Social</a>
@@ -151,19 +136,16 @@ body { margin:0; padding:0; }
   <a href='mailto:descentralizando@adasfro.org'>📧 Contacto</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════
-     TICKER DE NOTICIAS
-═══════════════════════════════════════════ -->
-<div class='ticker-barra' role='marquee' aria-live='off' aria-label='Noticias recientes'>
+<!-- ═══════════════════════ TICKER ═══════════════════════ -->
+<div class='ticker-barra' role='marquee' aria-live='off' aria-label='Titulares recientes'>
   <div class='contenedor'>
     <div class='ticker-inner'>
-      <span class='ticker-label'>📡 En vivo</span>
+      <span class='ticker-label'>📡 AHORA</span>
       <div class='ticker-pista-wrap'>
         <div id='ticker-pista'>
-          <!-- JS carga titulares dinámicos desde Blogger API -->
           <span class='ticker-item'>
             <span class='ticker-dot'>●</span>
-            <span>Cargando noticias de Descentralizando...</span>
+            <span>Cargando titulares de Descentralizando...</span>
           </span>
         </div>
       </div>
@@ -171,60 +153,55 @@ body { margin:0; padding:0; }
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     OVERLAY DE BÚSQUEDA
-═══════════════════════════════════════════ -->
-<div aria-label='Buscar en Descentralizando' class='busqueda-overlay' id='busqueda-overlay' role='dialog'>
-  <button aria-label='Cerrar búsqueda' class='busqueda-cerrar' id='busqueda-cerrar' type='button'>✕</button>
+<!-- ═══════════════════════ BÚSQUEDA ═══════════════════════ -->
+<div aria-label='Búsqueda en el sitio' class='busqueda-overlay' id='busqueda-overlay' role='dialog' aria-modal='true'>
+  <button aria-label='Cerrar buscador' class='busqueda-cerrar' id='busqueda-cerrar' type='button'>✕</button>
   <div class='busqueda-caja'>
-    <p class='busqueda-hint'>Buscar en Descentralizando</p>
-    <form action='/search' method='get'>
-      <input autocomplete='off' class='busqueda-input' id='busqueda-input' name='q' placeholder='¿Qué querés buscar?' type='search' aria-label='Término de búsqueda'/>
+    <p class='busqueda-hint'>🔍 Buscar en Descentralizando</p>
+    <form action='/search' method='get' role='search'>
+      <label class='sr-only' for='busqueda-input'>Buscar artículos</label>
+      <input autocomplete='off' class='busqueda-input' id='busqueda-input' name='q' placeholder='¿Qué querés encontrar?' type='search'/>
     </form>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     CONTENIDO PRINCIPAL
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════════ CONTENIDO PRINCIPAL ═══════════════════════ -->
 <main id='contenido-principal' role='main'>
 
-<!-- ════════ HOMEPAGE ════════ -->
+<!-- ════ HOMEPAGE ════ -->
 <b:if cond='data:view.isHomepage'>
 
-  <!-- HERO: Grid de noticias destacadas (llenado por JS) -->
-  <section aria-label='Noticias destacadas' class='hero'>
+  <!-- Hero grid: JS lo llena con las últimas entradas -->
+  <section class='hero' aria-label='Noticias destacadas'>
     <div class='contenedor'>
       <div class='hero-grid' id='dm-hero-grid'>
-        <!-- Placeholder mientras carga -->
-        <div style='grid-column:1/-1;min-height:300px;display:flex;align-items:center;justify-content:center;background:var(--negro-card);border-radius:var(--r-lg);'>
-          <span style='color:var(--gris-400);font-family:var(--f-cuerpo);font-size:var(--t-sm);'>⏳ Cargando portada...</span>
+        <div style='grid-column:1/-1;min-height:350px;display:flex;align-items:center;justify-content:center;background:var(--fondo-3);border-radius:var(--r-lg);border:1px solid var(--borde);'>
+          <span style='color:var(--texto-3);font-family:var(--f-cuerpo);font-size:var(--t-sm);'>⏳ Cargando noticias destacadas...</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- LAYOUT 2 COLUMNAS -->
+  <!-- Layout 2 columnas -->
   <div class='contenedor'>
     <div class='layout-2col'>
 
-      <!-- COLUMNA PRINCIPAL -->
+      <!-- Columna principal -->
       <div>
-        <!-- Noticias Recientes -->
         <section aria-labelledby='titulo-recientes'>
           <div class='seccion-header' data-animar='arriba'>
             <h2 class='seccion-titulo' id='titulo-recientes'>📰 Noticias Recientes</h2>
-            <a class='seccion-ver-todos' expr:href='data:blog.homepageUrl'>Ver todas</a>
+            <a class='seccion-ver-todos' expr:href='data:blog.homepageUrl' aria-label='Ver todas las noticias'>Ver todas</a>
           </div>
+          <!-- JS llena este contenedor -->
           <div class='grilla-noticias' id='dm-noticias-recientes'>
-            <div style='grid-column:1/-1;padding:2rem;text-align:center;color:var(--gris-400);font-family:var(--f-cuerpo);'>
+            <div style='grid-column:1/-1;padding:3rem;text-align:center;color:var(--texto-3);background:var(--fondo-2);border-radius:var(--r-lg);border:1px solid var(--borde);'>
               ⏳ Cargando publicaciones...
             </div>
           </div>
         </section>
 
-        <!-- Widget de Blogger NECESARIO para que funcione el blog
-             Lo ocultamos visualmente pero Blogger lo requiere -->
+        <!-- Blog widget OCULTO — requerido por Blogger para funcionar -->
         <div aria-hidden='true' style='display:none;'>
           <b:section class='main' id='main' maxwidgets='1' showaddelement='no'>
             <b:widget id='Blog1' locked='true' title='Entradas de blog' type='Blog' version='2'>
@@ -244,9 +221,7 @@ body { margin:0; padding:0; }
                     <b:include data='post' name='post'/>
                   </b:loop>
                 </div>
-                <div class='blog-pager' id='blog-pager'>
-                  <b:include name='nextprev'/>
-                </div>
+                <div class='blog-pager'><b:include name='nextprev'/></div>
               </b:includable>
               <b:includable id='post' var='post'>
                 <article class='post' expr:id='"post-" + data:post.id'>
@@ -268,16 +243,16 @@ body { margin:0; padding:0; }
       </div><!-- /columna principal -->
 
       <!-- SIDEBAR -->
-      <aside aria-label='Barra lateral' class='sidebar'>
+      <aside class='sidebar' aria-label='Barra lateral'>
 
-        <!-- Lo más leído -->
-        <div class='widget-card' data-animar='arriba'>
+        <!-- Lo más reciente -->
+        <div class='widget-card widget-card-accent' data-animar='arriba'>
           <div class='widget-header'>
             <span class='widget-header-icon' aria-hidden='true'>🔥</span>
             <span class='widget-header-titulo'>Lo más reciente</span>
           </div>
           <div class='widget-body' id='dm-populares'>
-            <div style='color:var(--gris-400);font-size:var(--t-sm);'>Cargando...</div>
+            <p style='color:var(--texto-4);font-size:var(--t-sm);'>Cargando...</p>
           </div>
         </div>
 
@@ -288,19 +263,20 @@ body { margin:0; padding:0; }
             <span class='widget-header-titulo'>Categorías</span>
           </div>
           <div class='widget-body'>
-            <div class='etiquetas-nube'>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Pol%C3%ADtica&quot;'>Política</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Social&quot;'>Social</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Tecnolog%C3%ADa&quot;'>Tecnología</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Econom%C3%ADa&quot;'>Economía 4.0</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Turismo&quot;'>Turismo</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Blockchain&quot;'>Blockchain</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Descentralizaci%C3%B3n&quot;'>Descentralización</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Inclusi%C3%B3n&quot;'>Inclusión</a>
-              <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Gobernanza&quot;'>Gobernanza</a>
-            </div>
-
-            <!-- Widget nativo de etiquetas de Blogger (oculto, genera las etiquetas reales) -->
+            <nav aria-label='Navegación por categorías'>
+              <div class='etiquetas-nube'>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Pol%C3%ADtica&quot;' style='border-color:#1e40af;color:#1e40af;'>🏛️ Política</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Social&quot;' style='border-color:#6d28d9;color:#6d28d9;'>👥 Social</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Tecnolog%C3%ADa&quot;' style='border-color:#0369a1;color:#0369a1;'>💻 Tecnología</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Econom%C3%ADa&quot;' style='border-color:#b45309;color:#b45309;'>📈 Economía 4.0</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Turismo&quot;' style='border-color:#047857;color:#047857;'>🌿 Turismo</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Blockchain&quot;' style='border-color:#7c3aed;color:#7c3aed;'>⛓️ Blockchain</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Descentralizaci%C3%B3n&quot;' style='border-color:#7c3aed;color:#7c3aed;'>🌐 Descentralización</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Inclusi%C3%B3n&quot;' style='border-color:#6d28d9;color:#6d28d9;'>♿ Inclusión</a>
+                <a class='etiqueta-btn' expr:href='data:blog.homepageUrl + &quot;search/label/Gobernanza&quot;' style='border-color:#1e40af;color:#1e40af;'>⚖️ Gobernanza</a>
+              </div>
+            </nav>
+            <!-- Widget nativo (genera etiquetas reales de Blogger) -->
             <div style='display:none;'>
               <b:section id='sidebar-labels'>
                 <b:widget id='Label1' title='Etiquetas' type='Label' version='2'/>
@@ -310,27 +286,29 @@ body { margin:0; padding:0; }
         </div>
 
         <!-- Sobre nosotros -->
-        <div class='widget-card' data-animar='arriba' data-retraso='200'>
+        <div class='widget-card widget-sobre' data-animar='arriba' data-retraso='200'>
           <div class='widget-header'>
             <span class='widget-header-icon' aria-hidden='true'>🏛️</span>
             <span class='widget-header-titulo'>Quiénes somos</span>
           </div>
           <div class='widget-body'>
             <div class='widget-sobre-logo'>
-              <div class='widget-sobre-logo-box' aria-hidden='true'>🗺️</div>
+              <div class='widget-sobre-logo-box' aria-hidden='true'>📖</div>
               <div>
                 <div class='widget-sobre-nombre'>Descentralizando</div>
                 <div class='widget-sobre-sub'>por ADASFRO</div>
               </div>
             </div>
-            <p style='font-size:var(--t-sm);color:var(--gris-400);line-height:1.65;margin-bottom:0.75rem;'>
-              Medio digital informativo enfocado en la economía 4.0, descentralización, 
-              tecnología e inclusión en Costa Rica y la región.
+            <p style='font-size:var(--t-sm);color:var(--texto-3);line-height:1.65;'>
+              Medio digital informativo sobre economía 4.0, descentralización, 
+              tecnología e inclusión en Costa Rica y la región. Accesible, libre y comunitario.
             </p>
-            <div class='widget-cedula'>🏛️ Cédula Jurídica: 3-002-860094</div>
-            <p style='font-size:var(--t-xs);color:var(--gris-600);margin-top:0.6rem;line-height:1.5;'>
-              Ley N.º 218 · Art. 28, 29, 46 Constitución · Art. 139 Código Electoral
-            </p>
+            <div class='widget-cedula'>
+              🏛️ Cédula Jurídica: 3-002-860094
+            </div>
+            <a href='mailto:descentralizando@adasfro.org' style='display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.75rem;font-family:var(--f-ui);font-size:var(--t-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--verde);text-decoration:none;transition:color 0.2s;'>
+              📧 Contactarnos
+            </a>
           </div>
         </div>
 
@@ -341,27 +319,14 @@ body { margin:0; padding:0; }
             <span class='widget-header-titulo'>Suscribirse</span>
           </div>
           <div class='widget-body'>
-            <div class='widget-sub-form'>
-              <p>Recibí noticias sobre economía 4.0 y descentralización directamente en tu correo.</p>
-              <!-- Widget nativo de Blogger para suscripción por email -->
+            <div class='sub-form-inner'>
+              <p>Recibí noticias sobre economía 4.0 y descentralización en tu correo. Gratis.</p>
+              <!-- Widget nativo Blogger de suscripción por email -->
               <b:section id='sidebar-follow'>
-                <b:widget id='FollowByEmail1' title='Suscripción por correo' type='FollowByEmail' version='2'/>
+                <b:widget id='FollowByEmail1' title='Suscripción' type='FollowByEmail' version='2'/>
               </b:section>
             </div>
           </div>
-        </div>
-
-        <!-- PopularPosts widget nativo (oculto) -->
-        <div style='display:none;' aria-hidden='true'>
-          <b:section id='sidebar-popular'>
-            <b:widget id='PopularPosts1' title='Populares' type='PopularPosts' version='2'>
-              <b:widget-settings>
-                <b:widget-setting name='numItemsToShow'>5</b:widget-setting>
-                <b:widget-setting name='showThumbnails'>false</b:widget-setting>
-                <b:widget-setting name='showSnippets'>false</b:widget-setting>
-              </b:widget-settings>
-            </b:widget>
-          </b:section>
         </div>
 
       </aside><!-- /sidebar -->
@@ -370,15 +335,14 @@ body { margin:0; padding:0; }
   </div><!-- /contenedor -->
 
 </b:if>
-<!-- ════════ FIN HOMEPAGE ════════ -->
+<!-- ════ FIN HOMEPAGE ════ -->
 
 
-<!-- ════════ PÁGINA DE ENTRADA INDIVIDUAL ════════ -->
+<!-- ════ POST INDIVIDUAL ════ -->
 <b:if cond='data:view.isPost'>
   <div class='contenedor'>
     <div class='layout-2col'>
 
-      <!-- Artículo -->
       <article class='post-individual'>
         <b:section class='main' id='main-post' maxwidgets='1' showaddelement='no'>
           <b:widget id='Blog2' locked='true' title='Entrada' type='Blog' version='2'>
@@ -387,42 +351,36 @@ body { margin:0; padding:0; }
                 <b:include data='post' name='postCompleto'/>
               </b:loop>
             </b:includable>
-
             <b:includable id='postCompleto' var='post'>
-              <!-- Eyebrow / etiquetas -->
+
               <div class='post-eyebrow'>
                 <b:loop values='data:post.labels' var='label'>
                   <a class='badge' expr:href='data:label.url'><data:label.name/></a>
                 </b:loop>
               </div>
 
-              <!-- Título -->
               <h1 class='post-titulo-principal'><data:post.title/></h1>
 
-              <!-- Meta -->
               <div class='post-dateline'>
                 <span>📅 <data:post.dateHeader/></span>
                 <span>✍️ <strong><data:post.author.name/></strong></span>
                 <b:if cond='data:post.allowComments'>
-                  <a expr:href='data:post.url + &quot;#comments&quot;' style='color:var(--esmeralda);text-decoration:none;'>
+                  <a expr:href='data:post.url + &quot;#comments&quot;' style='color:var(--verde);text-decoration:none;'>
                     💬 <data:post.numComments/> comentarios
                   </a>
                 </b:if>
               </div>
 
-              <!-- Imagen destacada si existe -->
               <b:if cond='data:post.featuredImage'>
-                <div class='post-imagen-destacada'>
-                  <img expr:alt='data:post.title' expr:src='data:post.featuredImage' loading='eager'/>
+                <div class='post-img-dest'>
+                  <img expr:alt='data:post.title' expr:src='data:post.featuredImage' loading='eager' decoding='async' style='width:100%;max-height:480px;object-fit:cover;object-position:center top;'/>
                 </div>
               </b:if>
 
-              <!-- Cuerpo del artículo -->
               <div class='post-body' expr:id='"post-body-" + data:post.id'>
                 <data:post.body/>
               </div>
 
-              <!-- Footer: etiquetas -->
               <div class='post-labels-footer'>
                 <span>Categorías:</span>
                 <b:loop values='data:post.labels' var='label'>
@@ -431,26 +389,26 @@ body { margin:0; padding:0; }
               </div>
 
               <!-- Compartir -->
-              <div style='margin-top:1.5rem;padding:1rem;background:var(--negro-panel);border-radius:var(--r-md);border:1px solid var(--negro-borde);'>
-                <p style='font-family:var(--f-ui);font-size:var(--t-xs);text-transform:uppercase;letter-spacing:0.1em;color:var(--gris-400);margin-bottom:0.75rem;'>Compartir este artículo</p>
-                <div style='display:flex;gap:0.75rem;flex-wrap:wrap;'>
-                  <a expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' rel='noopener' style='font-family:var(--f-ui);font-size:var(--t-xs);font-weight:700;text-transform:uppercase;padding:6px 14px;background:#1877f2;color:#fff;border-radius:var(--r-sm);text-decoration:none;' target='_blank'>Facebook</a>
-                  <a expr:href='&quot;https://twitter.com/intent/tweet?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' rel='noopener' style='font-family:var(--f-ui);font-size:var(--t-xs);font-weight:700;text-transform:uppercase;padding:6px 14px;background:#000;color:#fff;border-radius:var(--r-sm);text-decoration:none;' target='_blank'>Twitter/X</a>
-                  <a expr:href='&quot;https://wa.me/?text=&quot; + data:post.title + &quot; &quot; + data:post.url' rel='noopener' style='font-family:var(--f-ui);font-size:var(--t-xs);font-weight:700;text-transform:uppercase;padding:6px 14px;background:#25d366;color:#fff;border-radius:var(--r-sm);text-decoration:none;' target='_blank'>WhatsApp</a>
+              <div class='compartir-caja'>
+                <p class='compartir-titulo'>📤 Compartir este artículo</p>
+                <div class='compartir-btns'>
+                  <a class='btn-compartir btn-fb' expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' rel='noopener noreferrer' target='_blank'>f Facebook</a>
+                  <a class='btn-compartir btn-tw' expr:href='&quot;https://twitter.com/intent/tweet?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' rel='noopener noreferrer' target='_blank'>𝕏 Twitter</a>
+                  <a class='btn-compartir btn-wa' expr:href='&quot;https://wa.me/?text=&quot; + data:post.title + &quot; &quot; + data:post.url' rel='noopener noreferrer' target='_blank'>📱 WhatsApp</a>
                 </div>
               </div>
 
               <!-- Comentarios -->
               <b:if cond='data:post.allowComments'>
                 <section aria-label='Comentarios' style='margin-top:3rem;'>
-                  <h2 style='font-family:var(--f-titulo);font-size:var(--t-2xl);color:var(--blanco);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;'>
+                  <h2 style='font-family:var(--f-titulo);font-size:var(--t-2xl);color:var(--texto-1);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;border-bottom:2px solid var(--borde);padding-bottom:1rem;'>
                     💬 Comentarios (<data:post.numComments/>)
                   </h2>
                   <b:include data='post' name='comments'/>
                 </section>
               </b:if>
-            </b:includable>
 
+            </b:includable>
             <b:includable id='comments' var='post'>
               <div id='comments'>
                 <b:loop values='data:post.comments' var='comment'>
@@ -469,19 +427,17 @@ body { margin:0; padding:0; }
         </b:section>
       </article>
 
-      <!-- Sidebar en entrada individual -->
+      <!-- Sidebar post individual -->
       <aside class='sidebar' aria-label='Barra lateral'>
-
-        <div class='widget-card'>
+        <div class='widget-card widget-card-accent'>
           <div class='widget-header'>
             <span class='widget-header-icon'>🔥</span>
-            <span class='widget-header-titulo'>Más publicaciones</span>
+            <span class='widget-header-titulo'>Más noticias</span>
           </div>
           <div class='widget-body' id='dm-populares-post'>
-            <div style='color:var(--gris-400);font-size:var(--t-sm);'>Cargando...</div>
+            <p style='color:var(--texto-4);font-size:var(--t-sm);'>Cargando...</p>
           </div>
         </div>
-
         <div class='widget-card'>
           <div class='widget-header'>
             <span class='widget-header-icon'>📂</span>
@@ -498,33 +454,36 @@ body { margin:0; padding:0; }
             </div>
           </div>
         </div>
-
       </aside>
 
     </div>
   </div>
 </b:if>
-<!-- ════════ FIN POST INDIVIDUAL ════════ -->
+<!-- ════ FIN POST INDIVIDUAL ════ -->
 
 
-<!-- ════════ BÚSQUEDA / ETIQUETA ════════ -->
+<!-- ════ BÚSQUEDA / ETIQUETA ════ -->
 <b:if cond='data:view.isSearch'>
   <div class='page-header'>
     <div class='contenedor'>
       <b:if cond='data:view.search.label'>
-        <div class='page-header-badge'><span class='badge'>Categoría</span></div>
+        <div class='page-header-badge'>
+          <span class='badge'>📂 Categoría</span>
+        </div>
         <h1 class='page-header-titulo'><data:view.search.label/></h1>
         <p class='page-header-desc'>Todas las publicaciones sobre <data:view.search.label/></p>
       <b:else/>
-        <div class='page-header-badge'><span class='badge'>Búsqueda</span></div>
+        <div class='page-header-badge'>
+          <span class='badge'>🔍 Búsqueda</span>
+        </div>
         <h1 class='page-header-titulo'>Resultados de búsqueda</h1>
       </b:if>
     </div>
   </div>
 
-  <div class='contenedor' style='padding-top:0;padding-bottom:2rem;'>
+  <div class='contenedor' style='padding-bottom:3rem;'>
     <b:section class='main' id='main-search' maxwidgets='1' showaddelement='no'>
-      <b:widget id='Blog3' locked='true' title='Búsqueda' type='Blog' version='2'>
+      <b:widget id='Blog3' locked='true' title='Resultados' type='Blog' version='2'>
         <b:includable id='main' var='top'>
           <div class='grilla-noticias'>
             <b:loop values='data:posts' var='post'>
@@ -533,20 +492,19 @@ body { margin:0; padding:0; }
           </div>
           <div class='blog-pager'><b:include name='nextprev'/></div>
         </b:includable>
-
         <b:includable id='searchCard' var='post'>
           <article class='noticia-card'>
             <a class='noticia-thumb' expr:href='data:post.url' style='display:block;text-decoration:none;'>
               <b:if cond='data:post.featuredImage'>
-                <img expr:alt='data:post.title' expr:src='data:post.featuredImage' loading='lazy'/>
+                <img expr:alt='data:post.title' expr:src='data:post.featuredImage' loading='lazy' decoding='async' style='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;'/>
               <b:else/>
                 <div class='img-placeholder'>🗺️</div>
               </b:if>
               <b:if cond='data:post.labels'>
                 <b:loop values='data:post.labels' var='label'>
-                  <b:if cond='data:label == data:post.labels[0]'>
-                    <span class='badge'><data:label.name/></span>
-                  </b:if>
+                  <span class='badge' style='position:absolute;top:0.75rem;left:0.75rem;z-index:2;'>
+                    <data:label.name/>
+                  </span>
                 </b:loop>
               </b:if>
             </a>
@@ -556,13 +514,11 @@ body { margin:0; padding:0; }
               </h2>
               <div class='noticia-meta'>
                 <span>📅 <data:post.dateHeader/></span>
-                <span class='noticia-sep'>●</span>
-                <span class='noticia-autor'><data:post.author.name/></span>
+                <span class='noticia-autor'>· <data:post.author.name/></span>
               </div>
             </div>
           </article>
         </b:includable>
-
         <b:includable id='nextprev'>
           <b:if cond='data:newerPageUrl'>
             <a class='blog-pager-newer-link' expr:href='data:newerPageUrl'>← Más recientes</a>
@@ -575,40 +531,52 @@ body { margin:0; padding:0; }
     </b:section>
   </div>
 </b:if>
-<!-- ════════ FIN BÚSQUEDA/ETIQUETA ════════ -->
+<!-- ════ FIN BÚSQUEDA ════ -->
 
 </main>
 
-<!-- ═══════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
 <footer class='footer' role='contentinfo'>
+
+  <!-- Banda de links rápidos -->
+  <div class='footer-banda'>
+    <div class='contenedor'>
+      <div class='footer-banda-inner'>
+        <a class='footer-banda-link' expr:href='data:blog.homepageUrl'>Inicio</a>
+        <a class='footer-banda-link' expr:href='data:blog.homepageUrl + &quot;search/label/Pol%C3%ADtica&quot;'>Política</a>
+        <a class='footer-banda-link' expr:href='data:blog.homepageUrl + &quot;search/label/Social&quot;'>Social</a>
+        <a class='footer-banda-link' expr:href='data:blog.homepageUrl + &quot;search/label/Tecnolog%C3%ADa&quot;'>Tecnología</a>
+        <a class='footer-banda-link' expr:href='data:blog.homepageUrl + &quot;search/label/Econom%C3%ADa&quot;'>Economía 4.0</a>
+        <a class='footer-banda-link' expr:href='data:blog.homepageUrl + &quot;search/label/Turismo&quot;'>Turismo</a>
+        <a class='footer-banda-link' href='mailto:descentralizando@adasfro.org'>Contacto</a>
+      </div>
+    </div>
+  </div>
+
   <div class='contenedor'>
     <div class='footer-superior'>
 
-      <!-- Identidad -->
       <div>
-        <a class='footer-logo' expr:href='data:blog.homepageUrl'>
-          <div class='footer-logo-box' aria-hidden='true'>🗺️</div>
+        <a class='footer-logo' expr:href='data:blog.homepageUrl' aria-label='Descentralizando - inicio'>
+          <div class='footer-logo-box' aria-hidden='true'>📖</div>
           <div>
             <div class='footer-logo-nombre'>Descentralizando</div>
             <div class='footer-logo-sub'>por ADASFRO</div>
           </div>
         </a>
         <p class='footer-desc'>
-          Medio digital informativo sobre economía 4.0, descentralización, tecnología 
-          e inclusión en Costa Rica. Operado por ADASFRO bajo modelo no comercial.
+          Medio digital informativo sobre economía 4.0, descentralización, 
+          tecnología e inclusión en Costa Rica. Operado por ADASFRO bajo modelo no comercial y sin publicidad.
         </p>
-        <div class='footer-redes'>
-          <a class='footer-red' href='https://facebook.com' rel='noopener' target='_blank' title='Facebook' aria-label='Facebook'>f</a>
-          <a class='footer-red' href='https://instagram.com' rel='noopener' target='_blank' title='Instagram' aria-label='Instagram'>ig</a>
-          <a class='footer-red' href='https://twitter.com' rel='noopener' target='_blank' title='Twitter/X' aria-label='Twitter/X'>𝕏</a>
-          <a class='footer-red' href='https://youtube.com' rel='noopener' target='_blank' title='YouTube' aria-label='YouTube'>▶</a>
+        <div class='footer-redes' aria-label='Redes sociales'>
+          <a class='footer-red' href='https://facebook.com' rel='noopener noreferrer' target='_blank' aria-label='Facebook'>f</a>
+          <a class='footer-red' href='https://instagram.com' rel='noopener noreferrer' target='_blank' aria-label='Instagram'>ig</a>
+          <a class='footer-red' href='https://twitter.com' rel='noopener noreferrer' target='_blank' aria-label='Twitter/X'>𝕏</a>
+          <a class='footer-red' href='https://youtube.com' rel='noopener noreferrer' target='_blank' aria-label='YouTube'>▶</a>
         </div>
       </div>
 
-      <!-- Navegación -->
-      <nav aria-label='Navegación secundaria' class='footer-col'>
+      <nav class='footer-col' aria-label='Secciones del sitio'>
         <h3>Secciones</h3>
         <ul>
           <li><a expr:href='data:blog.homepageUrl'>Inicio</a></li>
@@ -621,7 +589,6 @@ body { margin:0; padding:0; }
         </ul>
       </nav>
 
-      <!-- Temas -->
       <div class='footer-col'>
         <h3>Temas</h3>
         <ul>
@@ -631,59 +598,55 @@ body { margin:0; padding:0; }
           <li><a href='#'>Gobernanza abierta</a></li>
           <li><a href='#'>Turismo inteligente</a></li>
           <li><a href='#'>Cartago 2026</a></li>
+          <li><a href='#'>LESCO y derechos</a></li>
         </ul>
       </div>
 
-      <!-- Contacto -->
       <div class='footer-col'>
-        <h3>Institución</h3>
+        <h3>Contacto</h3>
         <address>
           <p>📧 descentralizando@adasfro.org</p>
-          <p>📍 Orosi, Cartago, Costa Rica</p>
-          <p>🏛️ Cédula: 3-002-860094</p>
+          <p style='margin-top:0.5rem;'>📍 Orosi, Cartago, Costa Rica</p>
+          <p style='margin-top:0.5rem;'>🏛️ Cédula: 3-002-860094</p>
         </address>
-        <p style='margin-top:0.75rem;font-size:var(--t-xs);color:var(--gris-600);line-height:1.6;'>
+        <p style='margin-top:1rem;font-size:var(--t-xs);color:rgba(148,163,184,0.6);line-height:1.6;'>
           Ley N.º 218 · Art. 28, 29, 46<br/>
-          Constitución Política C.R.<br/>
+          Constitución Política de C.R.<br/>
           Art. 139 Código Electoral
         </p>
       </div>
 
-    </div><!-- /footer-superior -->
-  </div><!-- /contenedor -->
+    </div>
+  </div>
 
   <div class='footer-inferior'>
     <div class='contenedor'>
       <div class='footer-inferior-inner'>
         <span>© 2026 ADASFRO · Descentralizando — Todos los derechos reservados</span>
-        <span>Hecho con 🌿 en Costa Rica · Tecnología accesible para todos</span>
+        <span>🌿 Hecho en Costa Rica · Tecnología accesible para todos</span>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- Botón volver arriba -->
 <button aria-label='Volver al inicio de la página' class='volver-arriba' id='volver-arriba' type='button'>↑</button>
 
-<!-- ═══════════════════════════════════════════
-     SCRIPTS
-═══════════════════════════════════════════ -->
 <!-- JS desde GitHub Pages -->
 <script defer='defer' src='https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-script.js'/>
 
-<!-- Scroll suave para links internos -->
+<!-- Scroll suave para anclas -->
 <script>
 //<![CDATA[
-document.addEventListener('click', function(e) {
-  var a = e.target.closest('a[href^="#"]');
-  if (!a) return;
-  var href = a.getAttribute('href');
-  if (href === '#') return;
-  var dest = document.querySelector(href);
-  if (!dest) return;
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href^="#"]');
+  if(!a)return;
+  var id=a.getAttribute('href').slice(1);
+  if(!id)return;
+  var dest=document.getElementById(id);
+  if(!dest)return;
   e.preventDefault();
-  var top = dest.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top: top, behavior: 'smooth' });
+  window.scrollTo({top:dest.getBoundingClientRect().top+window.scrollY-85,behavior:'smooth'});
+  dest.setAttribute('tabindex','-1');dest.focus();
 });
 //]]>
 </script>
