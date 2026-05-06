@@ -1,126 +1,378 @@
 /*
   ╔══════════════════════════════════════════════════════════════╗
-  ║  DESCENTRALIZANDO — script.js                                ║
-  ║  Funcionalidades interactivas del sitio                      ║
+  ║  DESCENTRALIZANDO — script.js v3.0                           ║
+  ║  Medio Digital ADASFRO · Economía 4.0 · Costa Rica           ║
+  ║  GitHub Pages: leanpeg.github.io/Decentralizado_ADASFRO/     ║
   ║                                                              ║
-  ║  CÓMO ESTÁ ORGANIZADO:                                       ║
-  ║  1. Navbar con sombra al scroll                              ║
-  ║  2. Menú hamburguesa (móvil)                                 ║
-  ║  3. Scroll suave a secciones                                 ║
-  ║  4. Animaciones al hacer scroll                              ║
-  ║  5. Slider de casos de éxito                                 ║
-  ║  6. Filtros de noticias                                      ║
-  ║  7. Conteo animado de estadísticas                           ║
-  ║  8. Formulario de suscripción                                ║
-  ║  9. Botón volver arriba                                      ║
-  ║  10. Botones de accesibilidad (texto grande / contraste)     ║
+  ║  Funciones:                                                  ║
+  ║  1.  Navbar scroll + sombra                                  ║
+  ║  2.  Menú hamburguesa (móvil)                                ║
+  ║  3.  Búsqueda overlay                                        ║
+  ║  4.  Ticker: pausa al hover                                  ║
+  ║  5.  API Blogger: Hero grid dinámico                         ║
+  ║  6.  API Blogger: Noticias recientes (grid cards)            ║
+  ║  7.  API Blogger: Sidebar populares                          ║
+  ║  8.  API Blogger: Ticker de titulares                        ║
+  ║  9.  Animaciones al scroll (IntersectionObserver)            ║
+  ║  10. Volver arriba                                           ║
+  ║  11. Accesibilidad (texto grande / alto contraste)           ║
+  ║  12. Enlace activo en nav                                    ║
+  ║  13. Fecha dinámica en barra superior                        ║
   ╚══════════════════════════════════════════════════════════════╝
 */
 
-'use strict'; // Modo estricto — ayuda a evitar errores
+'use strict';
 
 // ══════════════════════════════════════════════════════════
-// 1. NAVBAR — Sombra al hacer scroll
+// CONFIGURACIÓN CENTRAL — editar sólo aquí
+// ══════════════════════════════════════════════════════════
+const CONFIG = {
+  blogUrl:    'https://www.decentralizando.org',
+  blogId:     '',               // opcional: ID numérico del blog (más rápido)
+  maxHero:    5,                // entradas en hero grid
+  maxRecientes: 9,              // entradas en grilla recientes
+  maxSidebar: 5,                // entradas en sidebar "populares"
+  maxTicker:  8,                // titulares en ticker
+  apiBase:    'https://www.decentralizando.org/feeds/posts/default',
+  // Mapeo etiqueta → clase CSS badge
+  labelMap: {
+    'Política':       'badge-politica',
+    'Social':         'badge-social',
+    'Tecnología':     'badge-tecnologia',
+    'Economia':       'badge-economia',
+    'Economía':       'badge-economia',
+    'Turismo':        'badge-turismo',
+    'Blockchain':     'badge-blockchain',
+    'Descentralización': 'badge-blockchain',
+    'Inclusión':      'badge-social',
+    'Gobernanza':     'badge-politica',
+  }
+};
+
+// ══════════════════════════════════════════════════════════
+// UTILIDADES
+// ══════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function getThumb(entry, size) {
+  size = size || 600;
+  if (entry.media$thumbnail) {
+    return entry.media$thumbnail.url.replace(/\/s\d+(-c)?\//, `/s${size}-c/`);
+  }
+  const c = (entry.content && entry.content.$t) || (entry.summary && entry.summary.$t) || '';
+  const m = c.match(/src=["']([^"']+\.(jpg|jpeg|png|webp|gif))[^"']*/i);
+  return m ? m[1] : '';
+}
+
+function getUrl(entry) {
+  const links = entry.link || [];
+  for (const l of links) { if (l.rel === 'alternate') return l.href; }
+  return '#';
+}
+
+function getTitle(entry) {
+  return (entry.title && entry.title.$t) || 'Sin título';
+}
+
+function getLabels(entry) {
+  return (entry.category || []).map(c => c.term);
+}
+
+function getFirstLabel(entry) {
+  const cats = entry.category || [];
+  return cats.length ? cats[0].term : '';
+}
+
+function getDate(entry) {
+  const raw = (entry.published && entry.published.$t) || '';
+  if (!raw) return '';
+  const d = new Date(raw);
+  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function badgeClass(label) {
+  return CONFIG.labelMap[label] || 'badge-turismo';
+}
+
+function makeBadge(label) {
+  if (!label) return '';
+  return `<span class="badge ${badgeClass(label)}">${esc(label)}</span>`;
+}
+
+// ══════════════════════════════════════════════════════════
+// 1. NAVBAR — Sombra al scroll
 // ══════════════════════════════════════════════════════════
 (function iniciarNavbar() {
-  const navbar = document.getElementById('navbar');
+  const navbar = document.querySelector('.navbar');
   if (!navbar) return;
-
-  // Agrega sombra cuando el usuario baja en la página
-  function actualizarNavbar() {
-    if (window.scrollY > 30) {
-      navbar.classList.add('con-sombra');
-    } else {
-      navbar.classList.remove('con-sombra');
-    }
+  function update() {
+    navbar.classList.toggle('con-sombra', window.scrollY > 30);
   }
-
-  window.addEventListener('scroll', actualizarNavbar, { passive: true });
-  actualizarNavbar(); // Ejecutar al cargar
+  window.addEventListener('scroll', update, { passive: true });
+  update();
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 2. MENÚ HAMBURGUESA — Para pantallas móviles
+// 2. MENÚ HAMBURGUESA
 // ══════════════════════════════════════════════════════════
 (function iniciarMenuMovil() {
-  const hamburguesa = document.getElementById('hamburguesa');
-  const menuMovil   = document.getElementById('menu-movil');
-  if (!hamburguesa || !menuMovil) return;
+  const btn  = $('hamburguesa');
+  const menu = $('menu-movil');
+  if (!btn || !menu) return;
 
-  // Al hacer clic en el ícono de hamburguesa
-  hamburguesa.addEventListener('click', () => {
-    const estaAbierto = hamburguesa.classList.toggle('abierto');
-    menuMovil.classList.toggle('abierto', estaAbierto);
-    hamburguesa.setAttribute('aria-expanded', estaAbierto.toString());
-    menuMovil.setAttribute('aria-hidden', (!estaAbierto).toString());
+  btn.addEventListener('click', () => {
+    const open = btn.classList.toggle('abierto');
+    menu.classList.toggle('abierto', open);
+    btn.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
   });
 
-  // Cerrar menú al hacer clic en un enlace
-  menuMovil.querySelectorAll('a').forEach(enlace => {
-    enlace.addEventListener('click', () => {
-      hamburguesa.classList.remove('abierto');
-      menuMovil.classList.remove('abierto');
-      hamburguesa.setAttribute('aria-expanded', 'false');
-      menuMovil.setAttribute('aria-hidden', 'true');
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      btn.classList.remove('abierto');
+      menu.classList.remove('abierto');
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
     });
   });
 
-  // Cerrar con la tecla Escape (accesibilidad)
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && hamburguesa.classList.contains('abierto')) {
-      hamburguesa.classList.remove('abierto');
-      menuMovil.classList.remove('abierto');
-      hamburguesa.setAttribute('aria-expanded', 'false');
-      menuMovil.setAttribute('aria-hidden', 'true');
-      hamburguesa.focus(); // Devolver foco al botón
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && btn.classList.contains('abierto')) {
+      btn.classList.remove('abierto');
+      menu.classList.remove('abierto');
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      btn.focus();
     }
   });
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 3. SCROLL SUAVE — Navegación fluida entre secciones
+// 3. BÚSQUEDA OVERLAY
 // ══════════════════════════════════════════════════════════
-(function iniciarScrollSuave() {
-  const ALTURA_NAVBAR = 80; // Altura del navbar en píxeles
+(function iniciarBusqueda() {
+  const btnAbrir  = $('btn-buscar');
+  const overlay   = $('busqueda-overlay');
+  const btnCerrar = $('busqueda-cerrar');
+  const input     = $('busqueda-input');
+  if (!overlay) return;
 
-  document.querySelectorAll('a[href^="#"]').forEach(enlace => {
-    enlace.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if (href === '#') return;
+  function abrir() {
+    overlay.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+    if (input) setTimeout(() => input.focus(), 80);
+  }
+  function cerrar() {
+    overlay.classList.remove('activo');
+    document.body.style.overflow = '';
+    if (btnAbrir) btnAbrir.focus();
+  }
 
-      const destino = document.querySelector(href);
-      if (!destino) return;
+  if (btnAbrir)  btnAbrir.addEventListener('click', abrir);
+  if (btnCerrar) btnCerrar.addEventListener('click', cerrar);
 
-      e.preventDefault();
-
-      // Calcular posición y hacer scroll
-      const posY = destino.getBoundingClientRect().top + window.scrollY - ALTURA_NAVBAR;
-      window.scrollTo({ top: posY, behavior: 'smooth' });
-
-      // Actualizar URL sin recargar página
-      history.pushState(null, '', href);
-
-      // Mover foco al destino (accesibilidad)
-      destino.setAttribute('tabindex', '-1');
-      destino.focus({ preventScroll: true });
-      destino.addEventListener('blur', () => destino.removeAttribute('tabindex'), { once: true });
-    });
+  overlay.addEventListener('click', e => { if (e.target === overlay) cerrar(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('activo')) cerrar();
   });
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 4. ANIMACIONES AL SCROLL — Aparecen al ser visibles
+// 4. TICKER — Pausa al hover
+// ══════════════════════════════════════════════════════════
+(function iniciarTicker() {
+  const pista = $('ticker-pista');
+  if (!pista) return;
+  pista.addEventListener('mouseenter', () => { pista.style.animationPlayState = 'paused'; });
+  pista.addEventListener('mouseleave', () => { pista.style.animationPlayState = 'running'; });
+})();
+
+
+// ══════════════════════════════════════════════════════════
+// BLOGGER JSON API — Fetch con JSONP
+// ══════════════════════════════════════════════════════════
+function fetchBlogger(max, label, callback) {
+  let url = `${CONFIG.apiBase}?alt=json&max-results=${max}`;
+  if (label) url += `&category=${encodeURIComponent(label)}`;
+
+  const cbName = '_bc_' + Math.random().toString(36).slice(2, 10);
+  const script = document.createElement('script');
+
+  window[cbName] = function(data) {
+    try { delete window[cbName]; } catch(e) {}
+    if (script.parentNode) script.parentNode.removeChild(script);
+    const entries = (data && data.feed && data.feed.entry) ? data.feed.entry : [];
+    callback(entries);
+  };
+
+  script.src = url + `&callback=${cbName}`;
+  script.onerror = function() {
+    try { delete window[cbName]; } catch(e) {}
+    callback([]);
+  };
+  document.head.appendChild(script);
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 5. HERO GRID — Carga dinámica
+// ══════════════════════════════════════════════════════════
+function renderHero(entries) {
+  const grid = $('dm-hero-grid');
+  if (!grid) return;
+
+  if (!entries.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--gris-400);font-family:var(--f-cuerpo);">
+      📰 No hay publicaciones aún. ¡Publicá tu primera entrada en Blogger!
+    </div>`;
+    return;
+  }
+
+  let html = '';
+
+  // POST PRINCIPAL (grande, toma toda la altura izquierda)
+  const main = entries[0];
+  const mThumb = getThumb(main, 900);
+  const mLabel = getFirstLabel(main);
+  html += `<a href="${esc(getUrl(main))}" class="hero-main" aria-label="${esc(getTitle(main))}">`;
+  if (mThumb) {
+    html += `<img src="${esc(mThumb)}" alt="${esc(getTitle(main))}" loading="eager"/>`;
+  } else {
+    html += `<div class="img-placeholder">🗺️</div>`;
+  }
+  html += `<div class="hero-main-overlay"></div>
+  <div class="hero-main-content">
+    ${makeBadge(mLabel)}
+    <h2 class="hero-main-title">${esc(getTitle(main))}</h2>
+    <div class="hero-main-meta">
+      <span>📅 ${esc(getDate(main))}</span>
+    </div>
+  </div>
+  </a>`;
+
+  // POSTS SECUNDARIOS (4, en 2x2 a la derecha)
+  const subs = entries.slice(1, 5);
+  for (const s of subs) {
+    const sThumb = getThumb(s, 600);
+    const sLabel = getFirstLabel(s);
+    html += `<a href="${esc(getUrl(s))}" class="hero-sub" aria-label="${esc(getTitle(s))}">`;
+    if (sThumb) {
+      html += `<img src="${esc(sThumb)}" alt="${esc(getTitle(s))}" loading="lazy"/>`;
+    } else {
+      html += `<div class="img-placeholder" style="font-size:2rem">🗺️</div>`;
+    }
+    html += `<div class="hero-sub-overlay"></div>
+    <div class="hero-sub-content">
+      ${makeBadge(sLabel)}
+      <h3 class="hero-sub-title">${esc(getTitle(s))}</h3>
+      <div class="hero-sub-meta">📅 ${esc(getDate(s))}</div>
+    </div>
+    </a>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 6. GRILLA DE NOTICIAS RECIENTES
+// ══════════════════════════════════════════════════════════
+function renderGridNoticias(entries, containerId) {
+  const container = $(containerId);
+  if (!container) return;
+
+  if (!entries.length) {
+    container.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--gris-400);">No hay publicaciones en esta categoría aún.</div>`;
+    return;
+  }
+
+  let html = '';
+  for (const e of entries) {
+    const thumb  = getThumb(e, 600);
+    const label  = getFirstLabel(e);
+    const url    = getUrl(e);
+    const titulo = getTitle(e);
+    const fecha  = getDate(e);
+
+    html += `<article class="noticia-card">
+      <a href="${esc(url)}" class="noticia-thumb" style="display:block;text-decoration:none">
+        ${thumb
+          ? `<img src="${esc(thumb)}" alt="${esc(titulo)}" loading="lazy"/>`
+          : `<div class="img-placeholder">🗺️</div>`
+        }
+        ${makeBadge(label)}
+      </a>
+      <div class="noticia-body">
+        <h2 class="noticia-titulo"><a href="${esc(url)}">${esc(titulo)}</a></h2>
+        <div class="noticia-meta">
+          <span>📅 ${esc(fecha)}</span>
+        </div>
+      </div>
+    </article>`;
+  }
+  container.innerHTML = html;
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 7. SIDEBAR — Lista de noticias
+// ══════════════════════════════════════════════════════════
+function renderSidebarLista(entries, containerId) {
+  const container = $(containerId);
+  if (!container || !entries.length) return;
+
+  let html = '';
+  entries.slice(0, CONFIG.maxSidebar).forEach((e, i) => {
+    const thumb = getThumb(e, 200);
+    const label = getFirstLabel(e);
+    html += `<div class="rank-item">
+      <span class="rank-num">${String(i+1).padStart(2,'0')}</span>
+      <div>
+        <div class="rank-titulo">
+          <a href="${esc(getUrl(e))}">${esc(getTitle(e))}</a>
+        </div>
+        <div class="rank-fecha">📅 ${esc(getDate(e))} ${label ? '· ' + label : ''}</div>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 8. TICKER — Titulares dinámicos
+// ══════════════════════════════════════════════════════════
+function renderTicker(entries) {
+  const pista = $('ticker-pista');
+  if (!pista || !entries.length) return;
+
+  const items = entries.slice(0, CONFIG.maxTicker).map(e => {
+    return `<span class="ticker-item">
+      <span class="ticker-dot">●</span>
+      <a href="${esc(getUrl(e))}">${esc(getTitle(e))}</a>
+    </span>`;
+  });
+  // Duplicar para loop continuo
+  pista.innerHTML = items.join('') + items.join('');
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 9. ANIMACIONES AL SCROLL
 // ══════════════════════════════════════════════════════════
 (function iniciarAnimaciones() {
   const elementos = document.querySelectorAll('[data-animar]');
   if (!elementos.length) return;
 
-  // Respetar preferencia del sistema de movimiento reducido
-  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefiereMenosMovimiento) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     elementos.forEach(el => el.classList.add('animado'));
     return;
   }
@@ -128,461 +380,145 @@
   const observer = new IntersectionObserver((entradas) => {
     entradas.forEach(entrada => {
       if (!entrada.isIntersecting) return;
-
       const el = entrada.target;
-      const retraso = parseInt(el.getAttribute('data-retraso') || '0', 10);
-
-      setTimeout(() => {
-        el.classList.add('animado');
-        // Si tiene animación de conteo, activarla
-        if (el.querySelector('.estadistica-numero')) {
-          activarConteo(el);
-        }
-      }, retraso);
-
-      observer.unobserve(el); // Solo animar una vez
+      const delay = parseInt(el.getAttribute('data-retraso') || '0', 10);
+      setTimeout(() => el.classList.add('animado'), delay);
+      observer.unobserve(el);
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -30px 0px'
-  });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
   elementos.forEach(el => observer.observe(el));
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 5. SLIDER DE CASOS DE ÉXITO — Carrusel interactivo
-// ══════════════════════════════════════════════════════════
-(function iniciarSlider() {
-  const pista      = document.getElementById('slider-pista');
-  const btnAnterior = document.getElementById('slider-anterior');
-  const btnSiguiente = document.getElementById('slider-siguiente');
-  const contenedor  = document.getElementById('slider-indicadores');
-
-  if (!pista || !btnAnterior || !btnSiguiente) return;
-
-  const tarjetas    = pista.querySelectorAll('.caso-card');
-  const totalTarjetas = tarjetas.length;
-  let indiceActual  = 0;
-  let tarjetasPorVista = obtenerTarjetasPorVista();
-
-  // Cuántas tarjetas mostrar según el ancho de pantalla
-  function obtenerTarjetasPorVista() {
-    if (window.innerWidth < 600) return 1;
-    if (window.innerWidth < 900) return 1;
-    return 3;
-  }
-
-  // Crear puntos indicadores
-  function crearIndicadores() {
-    if (!contenedor) return;
-    contenedor.innerHTML = '';
-    const totalIndicadores = Math.ceil(totalTarjetas / tarjetasPorVista);
-    for (let i = 0; i < totalIndicadores; i++) {
-      const btn = document.createElement('button');
-      btn.className = 'indicador' + (i === 0 ? ' activo' : '');
-      btn.setAttribute('aria-label', `Ir al grupo ${i + 1}`);
-      btn.setAttribute('role', 'tab');
-      btn.addEventListener('click', () => irA(i));
-      contenedor.appendChild(btn);
-    }
-  }
-
-  // Actualizar qué indicador está activo
-  function actualizarIndicadores() {
-    if (!contenedor) return;
-    const puntos = contenedor.querySelectorAll('.indicador');
-    const grupo = Math.floor(indiceActual / tarjetasPorVista);
-    puntos.forEach((p, i) => p.classList.toggle('activo', i === grupo));
-  }
-
-  // Mover el slider al índice indicado
-  function irA(grupoIndex) {
-    const totalGrupos = Math.ceil(totalTarjetas / tarjetasPorVista);
-    indiceActual = Math.min(grupoIndex * tarjetasPorVista, totalTarjetas - tarjetasPorVista);
-    const anchoTarjeta = tarjetas[0].offsetWidth + 24; // 24px = gap
-    pista.style.transform = `translateX(-${indiceActual * anchoTarjeta}px)`;
-    actualizarIndicadores();
-  }
-
-  // Siguiente
-  function siguiente() {
-    const maxIndice = totalTarjetas - tarjetasPorVista;
-    indiceActual = indiceActual >= maxIndice ? 0 : indiceActual + tarjetasPorVista;
-    irA(Math.floor(indiceActual / tarjetasPorVista));
-  }
-
-  // Anterior
-  function anterior() {
-    const maxIndice = totalTarjetas - tarjetasPorVista;
-    indiceActual = indiceActual <= 0 ? maxIndice : indiceActual - tarjetasPorVista;
-    irA(Math.floor(indiceActual / tarjetasPorVista));
-  }
-
-  // Eventos de botones
-  btnSiguiente.addEventListener('click', siguiente);
-  btnAnterior.addEventListener('click', anterior);
-
-  // Avance automático cada 5 segundos
-  let autoAvance = setInterval(siguiente, 5000);
-
-  // Pausar auto-avance al interactuar
-  [btnAnterior, btnSiguiente].forEach(btn => {
-    btn.addEventListener('click', () => {
-      clearInterval(autoAvance);
-      autoAvance = setInterval(siguiente, 6000);
-    });
-  });
-
-  // Soporte para swipe táctil
-  let inicioX = 0;
-  pista.addEventListener('touchstart', e => { inicioX = e.touches[0].clientX; }, { passive: true });
-  pista.addEventListener('touchend', e => {
-    const diff = inicioX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? siguiente() : anterior();
-    }
-  });
-
-  // Recalcular al cambiar tamaño de ventana
-  window.addEventListener('resize', () => {
-    tarjetasPorVista = obtenerTarjetasPorVista();
-    indiceActual = 0;
-    crearIndicadores();
-    irA(0);
-  });
-
-  // Iniciar
-  crearIndicadores();
-})();
-
-
-// ══════════════════════════════════════════════════════════
-// 6. FILTROS DE NOTICIAS — Mostrar/ocultar por categoría
-// ══════════════════════════════════════════════════════════
-(function iniciarFiltros() {
-  const botonesFiltro = document.querySelectorAll('.filtro');
-  const tarjetasNoticia = document.querySelectorAll('.tarjeta-noticia');
-  if (!botonesFiltro.length || !tarjetasNoticia.length) return;
-
-  botonesFiltro.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filtro = btn.getAttribute('data-filtro');
-
-      // Actualizar botón activo
-      botonesFiltro.forEach(b => b.classList.remove('activo'));
-      btn.classList.add('activo');
-
-      // Mostrar u ocultar tarjetas
-      tarjetasNoticia.forEach(tarjeta => {
-        const categoria = tarjeta.getAttribute('data-categoria');
-        if (filtro === 'todos' || categoria === filtro) {
-          tarjeta.classList.remove('oculto');
-        } else {
-          tarjeta.classList.add('oculto');
-        }
-      });
-
-      // Ajustar el layout según cuántas tarjetas quedan visibles
-      const visibles = document.querySelectorAll('.tarjeta-noticia:not(.oculto)');
-      const grilla = document.getElementById('grilla-noticias');
-      if (grilla) {
-        if (visibles.length === 1) {
-          grilla.style.gridTemplateColumns = '1fr';
-        } else if (visibles.length === 2) {
-          grilla.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        } else {
-          grilla.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        }
-      }
-    });
-  });
-})();
-
-
-// ══════════════════════════════════════════════════════════
-// 7. CONTEO ANIMADO DE ESTADÍSTICAS
-// ══════════════════════════════════════════════════════════
-
-// Esta función anima el número de una estadística desde 0 hasta su valor final
-function activarConteo(tarjeta) {
-  const numEl = tarjeta.querySelector('.estadistica-numero[data-meta]');
-  if (!numEl || numEl.hasAttribute('data-contado')) return;
-  numEl.setAttribute('data-contado', 'true');
-
-  const meta    = parseInt(numEl.getAttribute('data-meta'), 10);
-  const sufijo  = numEl.getAttribute('data-sufijo') || '';
-  const duracion = 1800; // milisegundos de la animación
-  const inicio  = performance.now();
-
-  // Función de aceleración (ease-out)
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function animar(ahora) {
-    const transcurrido = ahora - inicio;
-    const progreso = Math.min(transcurrido / duracion, 1);
-    const valorActual = Math.round(easeOut(progreso) * meta);
-    numEl.textContent = valorActual + sufijo;
-    if (progreso < 1) requestAnimationFrame(animar);
-  }
-
-  requestAnimationFrame(animar);
-}
-
-// Observar tarjetas de estadísticas para activar el conteo al hacerse visibles
-(function iniciarConteoEstadisticas() {
-  const tarjetas = document.querySelectorAll('.tarjeta-estadistica');
-  if (!tarjetas.length) return;
-
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach(entrada => {
-      if (entrada.isIntersecting) {
-        activarConteo(entrada.target);
-        observer.unobserve(entrada.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  tarjetas.forEach(t => observer.observe(t));
-})();
-
-
-// ══════════════════════════════════════════════════════════
-// 8. FORMULARIO DE SUSCRIPCIÓN — Validación y feedback
-// ══════════════════════════════════════════════════════════
-(function iniciarFormulario() {
-  const formulario = document.getElementById('formulario-suscripcion');
-  if (!formulario) return;
-
-  const mensajeExito = document.getElementById('formulario-exito');
-
-  // Validar formato de correo
-  function esEmailValido(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-
-  // Marcar campo como válido o inválido
-  function marcarCampo(input, conError) {
-    if (conError) {
-      input.classList.add('con-error');
-      input.setAttribute('aria-invalid', 'true');
-    } else {
-      input.classList.remove('con-error');
-      input.removeAttribute('aria-invalid');
-    }
-  }
-
-  // Limpiar errores al escribir
-  formulario.querySelectorAll('input, textarea').forEach(campo => {
-    campo.addEventListener('input', () => marcarCampo(campo, false));
-  });
-
-  // Al enviar el formulario
-  formulario.addEventListener('submit', function(e) {
-    e.preventDefault();
-    let valido = true;
-
-    const nombre = formulario.querySelector('#nombre-suscripcion');
-    const email  = formulario.querySelector('#email-suscripcion');
-
-    // Validar nombre
-    if (!nombre.value.trim()) {
-      marcarCampo(nombre, true);
-      valido = false;
-    } else {
-      marcarCampo(nombre, false);
-    }
-
-    // Validar email
-    if (!esEmailValido(email.value.trim())) {
-      marcarCampo(email, true);
-      valido = false;
-    } else {
-      marcarCampo(email, false);
-    }
-
-    // Si hay errores, enfocar el primero
-    if (!valido) {
-      const primerError = formulario.querySelector('.con-error');
-      if (primerError) primerError.focus();
-      return;
-    }
-
-    // Simular envío
-    // ✏️ NOTA: Para que el formulario envíe emails reales,
-    // reemplaza esta simulación con una llamada a Formspree o Web3Forms:
-    // fetch('https://formspree.io/f/TU_ID', { method: 'POST', body: new FormData(formulario) })
-    const btnEnviar = formulario.querySelector('button[type="submit"]');
-    btnEnviar.disabled = true;
-    btnEnviar.textContent = '⏳ Enviando...';
-
-    setTimeout(() => {
-      formulario.reset();
-      btnEnviar.disabled = false;
-      btnEnviar.textContent = '📩 Enviar y suscribirme';
-
-      if (mensajeExito) {
-        mensajeExito.textContent = '✅ ¡Listo! Te has suscrito exitosamente a Descentralizando.';
-        mensajeExito.classList.add('visible');
-        // Ocultar mensaje después de 6 segundos
-        setTimeout(() => {
-          mensajeExito.classList.remove('visible');
-          mensajeExito.textContent = '';
-        }, 6000);
-      }
-    }, 1400);
-  });
-})();
-
-
-// ══════════════════════════════════════════════════════════
-// 9. BOTÓN VOLVER ARRIBA
+// 10. VOLVER ARRIBA
 // ══════════════════════════════════════════════════════════
 (function iniciarVolverArriba() {
-  const boton = document.getElementById('volver-arriba');
-  if (!boton) return;
+  const btn = document.querySelector('.volver-arriba') || $('volver-arriba');
+  if (!btn) return;
 
-  // Mostrar/ocultar según posición de scroll
-  function actualizarBoton() {
-    boton.classList.toggle('visible', window.scrollY > 500);
-  }
-
-  window.addEventListener('scroll', actualizarBoton, { passive: true });
-
-  // Al hacer clic, volver al inicio
-  boton.addEventListener('click', () => {
+  function update() { btn.classList.toggle('visible', window.scrollY > 500); }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Mover foco al inicio de la página (accesibilidad)
-    const saltarContenido = document.querySelector('.saltar-contenido');
-    if (saltarContenido) saltarContenido.focus();
+    const skip = document.querySelector('.saltar-contenido');
+    if (skip) skip.focus();
   });
-
-  actualizarBoton();
+  update();
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 10. BOTONES DE ACCESIBILIDAD
-//     - Texto más grande
-//     - Texto normal
-//     - Alto contraste
+// 11. ACCESIBILIDAD — Texto grande / Alto contraste
 // ══════════════════════════════════════════════════════════
 (function iniciarAccesibilidad() {
+  const btnGrande   = $('btn-texto-grande');
+  const btnNormal   = $('btn-texto-normal');
+  const btnContraste= $('btn-alto-contraste');
 
-  // Botón: Texto grande
-  const btnGrande = document.getElementById('btn-texto-grande');
-  if (btnGrande) {
-    btnGrande.addEventListener('click', () => {
-      document.body.classList.add('texto-grande');
-      // Guardar preferencia (si el navegador lo permite)
-      try { localStorage.setItem('textoGrande', 'si'); } catch(e) {}
-    });
-  }
+  if (btnGrande) btnGrande.addEventListener('click', () => {
+    document.body.classList.add('texto-grande');
+    try { localStorage.setItem('dm-textoGrande','si'); } catch(e){}
+  });
+  if (btnNormal) btnNormal.addEventListener('click', () => {
+    document.body.classList.remove('texto-grande');
+    try { localStorage.setItem('dm-textoGrande','no'); } catch(e){}
+  });
+  if (btnContraste) btnContraste.addEventListener('click', () => {
+    const on = document.body.classList.toggle('alto-contraste');
+    btnContraste.setAttribute('aria-pressed', String(on));
+    try { localStorage.setItem('dm-contraste', on ? 'si' : 'no'); } catch(e){}
+  });
 
-  // Botón: Texto normal
-  const btnNormal = document.getElementById('btn-texto-normal');
-  if (btnNormal) {
-    btnNormal.addEventListener('click', () => {
-      document.body.classList.remove('texto-grande');
-      try { localStorage.setItem('textoGrande', 'no'); } catch(e) {}
-    });
-  }
-
-  // Botón: Alto contraste
-  const btnContraste = document.getElementById('btn-alto-contraste');
-  if (btnContraste) {
-    btnContraste.addEventListener('click', () => {
-      const activo = document.body.classList.toggle('alto-contraste');
-      btnContraste.setAttribute('aria-pressed', activo.toString());
-      try { localStorage.setItem('altoContraste', activo ? 'si' : 'no'); } catch(e) {}
-    });
-  }
-
-  // Restaurar preferencias guardadas al cargar la página
+  // Restaurar preferencias
   try {
-    if (localStorage.getItem('textoGrande') === 'si') {
+    if (localStorage.getItem('dm-textoGrande') === 'si')
       document.body.classList.add('texto-grande');
-    }
-    if (localStorage.getItem('altoContraste') === 'si') {
+    if (localStorage.getItem('dm-contraste') === 'si') {
       document.body.classList.add('alto-contraste');
-      if (btnContraste) btnContraste.setAttribute('aria-pressed', 'true');
+      if (btnContraste) btnContraste.setAttribute('aria-pressed','true');
     }
-  } catch(e) {}
+  } catch(e){}
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 11. ENLACE ACTIVO EN NAVBAR al hacer scroll
+// 12. ENLACE ACTIVO EN NAV (scroll spy)
 // ══════════════════════════════════════════════════════════
 (function iniciarEnlaceActivo() {
-  const secciones  = document.querySelectorAll('section[id]');
-  const enlacesNav = document.querySelectorAll('.nav-menu a[href^="#"]');
-  if (!secciones.length || !enlacesNav.length) return;
-
-  const OFFSET = 120;
-
-  function actualizarEnlaceActivo() {
-    let actual = '';
-    secciones.forEach(sec => {
-      const top = sec.getBoundingClientRect().top;
-      if (top <= OFFSET) actual = sec.id;
-    });
-
-    enlacesNav.forEach(enlace => {
-      const href = enlace.getAttribute('href').slice(1);
-      enlace.classList.toggle('activo', href === actual);
-    });
-  }
-
-  window.addEventListener('scroll', actualizarEnlaceActivo, { passive: true });
-  actualizarEnlaceActivo();
-})();
-
-
-// ══════════════════════════════════════════════════════════
-// 12. TICKER DE NOTICIAS — Pausa al pasar el mouse
-// ══════════════════════════════════════════════════════════
-(function iniciarTicker() {
-  const pista = document.getElementById('ticker-pista');
-  if (!pista) return;
-
-  // Pausar animación al pasar el cursor (para leer mejor)
-  pista.addEventListener('mouseenter', () => {
-    pista.style.animationPlayState = 'paused';
-  });
-  pista.addEventListener('mouseleave', () => {
-    pista.style.animationPlayState = 'running';
+  const enlacesNav = document.querySelectorAll('.nav-menu a');
+  const href = window.location.href;
+  enlacesNav.forEach(a => {
+    if (a.href === href || (a.href !== CONFIG.blogUrl + '/' && href.startsWith(a.href))) {
+      a.classList.add('activo');
+    }
   });
 })();
 
 
 // ══════════════════════════════════════════════════════════
-// 13. INICIALIZACIÓN GENERAL
+// 13. FECHA DINÁMICA
+// ══════════════════════════════════════════════════════════
+(function setFecha() {
+  const el = $('dm-fecha-hoy');
+  if (!el) return;
+  const dias   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const meses  = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const d = new Date();
+  el.textContent = `${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+})();
+
+
+// ══════════════════════════════════════════════════════════
+// INICIALIZACIÓN PRINCIPAL — Solo corre en la página de inicio
 // ══════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Mensaje en la consola del navegador (solo para desarrolladores)
   console.log(
-    '%c🗺️ Descentralizando — por ADASFRO\n%cDesarrollo Accesible Sin Fronteras · Costa Rica',
-    'color: #2d6a4f; font-size: 16px; font-weight: bold;',
-    'color: #40916c; font-size: 12px;'
+    '%c🗺️ Descentralizando — por ADASFRO\n%cEconomía 4.0 · Costa Rica',
+    'color:#00c896;font-size:15px;font-weight:bold;',
+    'color:#8896a7;font-size:11px;'
   );
 
-  // Activar animaciones de elementos ya visibles al cargar
+  // Animaciones ya visibles
   setTimeout(() => {
     document.querySelectorAll('[data-animar]:not(.animado)').forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight * 0.95) {
-        const retraso = parseInt(el.getAttribute('data-retraso') || '0', 10);
-        setTimeout(() => {
-          el.classList.add('animado');
-          if (el.querySelector('.estadistica-numero')) activarConteo(el);
-        }, retraso);
+        const delay = parseInt(el.getAttribute('data-retraso') || '0', 10);
+        setTimeout(() => el.classList.add('animado'), delay);
       }
     });
   }, 150);
+
+  // ── Solo en homepage ──
+  const heroGrid = $('dm-hero-grid');
+  if (heroGrid) {
+    // Hero + ticker (misma llamada)
+    fetchBlogger(CONFIG.maxHero + CONFIG.maxTicker, null, entries => {
+      renderHero(entries.slice(0, CONFIG.maxHero));
+      renderTicker(entries);
+    });
+    // Noticias recientes
+    fetchBlogger(CONFIG.maxRecientes, null, entries => {
+      renderGridNoticias(entries, 'dm-noticias-recientes');
+      renderSidebarLista(entries, 'dm-populares');
+    });
+  }
+
+  // ── Sidebar en post individual ──
+  const sidebarPopPost = $('dm-populares-post');
+  if (sidebarPopPost) {
+    fetchBlogger(CONFIG.maxSidebar, null, entries => {
+      renderSidebarLista(entries, 'dm-populares-post');
+    });
+  }
+
+  // ── Ticker en cualquier página ──
+  const ticker = $('ticker-pista');
+  if (ticker && ticker.children.length === 0) {
+    fetchBlogger(CONFIG.maxTicker, null, renderTicker);
+  }
 
 });

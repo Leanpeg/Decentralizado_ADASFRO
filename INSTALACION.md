@@ -1,150 +1,135 @@
-# 🗺️ Descentralizando — Guía de Instalación Completa
+# 🗺️ Descentralizando — Guía de Instalación v3.0
 ## ADASFRO · Cédula 3-002-860094
 
 ---
 
-## 📦 Archivos incluidos en este paquete
+## 📦 Archivos del paquete
 
-| Archivo | Destino | Descripción |
-|--------|---------|-------------|
-| `descentralizando-blogger-theme.xml` | Blogger | Tema completo listo para instalar |
-| `descentralizando-styles.css` | GitHub Pages | Estilos principales |
-| `descentralizando-script.js` | GitHub Pages | JavaScript de funcionalidades |
-| `INSTALACION.md` | — | Este archivo |
-
----
-
-## 🚀 PASO 1: Subir CSS y JS a GitHub Pages
-
-Tu repositorio ya está en: `https://leanpeg.github.io/Decentralizado_ADASFRO/`
-
-### Archivos que deben estar en ese repositorio:
-```
-Decentralizado_ADASFRO/
-├── descentralizando-styles.css   ← Ya existe, actualizar
-├── descentralizando-script.js    ← Ya existe, actualizar  
-└── (otros archivos si los hay)
-```
-
-### Cómo actualizar:
-1. Ir a https://github.com/leanpeg/Decentralizado_ADASFRO
-2. Clic en cada archivo → "Edit" (lápiz) o "Upload files"
-3. Pegar el contenido nuevo del CSS y JS
-4. Clic en "Commit changes"
-5. Esperar ~2 minutos para que GitHub Pages actualice
+| Archivo | Destino | Qué hace |
+|---------|---------|----------|
+| `descentralizando-styles.css` | GitHub Pages | Estilos dark-editorial completos |
+| `descentralizando-script.js` | GitHub Pages | JS: API Blogger + interactividad |
+| `descentralizando-blogger-theme.xml` | Blogger | Tema completo para instalar |
 
 ---
 
-## 🎨 PASO 2: Instalar el tema en Blogger
+## PASO 1 — Subir CSS y JS a GitHub Pages
 
-1. Ir a **https://www.blogger.com**
-2. Seleccionar tu blog **decentralizando.org**
-3. En el menú lateral: **Tema → Personalizar → ⋮ → Editar HTML**
-   - O bien: **Tema → Hacer copia de seguridad** (primero guarda el actual)
-4. **Seleccionar todo** el código que hay (Ctrl+A)
-5. **Borrar** todo
-6. **Pegar** el contenido de `descentralizando-blogger-theme.xml`
-7. Clic en **💾 Guardar tema**
-8. Ver el blog para verificar
+**Tu repositorio:** `https://github.com/Leanpeg/Decentralizado_ADASFRO`
+**URL pública:**    `https://leanpeg.github.io/Decentralizado_ADASFRO/`
 
----
+### Pasos:
+1. Ir a `https://github.com/Leanpeg/Decentralizado_ADASFRO`
+2. Clic en `descentralizando-styles.css` → icono lápiz ✏️ → borrar todo → pegar el nuevo CSS → **Commit changes**
+3. Repetir con `descentralizando-script.js`
+4. Esperar ~2 minutos para que GitHub Pages publique
 
-## 🏷️ PASO 3: Configurar etiquetas en tus entradas
+### Verificar que funcionan:
+- `https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-styles.css`
+- `https://leanpeg.github.io/Decentralizado_ADASFRO/descentralizando-script.js`
 
-El diseño usa etiquetas (labels) de Blogger para las categorías. 
-**Usa EXACTAMENTE** estos nombres al etiquetar tus entradas:
-
-| Etiqueta | URL generada automáticamente |
-|----------|------------------------------|
-| `Política` | /search/label/Política |
-| `Social` | /search/label/Social |
-| `Tecnología` | /search/label/Tecnología |
-| `Economía` | /search/label/Economía |
-| `Turismo` | /search/label/Turismo |
-| `Descentralización` | /search/label/Descentralización |
-| `Blockchain` | /search/label/Blockchain |
-| `Inclusión` | /search/label/Inclusión |
-
-**Importante:** Cada entrada puede tener varias etiquetas. La primera etiqueta aparece como badge de categoría en las tarjetas.
+> ⚠️ El repositorio debe ser **público** para que GitHub Pages sirva los archivos.
 
 ---
 
-## 🖼️ PASO 4: Imágenes destacadas en entradas
+## PASO 2 — Instalar el tema en Blogger
 
-Para que las tarjetas muestren imagen:
-1. Al crear/editar una entrada en Blogger
-2. En el panel derecho: **"Imagen de entrada"** → subir foto
-3. Esta imagen aparecerá automáticamente en la tarjeta de la cuadrícula
-
-**Tamaño recomendado:** 1200 × 800 px (ratio 3:2)
-
----
-
-## ⚙️ PASO 5: Personalizar el menú de navegación
-
-En el XML del tema, busca esta sección y edita los links:
-
-```xml
-<nav class='dm-nav' id='dm-nav'>
-  <a expr:href='data:blog.homepageUrl'>Inicio</a>
-  <a expr:href='data:blog.homepageUrl + "search/label/Política"'>Política</a>
-  <!-- Agrega o cambia categorías aquí -->
-</nav>
-```
+1. Ir a **https://www.blogger.com** → seleccionar tu blog
+2. Menú izquierdo → **Tema**
+3. Clic en **⋮ (tres puntos)** → **Hacer copia de seguridad** (guarda el actual primero)
+4. Clic en **⋮** → **Editar HTML**
+5. **Ctrl+A** (seleccionar todo) → **Suprimir** (borrar)
+6. Pegar todo el contenido de `descentralizando-blogger-theme.xml`
+7. Clic en 💾 **Guardar tema**
 
 ---
 
-## 📱 PASO 6: Configurar redes sociales
+## PASO 3 — Etiquetas para las entradas
 
-Busca en el XML estas líneas y reemplaza con tus URLs reales:
+Al crear o editar cada entrada en Blogger, agregar etiquetas **exactamente** así:
 
-```xml
-<a href='https://facebook.com' ...>f</a>
-<a href='https://instagram.com' ...>ig</a>
-<a href='https://twitter.com' ...>𝕏</a>
-<a href='https://youtube.com' ...>▶</a>
-```
+| Etiqueta | Sección en el menú |
+|----------|--------------------|
+| `Política` | Sección Política |
+| `Social` | Sección Social |
+| `Tecnología` | Sección Tecnología |
+| `Economía` | Sección Economía 4.0 |
+| `Turismo` | Sección Turismo |
+| `Blockchain` | Sección Blockchain |
+| `Descentralización` | Badge azul |
+| `Inclusión` | Badge morado |
+| `Gobernanza` | Badge azul oscuro |
+
+> ✅ Una entrada puede tener múltiples etiquetas. La primera etiqueta = color del badge en la tarjeta.
 
 ---
 
-## 🔧 PASO 7: Configurar dominio personalizado
+## PASO 4 — Imagen destacada
 
-Si tu dominio `www.decentralizando.org` no está configurado aún:
+Para que las tarjetas de noticias muestren imagen:
+1. Al crear/editar entrada → panel derecho → **"Imagen de entrada"**
+2. Subir la imagen (recomendado: **1200 × 800 px**)
+3. Esta imagen aparece automáticamente en el grid hero y en las tarjetas
+
+---
+
+## PASO 5 — Dominio personalizado
+
+Si `www.decentralizando.org` no está conectado:
 1. Blogger → Configuración → Dominio personalizado
-2. Ingresar: `www.decentralizando.org`
-3. Seguir las instrucciones DNS de Blogger
+2. Ingresar `www.decentralizando.org`
+3. Seguir instrucciones DNS (agregar registros CNAME en tu proveedor)
 
 ---
 
-## 🐛 Solución de problemas comunes
+## PASO 6 — Personalizar redes sociales
 
-### El CSS no carga
-- Verificar que los archivos están en `https://leanpeg.github.io/Decentralizado_ADASFRO/`
-- GitHub Pages puede tardar hasta 10 minutos en actualizar
-- Verificar que el repositorio es **público**
+En el XML, buscar y reemplazar las URLs de redes sociales:
+```
+https://facebook.com/descentralizando
+https://instagram.com/descentralizando
+https://twitter.com/descentralizando
+https://youtube.com/@adasfro
+```
 
-### Las entradas no aparecen en el grid
-- La API JSON de Blogger puede tardar en responder
-- Verificar que el blog no está en modo "privado"
-- Probar abriendo: `https://www.decentralizando.org/feeds/posts/default?alt=json&max-results=6`
+---
 
-### El diseño se ve mal en móvil
-- Asegurarse de que el `<meta viewport>` está en el `<head>` ✅ (ya incluido)
+## 🎨 Diseño del tema
 
-### Error al guardar el tema en Blogger
-- Blogger es estricto con XML: no puede haber `&` sueltos (debe ser `&amp;`)
+- **Paleta:** Negro profundo `#080c10` + Esmeralda `#00c896` + Dorado `#e8b84b`
+- **Fuentes:** DM Serif Display (títulos) + IBM Plex Sans (cuerpo) + Oswald (UI)
+- **Estilo:** Revista digital dark-editorial premium
+
+---
+
+## 🐛 Solución de problemas
+
+### El CSS/JS no carga
+- Verificar que el repo es público en GitHub
+- GitHub Pages tarda 5-10 minutos en publicar
+- Probar URL en incógnito para evitar caché
+
+### El hero grid no muestra entradas
+- La API JSON de Blogger puede tardar. Recargar.
+- Verificar abriendo: `https://www.decentralizando.org/feeds/posts/default?alt=json&max-results=5`
+- Si el blog está en privado, la API no responde → hacer público el blog
+
+### Error al guardar el tema
+- El XML es estricto: los `&` deben ser `&amp;` (ya corregido en este archivo)
 - No puede haber tags sin cerrar
-- El XML de este paquete ya está validado ✅
+
+### Las fuentes no cargan
+- Google Fonts requiere conexión a internet
+- Verificar que el `<link>` de Google Fonts está en el `<head>` ✅
 
 ---
 
-## 📞 Soporte
+## 📞 Soporte ADASFRO
 
-- **Correo:** descentralizando@adasfro.org
-- **Blog:** https://www.decentralizando.org
-- **GitHub:** https://github.com/leanpeg/Decentralizado_ADASFRO
+- **Correo:** descentralizando@adasfro.org  
+- **Blog:** https://www.decentralizando.org  
+- **GitHub:** https://github.com/Leanpeg/Decentralizado_ADASFRO
 
 ---
 
-*© 2026 ADASFRO · Descentralizando — Todos los derechos reservados*
-*Ley N.º 218 · Constitución Política Art. 28, 29, 46 · Código Electoral Art. 139*
+*© 2026 ADASFRO — Descentralizando. Todos los derechos reservados.*
