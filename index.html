@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Voces por la Dignidad — Blog personal de Lenin Pérez Guzmán. Análisis y reflexión en derechos humanos, accesibilidad e inclusión social desde Costa Rica." />
+  <meta name="keywords" content="derechos humanos, accesibilidad, inclusión, Costa Rica, educación cívica, Lenin Pérez Guzmán" />
+  <meta name="author" content="Lenin Pérez Guzmán" />
+  <meta property="og:title" content="Voces por la Dignidad" />
+  <meta property="og:description" content="Blog personal de análisis y reflexión en derechos humanos, accesibilidad e inclusión social. Por Lenin Pérez Guzmán." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CR" />
+  <title>Voces por la Dignidad | Lenin Pérez Guzmán</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav-container" aria-label="Navegación principal">
+      <a href="index.html" class="site-logo" aria-label="Voces por la Dignidad — Inicio">
+        <span class="logo-main">Voces por la Dignidad</span>
+        <span class="logo-sub">Lenin Pérez Guzmán</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú de navegación">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <ul class="nav-links" id="main-nav" role="list">
+        <li><a href="index.html" aria-current="page">Inicio</a></li>
+        <li><a href="https://voces-por-la-dignidad.blogspot.com/#articulos" target="_blank" rel="noopener">Artículos</a></li>
+        <li><a href="about.html">Sobre mí</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ── HERO con foto circular ── -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-inner">
+          <div class="hero-accent" aria-hidden="true"></div>
+          <p class="hero-eyebrow">Blog personal · Costa Rica</p>
+          <h1 id="hero-title">Voces por la Dignidad</h1>
+          <p class="hero-subtitle">Un espacio de análisis y reflexión sobre derechos humanos, accesibilidad e inclusión social</p>
+          <p class="hero-description">
+            Aquí publico reflexiones, análisis y recursos sobre derechos humanos desde una perspectiva educativa,
+            preventiva y formativa. Es un espacio personal, independiente y no partidario,
+            comprometido con la dignidad de toda persona.
+          </p>
+          <div class="hero-actions">
+            <a href="https://voces-por-la-dignidad.blogspot.com/" target="_blank" rel="noopener" class="btn btn-primary">Leer artículos</a>
+            <a href="about.html" class="btn btn-secondary">Conocer el proyecto</a>
+          </div>
+        </div>
+
+        <!-- Foto circular del autor -->
+        <div class="hero-photo-col" aria-hidden="true">
+          <div class="hero-photo-wrap">
+            <div class="hero-photo-ring"></div>
+            <div class="hero-photo-ring hero-photo-ring--2"></div>
+            <!-- Reemplaza esta imagen con tu foto real subida al repo como images/foto-lenin.jpg -->
+            <div class="hero-avatar" id="hero-avatar-img">
+              <img
+                src="images/foto-lenin.jpg"
+                alt="Lenin Antonio Pérez Guzmán"
+                class="hero-avatar__photo"
+                onerror="this.parentElement.classList.add('hero-avatar--fallback'); this.style.display='none';"
+              />
+              <span class="hero-avatar__initials" aria-hidden="true">LP</span>
+            </div>
+            <div class="hero-photo-badge">
+              <span class="hero-photo-badge__dot"></span>
+              Defensor de derechos humanos
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Artículos recientes ── -->
+    <section class="featured-section" aria-labelledby="featured-title">
+      <div class="container">
+        <h2 id="featured-title" class="section-title">Artículos recientes</h2>
+
+        <div class="posts-grid" id="recent-posts">
+          <!-- Los posts se cargan desde el feed de Blogger -->
+          <div class="post-loading" aria-label="Cargando artículos...">
+            <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
+          </div>
+        </div>
+
+        <div class="view-all-wrap">
+          <a href="https://voces-por-la-dignidad.blogspot.com/" target="_blank" rel="noopener" class="btn btn-outline">
+            Ver todos los artículos →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Sobre este espacio ── -->
+    <section class="about-strip" aria-labelledby="about-strip-title">
+      <div class="container about-strip__inner">
+        <div class="about-strip__text">
+          <h2 id="about-strip-title">Sobre este espacio</h2>
+          <p>
+            Soy Lenin Antonio Pérez Guzmán, gestor comunitario y líder social costarricense,
+            reconocido por mi compromiso con la inclusión, accesibilidad y transparencia.
+          </p>
+          <p>
+            Mi objetivo es contribuir a una ciudadanía más informada, crítica y comprometida
+            con los derechos de todas las personas.
+          </p>
+          <a href="about.html" class="btn btn-secondary">Conocer más sobre mí</a>
+        </div>
+        <div class="about-strip__deco" aria-hidden="true">
+          <div class="deco-quote">"La dignidad humana no se negocia."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Temas ── -->
+    <section class="topics-section" aria-labelledby="topics-title">
+      <div class="container">
+        <h2 id="topics-title" class="section-title">Temas que abordo</h2>
+        <ul class="topics-grid" role="list">
+          <li class="topic-item">
+            <a href="https://voces-por-la-dignidad.blogspot.com/search/label/Derechos%20humanos" target="_blank" rel="noopener" class="topic-link">
+              <span class="topic-icon" aria-hidden="true">⚖️</span>
+              <h3>Derechos humanos</h3>
+              <p>Análisis de estándares internacionales y su aplicación en el contexto costarricense y regional.</p>
+            </a>
+          </li>
+          <li class="topic-item">
+            <a href="https://voces-por-la-dignidad.blogspot.com/search/label/Accesibilidad" target="_blank" rel="noopener" class="topic-link">
+              <span class="topic-icon" aria-hidden="true">♿</span>
+              <h3>Accesibilidad</h3>
+              <p>Barreras y soluciones para garantizar la participación plena de personas con discapacidad.</p>
+            </a>
+          </li>
+          <li class="topic-item">
+            <a href="https://voces-por-la-dignidad.blogspot.com/search/label/Inclusi%C3%B3n" target="_blank" rel="noopener" class="topic-link">
+              <span class="topic-icon" aria-hidden="true">🤝</span>
+              <h3>Inclusión social</h3>
+              <p>Reflexiones sobre cómo construir sociedades más equitativas y participativas.</p>
+            </a>
+          </li>
+          <li class="topic-item">
+            <a href="https://voces-por-la-dignidad.blogspot.com/search/label/Educaci%C3%B3n%20c%C3%ADvica" target="_blank" rel="noopener" class="topic-link">
+              <span class="topic-icon" aria-hidden="true">📚</span>
+              <h3>Educación cívica</h3>
+              <p>Recursos y análisis para fortalecer el conocimiento ciudadano sobre derechos y deberes.</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-name">Lenin Pérez Guzmán</p>
+        <p class="footer-tagline">Defensor de derechos humanos · Accesibilidad · Inclusión social<br>Costa Rica</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/TU_USUARIO" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99A10 10 0 0 0 22 12"/></svg>
+          </a>
+          <a href="https://www.instagram.com/TU_USUARIO" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://wa.me/50600000000" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <a href="index.html">Inicio</a>
+        <a href="https://voces-por-la-dignidad.blogspot.com/" target="_blank" rel="noopener">Artículos</a>
+        <a href="about.html">Sobre mí</a>
+      </nav>
+      <div class="footer-legal">
+        <p>Este sitio es un espacio personal de carácter educativo e informativo. Las opiniones expresadas son responsabilidad exclusiva del autor. No representa a partidos políticos ni a gobiernos.</p>
+        <p class="footer-copy">© <span id="year"></span> Lenin Pérez Guzmán</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
